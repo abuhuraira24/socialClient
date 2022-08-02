@@ -31,7 +31,7 @@ const Forgot = () => {
     if (input.email) {
       setLoading(true);
       axios
-        .post("http://localhost:5000/forgotpassword", {
+        .post("https://serverforsocial.herokuapp.com/forgotpassword", {
           email: input.email,
           subject: "Email Verification",
           url: "http://localhost:3000/recovery_password",

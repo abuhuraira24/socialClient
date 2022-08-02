@@ -23,7 +23,7 @@ const ConfirmAccount = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/activeUser", { email: user.email })
+      .post("https://serverforsocial.herokuapp.com/activeUser", { email: user.email })
       .then((data) => {
         context.login(data.data.token);
         navigate("/");

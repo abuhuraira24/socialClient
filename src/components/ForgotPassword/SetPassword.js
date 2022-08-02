@@ -45,7 +45,7 @@ const SetNewPassword = () => {
     setLoading(true);
     if (input.password) {
       axios
-        .post("http://localhost:5000/recoverypassword", {
+        .post("https://serverforsocial.herokuapp.com/recoverypassword", {
           email,
           password: input.password,
         })
