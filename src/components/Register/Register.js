@@ -42,7 +42,7 @@ const Register = () => {
         .post(`https://serverforsocial.herokuapp.com/verify`, {
           email: values.email,
           subject: "Email Verification",
-          url: `https://classy-jalebi-7f30b9.netlify.app/${data.register.token}`,
+          url: `https://socialmedia24.herokuapp.com/${data.register.token}`,
           token: data.register.token,
         })
         .then((res) => {
