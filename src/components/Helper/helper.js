@@ -42,4 +42,5 @@ const FET_ALL_USERS = gql`
 
 export const getCommnetAvatar = (userId, users) => {
   let user = users?.find((u) => u.id === userId);
+  return user
 };

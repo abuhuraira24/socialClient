@@ -1,8 +1,4 @@
-// TODO: Create Context or initialState
 
-// TODO: Create Reducer
-
-// TODO: Create Provider
 
 import React, { createContext, useReducer } from "react";
 

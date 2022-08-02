@@ -4,9 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { useTheme } from "styled-components";
 
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-import io from "socket.io-client";
 
 import {
   AuthorName,
@@ -15,7 +14,6 @@ import {
   P,
   PostAvatar,
   PostBody,
-  PostTitle,
   Span,
   UserImage,
   UserProfile,
@@ -30,7 +28,6 @@ import SingleComment from "../Comments";
 
 import { AuthContext } from "../../context/auth";
 
-import Profile from "./Profile";
 
 import { Avatar } from "../Helper/helper";
 
@@ -42,7 +39,6 @@ import getAvatar from "../../hooks/useAvatar";
 
 import NavBar from "../Navbar/NavBar";
 
-let socket;
 
 const PostDetails = () => {
   // Commet value
@@ -50,7 +46,7 @@ const PostDetails = () => {
 
   let [image, setImage] = useState(null);
 
-  const { getComments, comments, user } = useContext(AuthContext);
+  const { getComments, comments } = useContext(AuthContext);
   const postId = useParams().id;
 
   // const { data } = useQuery(FETCH_POST, {
@@ -140,25 +136,6 @@ const PostDetails = () => {
   );
 };
 
-const FETCH_POST = gql`
-  query ($postId: ID!) {
-    getSinglePost(postId: $postId) {
-      firstName
-      lastName
-      userId
-      body
-      createdAt
-      comments {
-        body
-        username
-        userId
-        avatar
-        author
-        createdAt
-      }
-    }
-  }
-`;
 
 const GET_POST = gql`
   query ($postId: ID!) {

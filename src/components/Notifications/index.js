@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import SingleNoti from "./SingleNoti";
-import { Empty, Wrapper } from "./styles";
+import {  Wrapper } from "./styles";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
 
@@ -29,12 +29,12 @@ const Notification = () => {
             <SeeAll>See All</SeeAll>
           </SubHeader>
 
-          <Empty>
+          {/* <Empty>
             {notifications &&
               typeof notifications !== "notifications" &&
               notifications.length === 0 &&
               "There is no Notification"}
-          </Empty>
+          </Empty> */}
         </Header>
 
         {notifications &&

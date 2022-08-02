@@ -3,12 +3,6 @@ import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import {
-  ImageWrapper,
-  Photos,
-  Header,
-  SeeAll,
-  Images,
-  Image,
   Img,
 } from "../styles";
 

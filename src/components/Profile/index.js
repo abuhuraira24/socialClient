@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-import { useTheme } from "styled-components";
 
 import { Container, Col } from "../../Styles/ElementsStyles";
 

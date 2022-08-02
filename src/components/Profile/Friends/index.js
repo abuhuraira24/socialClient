@@ -4,16 +4,12 @@ import { gql, useQuery } from "@apollo/client";
 
 import { Wrapper, FriendsWrapper } from "./elemetStyles";
 
-import { Container, Row, Col } from "../../../Styles/ElementsStyles";
 
 import {
   ImageWrapper,
   Photos,
   Header,
   SeeAll,
-  Images,
-  Image,
-  Img,
 } from "../styles";
 
 import Friend from "./Friend";

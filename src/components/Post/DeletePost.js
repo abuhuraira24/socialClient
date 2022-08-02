@@ -1,6 +1,5 @@
 import { useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -9,11 +8,11 @@ import { Button, Buttons } from "./PopupStyles";
 import { AuthContext } from "../../context/auth";
 
 const DeletePost = ({ postId, closeModal }) => {
-  const navigate = useNavigate();
 
-  const { getPosts, deletedPostId } = useContext(AuthContext);
 
-  const [deletePost, { loading }] = useMutation(DELETE, {
+  const { deletedPostId } = useContext(AuthContext);
+
+  const [deletePost] = useMutation(DELETE, {
     onCompleted: (data) => {
       deletedPostId(postId);
       closeModal();

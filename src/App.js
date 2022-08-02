@@ -1,10 +1,9 @@
 import "./App.css";
 
-import NavBar from "./components/Navbar/NavBar";
 
 import Register from "./components/Register/Register";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -22,7 +21,6 @@ import People from "./components/People";
 
 import PostDetails from "./components/PostDetails";
 
-import SmallNavbar from "./components/Navbar/SmallNavbar";
 
 import Profile from "./components/Profile/Profile";
 
@@ -44,15 +42,6 @@ import Follower from "./components/Home/Followers";
 import Notification from "./components/Notifications";
 
 function App() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    let toke = localStorage.getItem("jwtToken");
-    if (toke) {
-      let decoded = decoder(toke);
-      setUser(decoded);
-    }
-  }, []);
 
   return (
     <AuthProvider>

@@ -30,7 +30,7 @@ const User = (user) => {
 
   let avatar = getAvatarById(data, loading);
 
-  let [addFollower, { data: info }] = useMutation(ADD_FOLLOWER, {
+  let [addFollower] = useMutation(ADD_FOLLOWER, {
     onCompleted: (data) => {
       console.log(data);
     },

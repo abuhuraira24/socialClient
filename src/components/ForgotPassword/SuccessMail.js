@@ -1,15 +1,11 @@
 import {
-  Form,
-  Input,
   Wraaper,
-  Button,
   H4,
   P,
   Success,
   SuccessIcon,
 } from "./styles";
 
-import { Link } from "react-router-dom";
 
 const SuccessMail = () => {
   return (

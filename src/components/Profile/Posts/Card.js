@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import Post from "../../Post/Post";
 
-import { Card, Empty, Load, LoadMore } from "../../Post/CartStyles";
+import { Card} from "../../Post/CartStyles";
 
 import { AuthContext } from "../../../context/auth";
 
@@ -16,13 +16,13 @@ const PostCart = () => {
     offset: 0,
   });
 
-  let { user, getPosts, posts } = useContext(AuthContext);
+  let {  getPosts, posts } = useContext(AuthContext);
 
   // userId
   const { id } = useParams();
 
   // Lazy Query
-  let [getDog, { loading }] = useLazyQuery(FETCH_POSTT, {
+  let [getDog] = useLazyQuery(FETCH_POSTT, {
     onCompleted: (data) => {
       getPosts(data.getPostsByUserId);
     },
@@ -37,13 +37,13 @@ const PostCart = () => {
     getDog({ variables: { userId: id } });
   }, [id, getDog]);
 
-  const morePost = () => {
-    setValues({
-      ...values,
-      limit: values.limit + 1,
-    });
-    getDog();
-  };
+  // const morePost = () => {
+  //   setValues({
+  //     ...values,
+  //     limit: values.limit + 1,
+  //   });
+  //   getDog();
+  // };
 
   return (
     <div>

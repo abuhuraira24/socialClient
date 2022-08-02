@@ -2,9 +2,6 @@ import { useContext } from "react";
 
 import { useParams } from "react-router-dom";
 
-import { Wrapper } from "./styles";
-
-import UserProfile from "../Profile/index";
 
 import PrivateProfile from "./PrivateProfile";
 

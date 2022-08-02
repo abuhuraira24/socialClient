@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
-import { Icon, Link, Main, NavWrapper } from "./mobile";
+import { Icon, Main, NavWrapper } from "./mobile";
 
-import { gql, useQuery } from "@apollo/client";
 
 import { NavLink } from "react-router-dom";
 
@@ -36,15 +35,6 @@ const MobileMenu = () => {
   );
 };
 
-const GET_NOTIFICATIONS = gql`
-  query {
-    notifications {
-      name
-      text
-      avatar
-      createdAt
-    }
-  }
-`;
+
 
 export default MobileMenu;

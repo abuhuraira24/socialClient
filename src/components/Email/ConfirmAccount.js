@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Container, Content, Img, Link, Wrapper } from "./styles";
+import { Button, Container, Content, Img, Wrapper } from "./styles";
 
 import email from "./email.png";
 

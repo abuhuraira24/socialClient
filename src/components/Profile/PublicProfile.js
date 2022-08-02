@@ -57,7 +57,7 @@ const PublicProfile = () => {
     },
   });
 
-  let [addFollow, { loading }] = useMutation(ADD_FOLLOWER, {
+  let [addFollow] = useMutation(ADD_FOLLOWER, {
     onCompleted: (data) => {
       console.log(data);
     },

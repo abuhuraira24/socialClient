@@ -18,7 +18,7 @@ const LikeButton = ({ postId, likes, userId }) => {
     },
   });
 
-  const { getLikes, user } = useContext(AuthContext);
+  const {  user } = useContext(AuthContext);
 
   useEffect(() => {
     if (user && likes.find((like) => like.userId === user.id)) {

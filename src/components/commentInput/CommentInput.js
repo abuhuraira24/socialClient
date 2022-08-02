@@ -6,7 +6,6 @@ import { CommentBox, Button, CommentInput, Form } from "../Post/CartStyles";
 
 import { AuthContext } from "../../context/auth";
 
-import socket from "../../hooks/socketio";
 
 const CommentBar = ({ postId }) => {
   // Commet value
@@ -16,7 +15,7 @@ const CommentBar = ({ postId }) => {
 
   const { user, getComments } = useContext(AuthContext);
 
-  const [addCommnet, { loading }] = useMutation(CREATE_COMMENT, {
+  const [addCommnet] = useMutation(CREATE_COMMENT, {
     onCompleted: (data) => {
       console.log(data);
       getComments(data.createComment.comments);

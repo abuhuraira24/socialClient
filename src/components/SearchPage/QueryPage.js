@@ -55,7 +55,7 @@ import "../SearchPage/index.scss";
 
 // export default QueryPage;
 import Posts from "./Posts";
-import { Menu, Navlink, NotFound, SearchWrapper } from "./Styles";
+import { NotFound, SearchWrapper } from "./Styles";
 
 const searchedPosts = (data, searchParams, loading) => {
   if (!loading) {

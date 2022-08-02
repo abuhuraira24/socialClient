@@ -1,4 +1,4 @@
-import { useEffect,useCallback, useState } from "react"
+import { useState } from "react"
 
 
 const Responsive = (small) => {

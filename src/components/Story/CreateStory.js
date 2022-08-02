@@ -10,7 +10,6 @@ import {
   Span,
 } from "./storyStyles";
 
-import avatar from "../Profile/avatar.jpg";
 
 const CreateStory = () => {
   let { data: getUser } = useQuery(GET_AVATAR);

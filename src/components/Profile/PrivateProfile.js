@@ -10,7 +10,6 @@ import Axios from "axios";
 
 import { AuthContext } from "../../context/auth";
 
-import avatar from "../Profile/avatar.jpg";
 
 import {
   Avatar,
@@ -40,7 +39,6 @@ import {
   UploadCover,
   UploadInput,
   UserIcon,
-  FollowButton,
 } from "./styles";
 import { useParams } from "react-router-dom";
 
@@ -56,7 +54,7 @@ const PrivateProfile = () => {
   const [cover, setCover] = useState();
   const [avatar, setAvatar] = useState();
   const [profileUser, setProfileUser] = useState(null);
-  const [posts, setPosts] = useState(null);
+  const [ setPosts] = useState(null);
   // Open Modal
   const [isOpen, setIsOpen] = useState(false);
   // File Upload Mutation

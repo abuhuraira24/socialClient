@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 
 import { Link } from "react-router-dom";
 
@@ -16,12 +16,10 @@ import {
   P,
   Name,
   Picture,
-  Author,
 } from "./CommentsStyles";
 
-import { AuthContext } from "../../context/auth";
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import moment from "moment";
 

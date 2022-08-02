@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Posts from "../Post";
 
@@ -17,7 +17,6 @@ import Navbar from "../Navbar/NavBar";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
 
-import Story from "../Story";
 
 const Home = () => {
   const theme = useTheme();

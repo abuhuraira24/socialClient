@@ -42,7 +42,6 @@ const Popup = ({ children }) => {
 
   const [toggle, setToggle] = useState(null);
 
-  const [chosenEmoji, setChosenEmoji] = useState(null);
 
   const [body, setBody] = useState("");
 
@@ -80,7 +79,7 @@ const Popup = ({ children }) => {
     setIsOpen(false);
   };
   const onEmojiClick = (event, emojiObject) => {
-    setChosenEmoji(emojiObject);
+  
     setBody((prev) => prev + emojiObject.emoji);
   };
 

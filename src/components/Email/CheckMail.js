@@ -1,4 +1,4 @@
-import { Container, Content, Img, Link, Wrapper } from "./styles";
+import { Container, Content, Img, Wrapper } from "./styles";
 
 import email from "./email.png";
 

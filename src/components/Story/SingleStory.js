@@ -1,13 +1,8 @@
 import { H5, ImageTwo, ImagTwo, Name, Wrapper } from "./storyStyles";
 
 import {
-  AddStory,
-  Icon,
-  Image,
+
   ImageWrapper,
-  Img,
-  PlusIcon,
-  Span,
 } from "./storyStyles";
 
 import avatar from "../Profile/avatar.jpg";

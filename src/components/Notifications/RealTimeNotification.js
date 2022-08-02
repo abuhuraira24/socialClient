@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import socket from "../../hooks/socketio";
 
 import {
   Avatar,

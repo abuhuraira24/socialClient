@@ -17,7 +17,7 @@ import axios from "axios";
 import Loading from "../Loading/index";
 
 const Register = () => {
-  const context = useContext(AuthContext);
+
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     firstName: "",

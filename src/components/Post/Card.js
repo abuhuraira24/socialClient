@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 
-import { gql, useQuery, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 
 import Post from "./Post";
 
-import { Card, Empty, Load, LoadMore } from "./CartStyles";
+import { Card } from "./CartStyles";
 
 import { AuthContext } from "../../context/auth";
 
@@ -17,7 +17,7 @@ const PostCart = () => {
   let { getPosts, posts } = useContext(AuthContext);
 
   // Lazy Query
-  let [getDog, { loading }] = useLazyQuery(FETCH_POSTT, {
+  let [getDog] = useLazyQuery(FETCH_POSTT, {
     onCompleted: (data) => {
       getPosts(data.infinitePost);
     },
@@ -32,13 +32,13 @@ const PostCart = () => {
     getDog();
   }, [getDog]);
 
-  const morePost = () => {
-    setValues({
-      ...values,
-      limit: values.limit + 1,
-    });
-    getDog();
-  };
+  // const morePost = () => {
+  //   setValues({
+  //     ...values,
+  //     limit: values.limit + 1,
+  //   });
+  //   getDog();
+  // };
 
   return (
     <div>

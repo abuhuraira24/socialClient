@@ -1,7 +1,3 @@
-import { gql, useQuery } from "@apollo/client";
-
-import { NavLink } from "react-router-dom";
-
 import { CardSubtitle } from "reactstrap";
 
 import moment from "moment";
