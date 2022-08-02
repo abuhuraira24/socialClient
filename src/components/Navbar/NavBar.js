@@ -50,11 +50,6 @@ const Navbar = () => {
   // Toggler Notification
   const [toggleNoti, setToggleNoti] = useState(false);
 
-  // Smal Device Handle
-  const [smallDevice, setSmallDevice] = useState(false);
-
-  // Set Notifications
-  const [notificationCount, setNotificationCount] = useState([]);
 
   // Get Notification
   const [notifications, setNotifications] = useState([]);
@@ -71,7 +66,7 @@ useQuery(GET_NOTIFICATIONS, {
 
   let [seenNotification] = useMutation(SEE_NOTIFICATION, {
     onCompleted: (data) => {
-      setNotificationCount(data);
+      
     },
   });
 
@@ -79,9 +74,7 @@ useQuery(GET_NOTIFICATIONS, {
 
   const { data } = useQuery(GET_USER_PIC);
 
-  useEffect(() => {
-    setNotificationCount(data);
-  }, [data]);
+
 
   const { images } = useAvatar(data);
 
@@ -112,8 +105,6 @@ useQuery(GET_NOTIFICATIONS, {
   const isHeaderSticky = () => {
     if (window.scrollY >= 1000) {
       setSticky(true);
-    } else if (window.innerWidth < 576) {
-      setSmallDevice(true);
     } else {
       setSticky(false);
     }
@@ -137,7 +128,8 @@ useQuery(GET_NOTIFICATIONS, {
     const isLight = localStorage.getItem("theme");
     setDark(isLight);
     themeMode(isLight);
-  }, []);
+  },[]);
+
   return (
     <NavLarge>
       <Nav issticky={sticky.toString()}>

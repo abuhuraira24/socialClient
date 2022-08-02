@@ -3,7 +3,6 @@ import "./App.css";
 
 import Register from "./components/Register/Register";
 
-import { useState, useEffect } from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -25,8 +24,6 @@ import PostDetails from "./components/PostDetails";
 import Profile from "./components/Profile/Profile";
 
 import PrivatRouter from "./hooks/PrivetRouter";
-
-import decoder from "jwt-decode";
 
 import CheckMail from "./components/Email/CheckMail";
 import ConfirmAccount from "./components/Email/ConfirmAccount";

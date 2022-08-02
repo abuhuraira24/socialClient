@@ -41,10 +41,9 @@ import PostCart from "../Profile/Posts/Card";
 import Friends from "./Friends";
 
 const PublicProfile = () => {
-  const [cover, setCover] = useState();
   const [avatar, setAvatar] = useState();
   const [profileUser, setProfileUser] = useState(null);
-  const [posts, setPosts] = useState(null);
+
   const [isFollow, setFollow] = useState(false);
 
   let userId = useParams();
@@ -70,10 +69,6 @@ const PublicProfile = () => {
 
   // Get posts
   useQuery(GET_POSTS_BY_USERS_ID, {
-    onCompleted: (data) => {
-      // console.log(data.getPostsByUserId);
-      setPosts(data.getPostsByUserId);
-    },
     variables: {
       userId: user.id,
     },
@@ -95,7 +90,7 @@ const PublicProfile = () => {
   useEffect(() => {
     if (data && typeof data.getUser !== "undefined") {
       setAvatar(data.getUser.avatar);
-      setCover(data.getUser.cover);
+    
       // console.log(data.getUser);
     }
   }, [data]);

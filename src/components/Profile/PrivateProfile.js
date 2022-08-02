@@ -54,7 +54,6 @@ const PrivateProfile = () => {
   const [cover, setCover] = useState();
   const [avatar, setAvatar] = useState();
   const [profileUser, setProfileUser] = useState(null);
-  const [ setPosts] = useState(null);
   // Open Modal
   const [isOpen, setIsOpen] = useState(false);
   // File Upload Mutation
@@ -103,10 +102,6 @@ const PrivateProfile = () => {
 
   // Get posts
   useQuery(GET_POSTS_BY_USERS_ID, {
-    onCompleted: (data) => {
-      // console.log(data.getPostsByUserId);
-      setPosts(data.getPostsByUserId);
-    },
     variables: {
       userId: user.id,
     },

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -6,7 +6,6 @@ import { Form, Button } from "react-bootstrap";
 
 import { gql, useMutation } from "@apollo/client";
 
-import { AuthContext } from "../../context/auth";
 
 import { RegisterWrapper, H2, H5 } from "./styles";
 

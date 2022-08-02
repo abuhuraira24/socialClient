@@ -30,6 +30,10 @@ const PostCart = () => {
 
   useEffect(() => {
     getDog();
+    setValues({
+      limit: 10,
+      offset: 0,
+    })
   }, [getDog]);
 
   // const morePost = () => {
