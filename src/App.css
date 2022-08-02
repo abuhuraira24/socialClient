@@ -1,0 +1,282 @@
+
+
+.App {
+  text-align: center;
+}
+.navbar{
+   background:  #fff !important;
+   color: #fff;
+}
+.logo{
+  color: #2c51ca;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+svg.logoSvg {
+  height: 28px;
+  fill: #fff;
+}
+.mt-6{
+  margin-top: 7rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ml-auto.navbar-nav {
+  margin-left: auto;
+}
+a{
+  text-decoration: none !important;
+}
+.navbar-nav a{
+  color: #282c34;
+  margin-right: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+button{
+  border: none;
+  background: transparent;
+}
+:no-button:focus{
+ border: none !important
+}
+input:focus{
+  border: 1px solid #ddd !important;
+ outline: none !important;
+
+}
+
+.hero{
+  background-size: cover;
+  height: 780px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(180deg, #2d2db0 -65%, #2c8cf4 110%);
+}
+/* .hero::before{
+  content: "";
+  position: absolute;
+  background-position: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #21252994;
+  z-index: -1;
+} */
+@media (min-width: 1400px){
+.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1400px !important;
+}
+}
+.p-y-2{
+  padding: 2rem 0;
+}
+.sectionTitle{
+  margin-bottom: 3rem;
+}
+
+.text-red{
+  color: rgba(255, 0, 0, 0.596) !important;
+}
+
+input{
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.searchbar{
+  z-index: 999;
+  position: relative;
+  width: 50%;
+  margin: 0 10%;
+}
+
+.searchbar input{
+  height: 55px;
+  line-height: 54px;
+  background: #fff;
+  border: navajowhite;
+  box-shadow: none;
+  padding-right: 3rem;
+}
+
+.searchbar button{
+  right: 0;
+  line-height: 68px;
+  padding-right: 1rem;
+  position: absolute;
+  top: 0%;
+}
+
+.searchbar button svg{
+  font-size: 25px;
+}
+.comments{
+  margin-top: 2rem;
+  border-top: 1px solid #ddd ;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.likes{
+ 
+}
+.likes  svg{
+font-size: 75px;
+height: 21px;
+fill: #6c757d;
+cursor: pointer;
+}
+.share{
+
+}
+.comment{
+}
+
+.comment  svg{
+  color: black;
+  font-size: 75px;
+  height: 21px;
+  fill: #2c51ca;
+  cursor: pointer;
+  }
+
+  .ReactModal__Overlay.ReactModal__Overlay--after-open {
+    background: #0e0e0ee0 !important;
+    z-index: 99;
+}
+
+  .share  svg{
+    color: black;
+    font-size: 75px;
+    height: 21px;
+    fill: #2c51ca;
+    cursor: pointer;
+    }
+
+    .users{
+      display: flex;
+    }
+  .usersPic {
+      background: #ddd;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      margin-right: 1rem;
+  }
+.heroTitle{
+  font-size: 50px;
+  margin-bottom: 2rem;
+}
+    .usersPic svg{
+      fill: 22px;
+      height: 21px;
+    }
+    .userName {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 40px;
+    }
+
+    svg.logout {
+      font-size: 44px;
+      height: 23px;
+      fill: white;
+  }
+
+  .cartTitle {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+
+.createAccount {
+  border: 1px solid #2c51ca;
+  padding: 8px 28px;
+  border-radius: 7px;
+  border-width: 2px;
+  font-size: 18px;
+}
+ul{
+  margin-bottom: 0;
+}
+.loginRegs a{
+  color: #000 !important;
+}
+
+.createAccount {
+  margin-right: 1rem;
+}
+
+.sm{
+  background: red;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}

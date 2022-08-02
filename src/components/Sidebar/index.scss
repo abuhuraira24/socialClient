@@ -1,0 +1,24 @@
+.sidebar {
+    background: #fff;
+    padding: 0 3rem;
+}
+
+.searchInput{
+    border: 1px solid #ddd !important;
+    position: relative;
+    padding: 12px;
+    overflow: hidden;
+    padding-right: 42px;
+}
+
+.searchbtn{
+    position: absolute;
+    top: 1px;
+    right: 0;
+    line-height: 54px;
+    padding-right: 14px;
+    font-size: 22px;
+    z-index: 99;
+    background: #fff;
+    height: 0;
+}
