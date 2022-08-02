@@ -89,9 +89,10 @@ const authReducer = (state, action) => {
         notification: action.payload,
       };
     case "THEME":
+      const isLight = localStorage.getItem("theme");
       return {
         ...state,
-        isDark: action.payload,
+        isDark: isLight,
       };
 
     case "DELETEDPOST":
@@ -185,13 +186,9 @@ const AuthProvider = (props) => {
       payload: data,
     });
   };
-  const themeMode = (dark) => {
-    localStorage.setItem("theme", dark);
-
-    console.log(dark);
+  const themeMode = () => {
     dispatch({
       type: "THEME",
-      payload: dark,
     });
   };
 

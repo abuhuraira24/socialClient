@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
 
 import "../Sidebar/index.scss";
@@ -54,7 +55,7 @@ const Navbar = () => {
   // Get Notification
   const [notifications, setNotifications] = useState([]);
 
-  const { user, logout, themeMode } = useContext(AuthContext);
+  const { user, logout, themeMode,isDark } = useContext(AuthContext);
 
 useQuery(GET_NOTIFICATIONS, {
     onCompleted: (data) => {
@@ -64,22 +65,12 @@ useQuery(GET_NOTIFICATIONS, {
     },
   });
 
-  let [seenNotification] = useMutation(SEE_NOTIFICATION, {
-    onCompleted: (data) => {
-      
-    },
-  });
+  let [seenNotification] = useMutation(SEE_NOTIFICATION);
 
   // Query User avata or data
-
   const { data } = useQuery(GET_USER_PIC);
 
-
-
   const { images } = useAvatar(data);
-
-
-
   // User account Toggler
   const toggle = () => {
     if (isToggle) {
@@ -117,18 +108,27 @@ useQuery(GET_NOTIFICATIONS, {
 
   const theme = () => {
     if (dark === "light") {
-      themeMode("dark");
+      localStorage.setItem('theme', "dark")
       setDark("dark");
+      themeMode()
     } else {
-      themeMode("light");
+      localStorage.setItem('theme', "light")
       setDark("light");
+      themeMode()
     }
   };
+
+
+  
   useEffect(() => {
-    const isLight = localStorage.getItem("theme");
-    setDark(isLight);
-    themeMode(isLight);
+    setDark(isDark)
+  },[])
+
+
+  useEffect(() => {
+    themeMode()
   },[]);
+
 
   return (
     <NavLarge>
