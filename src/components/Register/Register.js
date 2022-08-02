@@ -39,7 +39,7 @@ const Register = () => {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data }) {
       axios
-        .post(`http://localhost:5000/verify`, {
+        .post(`https://serverforsocial.herokuapp.com//verify`, {
           email: values.email,
           subject: "Email Verification",
           url: `http://localhost:3000/confirm/${data.register.token}`,
