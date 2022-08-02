@@ -4,20 +4,15 @@ import "../Sidebar/index.scss";
 
 import { AuthContext } from "../../context/auth";
 
-import { NavLink } from "react-router-dom";
 
 import Notification from "../Notifications";
 
 import {
   Nav,
   NavbarContainer,
-  NavbarMenu,
-  NavItem,
   NavLogo,
   LargeSearch,
-  MenuIcon,
   NavLarge,
-  Icon,
   SmallAccount,
   Ul,
   Li,
@@ -26,7 +21,6 @@ import {
   UserIconn,
   LeftBar,
   Logo,
-  LogoImg,
   RightMenu,
   Icons,
   Iconn,
@@ -36,7 +30,6 @@ import {
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-import logo from "../Navbar/logo.png";
 
 // import socket from "../../hooks/socketio";
 
@@ -47,8 +40,6 @@ import SearchPanel from "../SearchBar";
 const Navbar = () => {
   // Theme
   const [dark, setDark] = useState("light");
-
-  const [open, setOpen] = useState(false);
 
   // Toggler
   const [isToggle, setToggle] = useState(false);
@@ -70,7 +61,7 @@ const Navbar = () => {
 
   const { user, logout, themeMode } = useContext(AuthContext);
 
-  let noti = useQuery(GET_NOTIFICATIONS, {
+useQuery(GET_NOTIFICATIONS, {
     onCompleted: (data) => {
       if (data) {
         setNotifications(...notifications, data.notifications);
@@ -94,12 +85,7 @@ const Navbar = () => {
 
   const { images } = useAvatar(data);
 
-  const isOpen = () => {
-    setOpen(true);
-  };
-  const isClose = () => {
-    setOpen(false);
-  };
+
 
   // User account Toggler
   const toggle = () => {
@@ -227,21 +213,7 @@ const Navbar = () => {
             )}
           </RightMenu>
 
-          <NavbarMenu issticky={sticky} toggle={open}>
-            <NavItem>
-              {user ? (
-                ""
-              ) : (
-                <div className="navmenue">
-                  <NavLink to="/register">Create Account</NavLink>
-                  <NavLink to="/login" onClick={logout}>
-                    {" "}
-                    Login{" "}
-                  </NavLink>
-                </div>
-              )}
-            </NavItem>
-          </NavbarMenu>
+        
         </NavbarContainer>
       </Nav>
     </NavLarge>
