@@ -42,7 +42,7 @@ const Register = () => {
         .post(`https://serverforsocial.herokuapp.com/verify`, {
           email: values.email,
           subject: "Email Verification",
-          url: `https://socialmedia24.herokuapp.com/${data.register.token}`,
+          url: `https://socialmedia24.herokuapp.com/confirm/${data.register.token}`,
           token: data.register.token,
         })
         .then((res) => {
