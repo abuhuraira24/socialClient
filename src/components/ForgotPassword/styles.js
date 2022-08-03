@@ -7,6 +7,7 @@ export const Wraaper = styled.div`
   align-items: center;
   height: 100vh;
   flex-direction: column;
+
 `;
 
 export const Form = styled.form`
@@ -18,6 +19,10 @@ export const Form = styled.form`
   flex-direction: column;
   margin: 0 1rem;
   background: ${(props) => props.theme.gray};
+  @media (max-width : 558px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 export const Success = styled.div`
@@ -43,7 +48,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   background: #2374e1;
   padding: 0.5rem 1rem;
-  color: ${(props) => props.theme.text};
+  color: #fff;
   border-radius: 5px;
 `;
 
@@ -54,19 +59,25 @@ export const H4 = styled.h4`
   width: 100%;
   border-bottom: 1px solid #ddd;
   padding: 1rem 0;
-  color: ${(props) => props.theme.text};
+  color: #000;
+  @media (max-width: 558px){
+    font-size: 18px;
+  }
 `;
 
 export const P = styled.p`
-  color: ${(props) => props.theme.text};
+  color: #000;
   a {
-    color: ${(props) => props.theme.text};
+    color: #000;
+  }
+  @media (max-width: 558px){
+    font-size: 18px;
   }
 `;
 
 export const LoadButton = styled.div`
   background: #2374e1;
-  color: #fff;
+  color: #000;
   border-radius: 5px;
   padding: 0.5rem 3rem;
 `;

@@ -40,6 +40,7 @@ import Notification from "./components/Notifications";
 
 function App() {
 
+  
   return (
     <AuthProvider>
       <Theme>

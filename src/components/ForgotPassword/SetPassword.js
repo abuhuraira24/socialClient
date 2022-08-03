@@ -65,7 +65,7 @@ const SetNewPassword = () => {
     <Wraaper>
       <ToastContainer />
       <Form onSubmit={formHandler}>
-        <H4>Choose a new password</H4>
+        <H4>Choose a new passwordm</H4>
         <P>
           Create a new password that is at least 6 characters long. A strong
           password has a combination of letters, digits and punctuation marks.

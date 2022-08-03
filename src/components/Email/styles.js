@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
 
 export const Container = styled.div`
   width: 400px;
+  text-align: center;
+  @media (max-width: 558px) {
+    width: 100%;
+  }
 `;
 
 export const Img = styled.img`
@@ -22,6 +26,7 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
   a {
     color: #0d6efd;
     font-weight: 700;

@@ -2,9 +2,8 @@ import { useEffect, useContext } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Container, Content, Img, Wrapper } from "./styles";
+import { Button, Container, Content, Wrapper } from "./styles";
 
-import email from "./email.png";
 
 import axios from "axios";
 
@@ -29,16 +28,15 @@ const ConfirmAccount = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.response.status);
+
         navigate("/notfound");
       });
-    // navigate("/");
+   
   });
 
   return (
     <Wrapper>
       <Container>
-        <Img src={email} alt="emai" />
         <h1>Congratulations {user.firstName} </h1>
       </Container>
       <Content>
