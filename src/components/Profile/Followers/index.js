@@ -2,21 +2,20 @@ import { useState } from "react";
 
 import { gql, useQuery } from "@apollo/client";
 
-import { Wrapper, FriendsWrapper } from "./elemetStyles";
-
-import { ImageWrapper, Photos, Header, SeeAll } from "../styles";
-
-import Friend from "./Friend";
 import { useParams } from "react-router-dom";
 
-const Friends = () => {
-  let [folllowing, setFollowing] = useState([]);
+import MyFollower from "./Follower";
+
+const Followers = () => {
+  let [followers, setFollowers] = useState([]);
+  let [following, setFollowing] = useState([]);
 
   let userId = useParams();
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
       if (data.getUserById.following) {
+        setFollowers(data.getUserById.followers);
         setFollowing(data.getUserById.following);
       }
     },
@@ -25,20 +24,17 @@ const Friends = () => {
     },
   });
 
+  console.log(followers?.length === 0);
   return (
-    <Wrapper>
-      <ImageWrapper>
-        <Header>
-          <Photos>Followers</Photos>
-          <SeeAll>See All Followers</SeeAll>
-        </Header>
-        <FriendsWrapper>
-          {folllowing?.map((user, index) => (
-            <Friend key={index} user={user} />
-          ))}
-        </FriendsWrapper>
-      </ImageWrapper>
-    </Wrapper>
+    <>
+      {followers?.slice(0, 8).map((user, index) => (
+        <MyFollower key={index} user={user} />
+      ))}
+      {followers?.length === 0 &&
+        following
+          ?.slice(0, 8)
+          .map((user, index) => <MyFollower key={index} user={user} />)}
+    </>
   );
 };
 
@@ -65,4 +61,4 @@ const GET_USER_BY_ID = gql`
   }
 `;
 
-export default Friends;
+export default Followers;

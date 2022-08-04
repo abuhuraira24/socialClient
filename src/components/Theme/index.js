@@ -1,5 +1,5 @@
 export const dark = {
-  color: "#808ea2",
+  color: "#fff",
   bg: "#0e1527",
   gray: "#182133",
   white: "#fff",

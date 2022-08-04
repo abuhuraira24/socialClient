@@ -176,8 +176,8 @@ const PublicProfile = () => {
       <Container>
         <Row>
           <Col w="40" md="40" sm="100">
-            <ImageWrapper>
-              <Header>
+            <ImageWrapper display="none">
+              <Header display="none">
                 <Photos>Photos</Photos>
                 <SeeAll>See All Photos</SeeAll>
               </Header>

@@ -5,6 +5,7 @@ export const Container = styled.div`
   align-items: center;
   max-width: 1450px;
   margin: auto;
+
   margin: ${(props) => (props.margin ? "55px auto" : "auto")};
   position: relative;
   flex-direction: ${(props) => (props.direction === "column" ? "column" : "")};

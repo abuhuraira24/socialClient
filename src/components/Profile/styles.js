@@ -29,6 +29,9 @@ export const Bio = styled.h5`
 
 export const Cover = styled.div`
   height: 18rem;
+  @media (max-width: 558px) {
+    height: 12rem;
+  }
 `;
 
 export const CoverPic = styled.div`
@@ -40,29 +43,42 @@ export const CoverPic = styled.div`
   img {
     width: 100%;
   }
+  @media (max-width: 558px) {
+    height: 10rem;
+  }
 `;
 export const ProfileAvatar = styled.div`
-  padding: 0 2rem;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 12rem;
   padding-bottom: 1rem;
+  padding-left: 242px;
+  padding-top: 1rem;
   @media (max-width: 558px) {
     padding-top: 4rem;
+  }
+  @media (max-width: 900px) {
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 4rem;
+  }
+  @media (max-width: 558px) {
+    margin-top: 0rem;
   }
 `;
 
 export const Avatars = styled.div`
-  position: absolute;
+  position: relative;
+  /* position: absolute; */
   top: 32%;
-  left: 42%;
-
-  @media (max-width: 558px) {
-    top: 28%;
-    left: 30%;
+  left: 5%;
+  display: flex;
+  margin-bottom: 1rem;
+  @media (max-width: 900px) {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    left: 0;
   }
 `;
 
@@ -76,9 +92,14 @@ export const Avatar = styled.div`
   align-items: center;
   border: 5px solid #fff;
   overflow: hidden;
+  position: absolute;
+  top: -48%;
   @media (max-width: 558px) {
     width: 150px;
     height: 150px;
+  }
+  @media (max-width: 900px) {
+    top: -42%;
   }
   img {
     max-width: 100%;
@@ -94,10 +115,8 @@ export const Name = styled.div``;
 
 export const Followers = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  flex-direction: column;
-  margin-bottom: 2rem;
 `;
 
 export const Ul = styled.ul`
@@ -118,13 +137,11 @@ export const Span = styled.span`
 
 export const EdidButton = styled.button`
   margin-top: 2rem;
-  background: #0d6efd;
-  color: #fff;
+  background: ${(props) => props.theme.gray};
+
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  &&:hover {
-    color: #fff;
-  }
+  color: ${(props) => props.theme.color};
 `;
 
 export const FollowButton = styled.button`
@@ -196,7 +213,18 @@ export const EditIcon = styled.i`
   margin-right: 1rem;
 `;
 
-export const Buttons = styled.div``;
+export const Buttons = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: right;
+  @media (max-width: 900px) {
+    justify-content: center;
+    align-items: center;
+    button {
+      margin-top: 1rem;
+    }
+  }
+`;
 
 export const Picture = styled.img`
   width: 100%;
@@ -224,18 +252,24 @@ export const ImageWrapper = styled.div`
   background: ${(props) => props.theme.gray};
   padding: 1rem 0;
   border-radius: 10px;
+  @media (max-width: 558px) {
+    display: ${(props) => props.display};
+  }
 `;
 
 export const Images = styled.div`
   display: flex;
-  flex-wrap: wrap-reverse;
-
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  @media (max-width: 558px) {
+    display: none;
+  }
 `;
 
 export const Image = styled.div`
-  width: 60px;
+  width: 110px;
+  height: 110px;
   margin: 8px;
   border-radius: 10px;
   overflow: hidden;

@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 
 export const FriendsWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export const Image = styled.div``;
@@ -21,13 +22,19 @@ export const Users = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
 `;
 
 export const User = styled.div`
   width: 110px;
+  height: 110px;
   margin: 8px;
   border-radius: 10px;
   overflow: hidden;
+  @media (max-width: 558px) {
+    width: 67px;
+    height: 70px;
+  }
 `;
 
 export const Name = styled.h5`

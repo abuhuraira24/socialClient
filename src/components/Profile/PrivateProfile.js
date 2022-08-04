@@ -10,11 +10,11 @@ import Axios from "axios";
 
 import { AuthContext } from "../../context/auth";
 
+import MyFollowers from "./Followers";
 
 import {
   Avatar,
   Avatars,
-  Bio,
   Buttons,
   Camera,
   Cover,
@@ -29,12 +29,10 @@ import {
   Images,
   ImageWrapper,
   Img,
-  Li,
   Photos,
   ProfileAvatar,
   SeeAll,
   Span,
-  Ul,
   UploadAvatar,
   UploadCover,
   UploadInput,
@@ -167,44 +165,43 @@ const PrivateProfile = () => {
         <Col w="100">
           <Cover>
             <CoverPic>
+              {/* Cover photo */}
               {cover && <img src={cover} alt="me" />}
 
+              {/* Upload Cover Photo */}
               <UploadCover>
                 <UploadInput type="file" onChange={coverHandler} />
                 <Camera className="fa-solid fa-camera"></Camera>
               </UploadCover>
             </CoverPic>
+          </Cover>
 
-            <Avatars>
-              <Avatar file={avatar}>
-                {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>}
-                {avatar && <img src={avatar} alt="me" />}
-              </Avatar>
+          {/* Profile avatar */}
+          <Avatars>
+            <Avatar file={avatar}>
+              {/* Set Avatar */}
+              {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>}
+              {avatar && <img src={avatar} alt="me" />}
+
+              {/* File Upload Input */}
               <UploadAvatar>
                 <UploadInput type="file" onChange={onChange} />
                 <Camera className="fa-solid fa-camera"></Camera>
               </UploadAvatar>
-            </Avatars>
-          </Cover>
-          <ProfileAvatar>
-            <H3>
-              {" "}
-              {user.firstName} {user.lastName}
-            </H3>
-            <Bio>Web Application Developer</Bio>
-          </ProfileAvatar>
+            </Avatar>
 
-          <Followers>
-            <Ul>
-              <Li>
-                <Span>{profileUser && profileUser.followers.length}</Span>
-                <Span>Followers</Span>
-              </Li>
-              <Li>
-                <Span>{profileUser && profileUser.following.length}</Span>
-                <Span>Following</Span>
-              </Li>
-            </Ul>
+            {/* Profile Name and Followers */}
+            <ProfileAvatar>
+              <H3>
+                {" "}
+                {user.firstName} {user.lastName}
+              </H3>
+              <Span> {profileUser?.followers.length} Followers .</Span>
+              <Span> {profileUser?.following.length} Followers</Span>
+              <Followers>
+                <MyFollowers />
+              </Followers>
+            </ProfileAvatar>
             <Buttons>
               <EdidButton onClick={modalIsOpen}>
                 <EditIcon className="fa-solid fa-pen"></EditIcon>
@@ -216,13 +213,13 @@ const PrivateProfile = () => {
                 closeModal={closeModal}
               />
             </Buttons>
-          </Followers>
+          </Avatars>
         </Col>
       </Container>
       <Container>
         <Row>
-          <Col w="30" md="40" sm="100">
-            <ImageWrapper>
+          <Col w="30" md="100" sm="100">
+            <ImageWrapper display="none">
               <Header>
                 <Photos>Photos</Photos>
                 <SeeAll>See All Photos</SeeAll>
@@ -247,7 +244,7 @@ const PrivateProfile = () => {
 
             <Friends />
           </Col>
-          <Col w="50" md="60" sm="100">
+          <Col w="50" md="100" sm="100">
             <CreatePost />
             <PostCart />
           </Col>
