@@ -40,6 +40,7 @@ const FETCH_USERS = gql`
       firstName
       lastName
       id
+      bio
     }
   }
 `;

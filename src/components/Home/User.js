@@ -67,7 +67,7 @@ const User = (user) => {
           </H5>
         </NavLink>
 
-        <Span>Web Application Developer</Span>
+        <Span>{user.user.bio}</Span>
 
         {isFollow ? (
           <Button onClick={() => followHandler(user.user.id)}>
