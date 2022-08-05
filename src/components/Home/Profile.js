@@ -20,6 +20,15 @@ const Profile = () => {
   let user = decoder(token);
   const { data } = useQuery(GET_USER);
 
+  const { data: bio } = useQuery(GET_BIO_DATA, {
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    variables: { userId: user.id },
+  });
+
+  console.log(user.id);
+
   return (
     <Wrapper>
       {data && typeof data.getUser !== "undefined" && (
@@ -58,4 +67,13 @@ const GET_USER = gql`
     }
   }
 `;
+
+const GET_BIO_DATA = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      bio
+    }
+  }
+`;
+
 export default Profile;

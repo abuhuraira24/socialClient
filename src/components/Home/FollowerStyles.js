@@ -59,12 +59,14 @@ export const Name = styled.div`
   a {
     display: block;
   }
+  padding-left: 1rem;
 `;
 
 export const Span = styled.span`
   color: ${(props) => props.theme.text};
   margin-bottom: 4px;
   display: block;
+  margin-top: 4px;
 `;
 
 export const Emty = styled.h5`
@@ -79,6 +81,7 @@ export const Button = styled.button`
   border: 1px solid #ddd;
   border-radius: 50px;
   color: ${(props) => props.theme.text};
+  margin-top: 4px;
 `;
 
 export const Icon = styled.i`
