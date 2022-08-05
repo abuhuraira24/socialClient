@@ -42,7 +42,6 @@ const Popup = ({ children }) => {
 
   const [toggle, setToggle] = useState(null);
 
-
   const [body, setBody] = useState("");
 
   const [createPost, { loading }] = useMutation(CREATE_POST, {
@@ -79,7 +78,6 @@ const Popup = ({ children }) => {
     setIsOpen(false);
   };
   const onEmojiClick = (event, emojiObject) => {
-  
     setBody((prev) => prev + emojiObject.emoji);
   };
 
@@ -128,14 +126,6 @@ const Popup = ({ children }) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        {toggle && (
-          <Emoji>
-            <Picker
-              onEmojiClick={onEmojiClick}
-              skinTone={SKIN_TONE_MEDIUM_DARK}
-            />
-          </Emoji>
-        )}
         <ClosedModal>
           <H4>Create a post</H4>
           <Close onClick={closeModal} className="fa-solid fa-xmark"></Close>
