@@ -102,7 +102,7 @@ export const Avatar = styled.div`
     top: -42%;
   }
   img {
-    max-width: 100%;
+    width: 100%;
     height: 100%;
   }
 `;
