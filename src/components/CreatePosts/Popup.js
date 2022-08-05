@@ -6,9 +6,8 @@ import Modal from "react-modal";
 
 import { AuthContext } from "../../context/auth";
 
-import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
-
 import { LineWave } from "react-loader-spinner";
+
 import {
   Avatar,
   Button,
@@ -26,10 +25,7 @@ import {
   Form,
   TextArea,
   Footer,
-  Icons,
   PostButton,
-  Emoji,
-  EmoiIcon,
 } from "./styles";
 import { useTheme } from "styled-components";
 
@@ -39,8 +35,6 @@ const Popup = ({ children }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [avatar, setAvatar] = useState("");
-
-  const [toggle, setToggle] = useState(null);
 
   const [body, setBody] = useState("");
 
@@ -76,17 +70,6 @@ const Popup = ({ children }) => {
 
   const closeModal = () => {
     setIsOpen(false);
-  };
-  const onEmojiClick = (event, emojiObject) => {
-    setBody((prev) => prev + emojiObject.emoji);
-  };
-
-  const totler = () => {
-    if (toggle) {
-      setToggle(false);
-    } else {
-      setToggle(true);
-    }
   };
 
   const changeHandler = (e) => {
@@ -159,10 +142,6 @@ const Popup = ({ children }) => {
           </Form>
         </Body>
         <Footer>
-          <Icons>
-            <EmoiIcon onClick={totler}>☺️</EmoiIcon>
-          </Icons>
-
           {body && body.trim() && !loading && (
             <PostButton onClick={submitHandler}>Post</PostButton>
           )}

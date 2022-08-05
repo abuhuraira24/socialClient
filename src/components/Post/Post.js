@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { gql, useQuery } from "@apollo/client";
 import {
   Comments,
@@ -25,6 +27,7 @@ import {
   Icon,
   H6,
   Report,
+  Name,
 } from "./CartStyles";
 
 import LikeButton from "../LikeButton";
@@ -54,8 +57,6 @@ import PostUpdatePopup from "./UpdatePopup";
 import PostUpdateForm from "./UpdatePost";
 
 import Delete from "./DeletePost";
-
-import { HashLink } from "react-router-hash-link";
 
 const Post = ({ ...props }) => {
   let [toggleComment, setToggleComment] = useState(false);
@@ -125,6 +126,12 @@ const Post = ({ ...props }) => {
     setTogle(false);
   };
 
+  const navigate = useNavigate();
+
+  const profileRedirect = (id) => {
+    navigate();
+  };
+
   return (
     <CardBody className="mb-4 ">
       <Users>
@@ -134,8 +141,12 @@ const Post = ({ ...props }) => {
               <CircleImage src={avatar} alt="user" />
             )}
           </UserPic>
-
-          <Link to={`profile/${data.userId}`}>
+          {/* <UserName>
+            <Name onClick={() => profileRedirect(data.user)}>
+              {data.firstName + " " + data.lastName}
+            </Name>
+          </UserName> */}
+          <Link to={`/profile/${data.userId}`}>
             <UserName>{data.firstName + " " + data.lastName}</UserName>
           </Link>
         </Left>

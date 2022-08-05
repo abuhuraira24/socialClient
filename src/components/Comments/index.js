@@ -16,8 +16,6 @@ import {
   Picture,
 } from "./CommentsStyles";
 
-import { useState } from "react";
-
 import moment from "moment";
 
 const SingleComment = ({ c }) => {
@@ -35,17 +33,19 @@ const SingleComment = ({ c }) => {
       <CommentWrapper>
         <UserImage>
           <Image>
-            <Picture
-              src={
-                data && data.getUserById && data.getUserById.avatars[0].avatar
-              }
-              alt="abu"
-            />
+            <Link to={`/profile/${c.userId}`}>
+              <Picture
+                src={
+                  data && data.getUserById && data.getUserById.avatars[0].avatar
+                }
+                alt="abu"
+              />
+            </Link>
           </Image>
         </UserImage>
         <CommentBody>
           <P>
-            <Link to={`profile/${c.userId}`}>
+            <Link to={`/profile/${c.userId}`}>
               <Name>{c.username}</Name>
             </Link>
             {c.body}

@@ -83,6 +83,7 @@ export const UserName = styled.div`
   line-height: 40px;
   color: ${(props) => props.theme.color};
 `;
+export const Name = styled.h6``;
 
 export const CardTitle = styled.div`
   font-weight: 700;
