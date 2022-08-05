@@ -104,6 +104,8 @@ const Navbar = () => {
   window.addEventListener("scroll", isHeaderSticky);
 
   const theme = () => {
+    setToggleNoti(false);
+    setToggle(false);
     if (dark === "dark") {
       localStorage.setItem("theme", "light");
       setDark("light");
@@ -152,8 +154,6 @@ const Navbar = () => {
             )}
 
             <Icons>
-              <Count>1</Count>
-
               <Iconn className="fa-solid fa-message"></Iconn>
             </Icons>
             <HeaderItem>

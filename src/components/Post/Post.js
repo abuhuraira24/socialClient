@@ -154,7 +154,7 @@ const Post = ({ ...props }) => {
                       <H6 onClick={updateOpen}>Edit</H6>
                     </Edit>
                     <PostUpdatePopup closeModal={updateClose} isOpen={isUpdate}>
-                      <PostUpdateForm post={data.body} />
+                      <PostUpdateForm closeModal={updateClose} post={data} />
                     </PostUpdatePopup>
                   </UpdatePost>
                   <DeletePost>

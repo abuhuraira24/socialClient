@@ -1,5 +1,3 @@
-
-
 import React, { createContext, useReducer } from "react";
 
 import jwtDecode from "jwt-decode";
@@ -19,6 +17,7 @@ const AuthContext = createContext({
   getRealTimeNoti: (data) => {},
   themeMode: () => {},
   deletedPostId: (data) => {},
+  UpdatedPost: (data) => {},
 });
 
 const init = {
@@ -43,22 +42,26 @@ if (localStorage.getItem("jwtToken")) {
 
 const authReducer = (state, action) => {
   switch (action.type) {
+    // Login
     case "LOGIN":
       return {
         ...state,
         user: action.payload,
       };
 
+    // Log Out
     case "LOGOUT":
       return {
         ...state,
         user: null,
       };
+    // Search Qery
     case "QUERY":
       return {
         searchText: action.payload.text,
       };
 
+    // Get Comments
     case "GET_COMMENTS":
       return {
         ...state,
@@ -66,28 +69,35 @@ const authReducer = (state, action) => {
         commentLoading: false,
       };
 
+    // Get Likes
     case "GET_LIKES":
       return {
         ...state,
         likes: action.payload,
       };
 
+    // Get Posts
     case "GET_POSTS":
       return {
         ...state,
         posts: action.payload.posts,
       };
+
+    // Get Notifications
     case "GET_NOTI":
       return {
         ...state,
         notification: action.payload,
       };
 
+    // Get Real Time Notifications
     case "GET_REAL_TIME_NOTI":
       return {
         ...state,
         notification: action.payload,
       };
+
+    // Theme Change
     case "THEME":
       const isLight = localStorage.getItem("theme");
       return {
@@ -95,12 +105,25 @@ const authReducer = (state, action) => {
         isDark: isLight,
       };
 
+    // Delete Post
     case "DELETEDPOST":
       let posts = state.posts.filter((post) => post._id !== action.payload);
 
       return {
         ...state,
         posts: posts,
+      };
+
+    // Updated post
+    case "UPADATED_POST":
+      // const objByIndex = state.posts.findIndex(
+      //   (obj) => obj._id === action.payload._id
+      // );
+      // state.posts[objByIndex].body = action.payload.body;
+
+      console.log(state.posts);
+      return {
+        ...state,
       };
     default:
       return state;
@@ -110,6 +133,7 @@ const authReducer = (state, action) => {
 const AuthProvider = (props) => {
   const [state, dispatch] = useReducer(authReducer, init);
 
+  // Login
   const login = (userData) => {
     localStorage.setItem("jwtToken", userData);
     dispatch({
@@ -118,11 +142,13 @@ const AuthProvider = (props) => {
     });
   };
 
+  // Logout
   const logout = () => {
     localStorage.removeItem("jwtToken");
     dispatch({ type: "LOGIN" });
   };
 
+  // Query User
   const queryText = (text, navigate, createSearchParams) => {
     if (text) {
       const textt = text.toLowerCase();
@@ -144,11 +170,14 @@ const AuthProvider = (props) => {
     }
   };
 
+  // Comments Loading
   const comLoading = () => {
     dispatch({
       type: "COM_LOAD",
     });
   };
+
+  // Get Commnets
   const getComments = (data) => {
     if (data) {
       dispatch({
@@ -158,6 +187,7 @@ const AuthProvider = (props) => {
     }
   };
 
+  // Get Likes
   const getLikes = (data) => {
     dispatch({
       type: "GET_LIKES",
@@ -165,6 +195,7 @@ const AuthProvider = (props) => {
     });
   };
 
+  // Get Posts
   const getPosts = (data) => {
     dispatch({
       type: "GET_POSTS",
@@ -174,28 +205,42 @@ const AuthProvider = (props) => {
     });
   };
 
+  // Get Notifications
   const getNotification = (data) => {
     dispatch({
       type: "GET_NOTI",
       payload: data,
     });
   };
+
+  // Real Time Notification
   const getRealTimeNoti = (data) => {
     dispatch({
       type: "GET_REAL_TIME_NOTI",
       payload: data,
     });
   };
+
+  // Theme Changer
   const themeMode = () => {
     dispatch({
       type: "THEME",
     });
   };
 
+  // Delete post
   const deletedPostId = (postId) => {
     dispatch({
       type: "DELETEDPOST",
       payload: postId,
+    });
+  };
+
+  // Update post
+  const UpdatedPost = (data) => {
+    dispatch({
+      type: "UPADATED_POST",
+      payload: data,
     });
   };
   return (
@@ -219,6 +264,7 @@ const AuthProvider = (props) => {
         themeMode,
         isDark: state.isDark,
         deletedPostId,
+        UpdatedPost,
       }}
       {...props}
     />

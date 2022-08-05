@@ -42,3 +42,12 @@ export const TextArea = styled.textarea`
     display: none;
   }
 `;
+
+export const Update = styled.button`
+  color: ${(props) => props.theme.text};
+  background: ${(props) => props.theme.input};
+  padding: 4px 18px;
+  display: inline-block;
+  margin-top: 8px;
+  cursor: pointer;
+`;
