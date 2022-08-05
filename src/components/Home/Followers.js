@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { gql, useQuery } from "@apollo/client";
 
-import { H5, Title, Wrapper, Followers } from "./FollowerStyles";
+import { H5, Title, Wrapper, Followers, Emty } from "./FollowerStyles";
 
 import { AuthContext } from "../../context/auth";
 
@@ -26,6 +26,9 @@ const Follower = () => {
           publicUsers.publicUsers?.slice(0, 3).map((user, index) => {
             return usr.user.id !== user.id && <User key={index} user={user} />;
           })}
+        {publicUsers && publicUsers.publicUsers.length === 1 && (
+          <Emty>No more friends</Emty>
+        )}
       </Followers>
     </Wrapper>
   );

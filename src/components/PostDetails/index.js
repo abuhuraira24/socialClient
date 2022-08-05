@@ -86,6 +86,7 @@ const PostDetails = () => {
     body[0].style.backgroundColor = theme.bg;
     body[0].style.overflow = "auto";
   });
+
   return (
     <Wrapper>
       {/* <NavBar /> */}
@@ -99,12 +100,17 @@ const PostDetails = () => {
           <Col w="70" sm="100">
             <UserProfile>
               <UserImage>
-                {typeof avatar !== "function" && (
-                  <PostAvatar src={avatar} alt="post" />
-                )}
+                <Link to={`/profile/${post?.userId}`}>
+                  {typeof avatar !== "function" && (
+                    <PostAvatar src={avatar} alt="post" />
+                  )}
+                </Link>
               </UserImage>
               <AuthorName>
-                <H5>{post && post.firstName + " " + post.lastName}</H5>
+                <Link to={`/profile/${post?.userId}`}>
+                  <H5>{post && post.firstName + " " + post.lastName}</H5>
+                </Link>
+
                 <Span>{post && moment(post.createdAt).fromNow(true)}</Span>
               </AuthorName>
             </UserProfile>

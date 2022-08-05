@@ -67,6 +67,13 @@ export const Span = styled.span`
   display: block;
 `;
 
+export const Emty = styled.h5`
+  color: ${(props) => props.theme.text};
+  font-size: 14px;
+  display: block;
+  text-align: center;
+`;
+
 export const Button = styled.button`
   padding: 4px 10px;
   border: 1px solid #ddd;

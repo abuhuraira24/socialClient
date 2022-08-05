@@ -27,7 +27,11 @@ export const UserImage = styled.div`
   }
 `;
 
-export const AuthorName = styled.div``;
+export const AuthorName = styled.div`
+  a {
+    display: block;
+  }
+`;
 export const H5 = styled.h5`
   font-weight: 600;
   color: ${(props) => props.theme.color};
