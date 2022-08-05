@@ -87,8 +87,9 @@ export const UserName = styled.div`
 export const CardTitle = styled.div`
   font-weight: 700;
   font-size: 30px;
+  color: ${(props) => props.theme.text};
   a {
-    color: ${(props) => props.theme.color};
+    color: ${(props) => props.theme.text};
   }
 `;
 

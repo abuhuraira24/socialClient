@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Container, Content, Wrapper } from "./styles";
 
-
 import axios from "axios";
 
 import { AuthContext } from "../../context/auth";
@@ -22,16 +21,17 @@ const ConfirmAccount = () => {
 
   useEffect(() => {
     axios
-      .post("https://serverforsocial.herokuapp.com/activeUser", { email: user.email })
+      .post("https://serverforsocial.herokuapp.com/activeUser", {
+        email: user.email,
+      })
       .then((data) => {
         context.login(data.data.token);
         navigate("/");
       })
       .catch((error) => {
-
         navigate("/notfound");
       });
-   
+    navigate("/");
   });
 
   return (

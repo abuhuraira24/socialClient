@@ -50,7 +50,7 @@ export const CoverPic = styled.div`
 export const ProfileAvatar = styled.div`
   padding-bottom: 1rem;
   padding-left: 242px;
-  padding-top: 1rem;
+  padding-top: 2rem;
   @media (max-width: 558px) {
     padding-top: 4rem;
   }
@@ -73,7 +73,7 @@ export const Avatars = styled.div`
   top: 32%;
   left: 5%;
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   @media (max-width: 900px) {
     justify-content: center;
     align-items: center;
@@ -144,16 +144,19 @@ export const EdidButton = styled.button`
   color: ${(props) => props.theme.color};
 `;
 
-export const FollowButton = styled.button`
+export const FollowButton = styled.span`
   margin-top: 2rem;
   background: ${(props) => props.theme.gray};
   color: ${(props) => props.theme.text};
   padding: 0.5rem 1rem;
   border-radius: 5px;
   margin-left: 0.8rem;
-  &&:hover {
-    color: #000;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-weight: 700;
+  cursor: pointer;
 `;
 export const MassageButton = styled(Link)`
   margin-top: 2rem;
@@ -228,6 +231,7 @@ export const Buttons = styled.div`
 
 export const Picture = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 export const Header = styled.div`
@@ -277,4 +281,5 @@ export const Image = styled.div`
 
 export const Img = styled.img`
   width: 100%;
+  height: 100%;
 `;

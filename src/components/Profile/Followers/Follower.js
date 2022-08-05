@@ -10,9 +10,6 @@ const MyFollower = ({ user }) => {
       setAvatar(data.getUserById.avatars[0].avatar);
     },
     variables: { userId: user.userId },
-    onError(error) {
-      console.log(error);
-    },
   });
   return <Image>{avatar && <Img src={avatar} alt="avatar" />}</Image>;
 };

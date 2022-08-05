@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 
 import { gql, useQuery } from "@apollo/client";
@@ -18,20 +16,17 @@ import {
   Picture,
 } from "./CommentsStyles";
 
-
 import { useState } from "react";
 
 import moment from "moment";
 
 const SingleComment = ({ c }) => {
-  let [avatar, setAvatar] = useState("");
-
-  useQuery(GET_COMMENT_AVATAR, {
-    onCompleted: (data) => {
-      setAvatar(data.getCommentAvatar.avatar);
-    },
+  let { data } = useQuery(GET_USER, {
     variables: {
       userId: c.userId,
+    },
+    onError(error) {
+      console.log(error);
     },
   });
 
@@ -39,17 +34,20 @@ const SingleComment = ({ c }) => {
     <Wrapper>
       <CommentWrapper>
         <UserImage>
-          <Image>{avatar && <Picture src={avatar} alt="abu" />}</Image>
+          <Image>
+            <Picture
+              src={
+                data && data.getUserById && data.getUserById.avatars[0].avatar
+              }
+              alt="abu"
+            />
+          </Image>
         </UserImage>
         <CommentBody>
           <P>
             <Link to={`profile/${c.userId}`}>
-              <Name>
-                {c.username}
-                {/* <Author>{c.author === "true" && "author"}</Author> */}
-              </Name>
+              <Name>{c.username}</Name>
             </Link>
-
             {c.body}
           </P>
           <TimeLine>
@@ -63,11 +61,12 @@ const SingleComment = ({ c }) => {
   );
 };
 
-const GET_COMMENT_AVATAR = gql`
+const GET_USER = gql`
   query ($userId: ID!) {
-    getCommentAvatar(userId: $userId) {
-      avatar
-      isStock
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;

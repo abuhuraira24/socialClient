@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import { useTheme } from "styled-components";
 
 import { gql, useQuery } from "@apollo/client";
 
-
 import {
+  ArrowLeft,
   AuthorName,
   Comments,
   H5,
@@ -28,7 +28,6 @@ import SingleComment from "../Comments";
 
 import { AuthContext } from "../../context/auth";
 
-
 import { Avatar } from "../Helper/helper";
 
 import CommentBar from "../commentInput/CommentInput";
@@ -37,8 +36,7 @@ import { CommentsArea, UserPic, CircleImage } from "../Post/CartStyles";
 
 import getAvatar from "../../hooks/useAvatar";
 
-import NavBar from "../Navbar/NavBar";
-
+import { BackButton } from "./Styles";
 
 const PostDetails = () => {
   // Commet value
@@ -46,16 +44,8 @@ const PostDetails = () => {
 
   let [image, setImage] = useState(null);
 
-  const { getComments, comments } = useContext(AuthContext);
+  const { getComments, comments, themeMode } = useContext(AuthContext);
   const postId = useParams().id;
-
-  // const { data } = useQuery(FETCH_POST, {
-  //   variables: {
-  //     postId,
-  //   },
-  // });
-
-  // Query User avata or data
 
   useQuery(GET_USER_PIC, {
     onCompleted: (data) => {
@@ -67,7 +57,6 @@ const PostDetails = () => {
   // Get single post
   useQuery(GET_POST, {
     onCompleted: (data) => {
-      console.log(data.getSinglePost);
       setPost(data.getSinglePost);
     },
     variables: {
@@ -89,14 +78,23 @@ const PostDetails = () => {
   const theme = useTheme();
 
   useEffect(() => {
+    themeMode();
+  }, []);
+
+  useEffect(() => {
     const body = document.getElementsByTagName("body");
     body[0].style.backgroundColor = theme.bg;
     body[0].style.overflow = "auto";
   });
   return (
     <Wrapper>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container>
+        <BackButton>
+          <Link to="/">
+            <ArrowLeft className="fa-solid fa-arrow-left"></ArrowLeft>
+          </Link>
+        </BackButton>
         <Row>
           <Col w="70" sm="100">
             <UserProfile>
@@ -136,7 +134,6 @@ const PostDetails = () => {
   );
 };
 
-
 const GET_POST = gql`
   query ($postId: ID!) {
     getSinglePost(postId: $postId) {
@@ -170,4 +167,5 @@ const GET_USER_PIC = gql`
     }
   }
 `;
+
 export default PostDetails;

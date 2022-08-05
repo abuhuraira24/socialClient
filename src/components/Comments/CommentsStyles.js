@@ -5,13 +5,9 @@ export const CommentWrapper = styled.div`
   margin-bottom: 2rem;
 `;
 
-export const UserImage = styled.div`
-  width: 7%;
-`;
+export const UserImage = styled.div``;
 
-export const CommentBody = styled.div`
-  width: 93%;
-`;
+export const CommentBody = styled.div``;
 
 export const P = styled.p`
   background: ${(props) => props.theme.gray};

@@ -31,7 +31,7 @@ import LikeButton from "../LikeButton";
 
 import Popup from "../Popup/Popup";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import moment from "moment";
 
@@ -54,6 +54,8 @@ import PostUpdatePopup from "./UpdatePopup";
 import PostUpdateForm from "./UpdatePost";
 
 import Delete from "./DeletePost";
+
+import { HashLink } from "react-router-hash-link";
 
 const Post = ({ ...props }) => {
   let [toggleComment, setToggleComment] = useState(false);
@@ -122,6 +124,7 @@ const Post = ({ ...props }) => {
     setUpdate(false);
     setTogle(false);
   };
+
   return (
     <CardBody className="mb-4 ">
       <Users>
@@ -131,9 +134,10 @@ const Post = ({ ...props }) => {
               <CircleImage src={avatar} alt="user" />
             )}
           </UserPic>
-          <NavLink to={`profile/${data.userId}`}>
+
+          <Link to={`profile/${data.userId}`}>
             <UserName>{data.firstName + " " + data.lastName}</UserName>
-          </NavLink>
+          </Link>
         </Left>
         <Right>
           <Dot onClick={toggler} className="fa-solid fa-ellipsis"></Dot>

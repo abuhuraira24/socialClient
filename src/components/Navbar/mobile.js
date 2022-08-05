@@ -20,4 +20,5 @@ export const Main = styled.div`
 
 export const Icon = styled.i`
   color: ${(props) => props.theme.text};
+  font-size: 22px;
 `;

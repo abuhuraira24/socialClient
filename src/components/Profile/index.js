@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-
 import { Container, Col } from "../../Styles/ElementsStyles";
 
 import Axios from "axios";
@@ -110,7 +109,7 @@ const Profile = () => {
   }, [data]);
 
   return (
-    <CoverWrapper>
+    <CoverWrapper id="profile">
       <Container>
         <Col w="100">
           <Cover>

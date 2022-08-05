@@ -6,7 +6,6 @@ import { CommentBox, Button, CommentInput, Form } from "../Post/CartStyles";
 
 import { AuthContext } from "../../context/auth";
 
-
 const CommentBar = ({ postId }) => {
   // Commet value
   const [value, setValues] = useState({
@@ -17,7 +16,6 @@ const CommentBar = ({ postId }) => {
 
   const [addCommnet] = useMutation(CREATE_COMMENT, {
     onCompleted: (data) => {
-      console.log(data);
       getComments(data.createComment.comments);
     },
     variables: { postId: postId, body: value.body },
@@ -76,6 +74,7 @@ const CREATE_COMMENT = gql`
         body
         username
         createdAt
+        userId
       }
     }
   }

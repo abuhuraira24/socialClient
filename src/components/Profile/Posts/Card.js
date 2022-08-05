@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import Post from "../../Post/Post";
 
-import { Card} from "../../Post/CartStyles";
+import { Card } from "../../Post/CartStyles";
 
 import { AuthContext } from "../../../context/auth";
 
@@ -16,7 +16,7 @@ const PostCart = () => {
     offset: 0,
   });
 
-  let {  getPosts, posts } = useContext(AuthContext);
+  let { getPosts, posts } = useContext(AuthContext);
 
   // userId
   const { id } = useParams();
@@ -38,16 +38,8 @@ const PostCart = () => {
     setValues({
       limit: 10,
       offset: 0,
-    })
+    });
   }, [id, getDog]);
-
-  // const morePost = () => {
-  //   setValues({
-  //     ...values,
-  //     limit: values.limit + 1,
-  //   });
-  //   getDog();
-  // };
 
   return (
     <div>

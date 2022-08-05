@@ -5,7 +5,6 @@ import "../Sidebar/index.scss";
 
 import { AuthContext } from "../../context/auth";
 
-
 import Notification from "../Notifications";
 
 import {
@@ -31,7 +30,6 @@ import {
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-
 // import socket from "../../hooks/socketio";
 
 import useAvatar from "../../hooks/useAvatar";
@@ -51,13 +49,12 @@ const Navbar = () => {
   // Toggler Notification
   const [toggleNoti, setToggleNoti] = useState(false);
 
-
   // Get Notification
   const [notifications, setNotifications] = useState([]);
 
-  const { user, logout, themeMode,isDark } = useContext(AuthContext);
+  const { user, logout, themeMode, isDark } = useContext(AuthContext);
 
-useQuery(GET_NOTIFICATIONS, {
+  useQuery(GET_NOTIFICATIONS, {
     onCompleted: (data) => {
       if (data) {
         setNotifications(...notifications, data.notifications);
@@ -107,28 +104,24 @@ useQuery(GET_NOTIFICATIONS, {
   window.addEventListener("scroll", isHeaderSticky);
 
   const theme = () => {
-    if (dark === "light") {
-      localStorage.setItem('theme', "dark")
-      setDark("dark");
-      themeMode()
-    } else {
-      localStorage.setItem('theme', "light")
+    if (dark === "dark") {
+      localStorage.setItem("theme", "light");
       setDark("light");
-      themeMode()
+      themeMode();
+    } else {
+      localStorage.setItem("theme", "dark");
+      setDark("dark");
+      themeMode();
     }
   };
 
-
-  
   useEffect(() => {
-    setDark(isDark)
-  },[])
-
+    setDark(isDark);
+  }, []);
 
   useEffect(() => {
-    themeMode()
-  },[]);
-
+    themeMode();
+  }, []);
 
   return (
     <NavLarge>
@@ -204,8 +197,6 @@ useQuery(GET_NOTIFICATIONS, {
               </>
             )}
           </RightMenu>
-
-        
         </NavbarContainer>
       </Nav>
     </NavLarge>

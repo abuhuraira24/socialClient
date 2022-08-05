@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin-top: 5rem;
-  padding-top: 7rem;
+  padding-top: 1rem;
   background: ${(props) => props.theme.bg};
 `;
 
@@ -34,7 +33,9 @@ export const H5 = styled.h5`
   color: ${(props) => props.theme.color};
 `;
 
-export const Span = styled.span``;
+export const Span = styled.span`
+  color: ${(props) => props.theme.text};
+`;
 
 export const PostTitle = styled.h2`
   font-size: 40px;
@@ -122,4 +123,16 @@ export const Joined = styled.span`
 
 export const PostAvatar = styled.img`
   width: 100%;
+`;
+
+export const BackButton = styled.div``;
+
+export const ArrowLeft = styled.i`
+  cursor: pointer;
+  color: ${(props) => props.theme.text};
+  padding: 1rem;
+  background: ${(props) => props.theme.gray};
+  font-size: 30px;
+  margin-left: 4px;
+  margin-bottom: 1rem;
 `;

@@ -33,16 +33,8 @@ const PostCart = () => {
     setValues({
       limit: 10,
       offset: 0,
-    })
+    });
   }, [getDog]);
-
-  // const morePost = () => {
-  //   setValues({
-  //     ...values,
-  //     limit: values.limit + 1,
-  //   });
-  //   getDog();
-  // };
 
   return (
     <div>

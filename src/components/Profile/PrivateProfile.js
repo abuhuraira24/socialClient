@@ -181,7 +181,7 @@ const PrivateProfile = () => {
             <Avatar file={avatar}>
               {/* Set Avatar */}
               {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>}
-              {avatar && <img src={avatar} alt="me" />}
+              {avatar && <Img src={avatar} alt="me" />}
 
               {/* File Upload Input */}
               <UploadAvatar>

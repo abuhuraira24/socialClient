@@ -24,7 +24,6 @@ const Followers = () => {
     },
   });
 
-  console.log(followers?.length === 0);
   return (
     <>
       {followers?.slice(0, 8).map((user, index) => (
