@@ -185,9 +185,9 @@ const Navbar = () => {
                     <Li mone="1" bbottom="true" to={`/profile/${user.id}`}>
                       {user.username}
                     </Li>
-                    <Li to="/dashboard">Dashboard</Li>
+                    {/* <Li to="/dashboard">Dashboard</Li>
                     <Li to="/createpost">Create Post</Li>
-                    <Li to="/setting">Setting</Li>
+                    <Li to="/setting">Setting</Li> */}
 
                     <Li to="" onClick={logout}>
                       Logout
