@@ -408,7 +408,7 @@ const PublicProfile = () => {
                 {profileUser?.firstName} {profileUser?.lastName}
               </H3>
               <Span> {profileUser?.followers.length} Followers .</Span>
-              <Span> {profileUser?.following.length} Followers</Span>
+              <Span> {profileUser?.following.length} Following</Span>
               <Followers>
                 <MyFollowers />
               </Followers>
