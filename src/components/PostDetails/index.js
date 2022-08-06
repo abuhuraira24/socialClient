@@ -38,6 +38,8 @@ import getAvatar from "../../hooks/useAvatar";
 
 import { BackButton } from "./Styles";
 
+import Profile from "./Profile";
+
 const PostDetails = () => {
   // Commet value
   const [post, setPost] = useState(null);
@@ -133,7 +135,9 @@ const PostDetails = () => {
               ))}
             </Comments>
           </Col>
-          <Col w="30" sm="100"></Col>
+          <Col w="30" sm="100">
+            {post && <Profile post={post} />}
+          </Col>
         </Row>
       </Container>
     </Wrapper>

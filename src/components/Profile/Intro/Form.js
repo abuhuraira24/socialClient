@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState, useContext, useEffect } from "react";
 
-import { AddBioForm, Cancle, Input, Save } from "./styles";
+import { AddBioForm, Cancle, DisAble, Input, Save } from "./styles";
 
 import { AuthContext } from "../../../context/auth";
 
@@ -30,9 +30,8 @@ const Form = ({ closeForm }) => {
   const FormSubmit = (e) => {
     e.preventDefault();
 
-    if (value) {
-      addBio({ variables: { text: value } });
-    }
+    addBio({ variables: { text: value } });
+
     closeForm();
   };
 
@@ -40,7 +39,14 @@ const Form = ({ closeForm }) => {
     <AddBioForm onSubmit={FormSubmit}>
       <Input onChange={changeHandler} value={value} />
       <Cancle onClick={closeForm}>Cancel</Cancle>
-      <Save type="submit">Save</Save>
+
+      {bio === value ? (
+        <DisAble disabled type="submit">
+          Save
+        </DisAble>
+      ) : (
+        <Save type="submit">Save</Save>
+      )}
     </AddBioForm>
   );
 };

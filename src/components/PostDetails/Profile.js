@@ -1,20 +1,32 @@
+import { gql, useQuery } from "@apollo/client";
+import { useState } from "react";
 import {
   Cover,
   ProfilePic,
   ProfileWrapper,
-  Image,
   ProfileName,
   Profilee,
   H3,
   Follow,
   Joined,
   PostAvatar,
+  Image,
 } from "./Styles";
 
-import { Avatar } from "../Helper/helper";
+const Profile = ({ post }) => {
+  const [avatar, setvAvatar] = useState("");
 
-const Profile = (post) => {
-  let avatar = Avatar(post.data.userId);
+  useQuery(GET_USER, {
+    onCompleted: (data) => {
+      setvAvatar(data.getUserById.avatars[0].avatar);
+    },
+    variables: {
+      userId: post.userId,
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
 
   return (
     <ProfileWrapper>
@@ -23,20 +35,16 @@ const Profile = (post) => {
       <Profilee>
         <ProfilePic>
           <Image>
-            {avatar && typeof avatar !== "function" && (
-              <PostAvatar src={avatar} alt="user" />
-            )}
+            {avatar && <PostAvatar src={avatar} alt="user" />}
             <PostAvatar />
-            {/* <i className="fa-solid fa-user"></i> */}
           </Image>
         </ProfilePic>
         <ProfileName>
-          {post && typeof post.data !== "undefined" && (
-            <H3>
-              {post.data.firstName + " "}
-              {post.data.lastName}
-            </H3>
-          )}
+          <H3>
+            {post.firstName + " "}
+            {post.lastName}
+          </H3>
+
           <Follow>Follow</Follow>
           <Joined>Joined 4 Jun, 22</Joined>
         </ProfileName>
@@ -44,5 +52,15 @@ const Profile = (post) => {
     </ProfileWrapper>
   );
 };
+
+const GET_USER = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
+    }
+  }
+`;
 
 export default Profile;

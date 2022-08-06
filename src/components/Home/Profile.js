@@ -14,6 +14,7 @@ import {
 } from "./ProfileStyles";
 
 import decoder from "jwt-decode";
+import { Link } from "react-router-dom";
 const Profile = () => {
   let token = localStorage.getItem("jwtToken");
 
@@ -47,7 +48,9 @@ const Profile = () => {
         </Cover>
       )}
       <BioNames>
-        {user && <Name>{user.firstName + " " + user.lastName}</Name>}
+        <Link to={`/profile/${user.id}`}>
+          {user && <Name>{user.firstName + " " + user.lastName}</Name>}
+        </Link>
         <Bio>{bio && bio.getUserById && bio.getUserById.bio}</Bio>
       </BioNames>
     </Wrapper>

@@ -6,15 +6,17 @@ import { useParams } from "react-router-dom";
 
 import Post from "../../Post/Post";
 
-import { Card } from "../../Post/CartStyles";
+import { Card, Empty } from "../../Post/CartStyles";
 
 import { AuthContext } from "../../../context/auth";
+import { NomorePost } from "../styles";
 
 const PostCart = () => {
   const [values, setValues] = useState({
     limit: 10,
     offset: 0,
   });
+  const [empty, setEmpty] = useState(false);
 
   let { getPosts, posts } = useContext(AuthContext);
 
@@ -24,6 +26,9 @@ const PostCart = () => {
   // Lazy Query
   let [getDog] = useLazyQuery(FETCH_POSTT, {
     onCompleted: (data) => {
+      if (data.getPostsByUserId.length === 0) {
+        setEmpty(true);
+      }
       getPosts(data.getPostsByUserId);
     },
 
@@ -49,6 +54,7 @@ const PostCart = () => {
           Object.keys(posts).length !== 0 &&
           posts.map((post, index) => <Post key={index} data={post} />)}
       </Card>
+      {empty && <NomorePost>No more posts</NomorePost>}
       {/* {posts && typeof posts !== "undefined" && posts.length > 9 && (
         <LoadMore>
           <Load type="button" onClick={morePost}>

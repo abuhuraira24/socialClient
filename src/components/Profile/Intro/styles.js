@@ -52,6 +52,13 @@ export const Save = styled.button`
   border-radius: 6px;
   margin-top: 1rem;
 `;
+export const DisAble = styled.button`
+  background: ${(props) => props.theme.input};
+  color: ${(props) => props.theme.text};
+  padding: 4px 18px;
+  border-radius: 6px;
+  margin-top: 1rem;
+`;
 export const Cancle = styled.button`
   background: ${(props) => props.theme.input};
   color: ${(props) => props.theme.text};

@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 
+import { useParams } from "react-router-dom";
+
 import { gql, useQuery } from "@apollo/client";
 
 import { Header } from "../styles";
@@ -14,6 +16,8 @@ const Intro = () => {
 
   const [editToggler, setEditToggler] = useState(false);
 
+  const params = useParams();
+
   const { user, bioUpdate, bio } = useContext(AuthContext);
 
   const { data } = useQuery(GET_BIO_DATA, {
@@ -23,7 +27,7 @@ const Intro = () => {
     onError(error) {
       console.log(error);
     },
-    variables: { userId: user.id },
+    variables: { userId: params.id },
   });
 
   const openForm = () => {
@@ -42,12 +46,12 @@ const Intro = () => {
       </Header>
       <AddBio>
         <P> {bio}</P>
-        {!toggler && !bio && (
+        {user.id === params.id && !toggler && !bio && (
           <EditButton style={{ cursor: "pointer" }} onClick={openForm}>
             Add Bio
           </EditButton>
         )}
-        {!editToggler && bio && (
+        {user.id === params.id && !editToggler && bio && (
           <EditButton style={{ cursor: "pointer" }} onClick={openForm}>
             Edit bio
           </EditButton>

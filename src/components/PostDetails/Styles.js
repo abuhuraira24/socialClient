@@ -127,6 +127,7 @@ export const Joined = styled.span`
 
 export const PostAvatar = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 export const BackButton = styled.div``;

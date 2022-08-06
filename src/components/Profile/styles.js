@@ -284,3 +284,9 @@ export const Img = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+export const NomorePost = styled.div`
+  color: ${(props) => props.theme.text};
+  text-align: center;
+  margin-top: 5rem;
+`;

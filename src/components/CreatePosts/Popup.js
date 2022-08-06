@@ -54,7 +54,7 @@ const Popup = ({ children }) => {
     if (modalIsOpen) {
       body.style.overflow = "hidden";
     } else {
-      body.style.overflow = "scroll";
+      body.style.overflow = "auto";
     }
   }, [modalIsOpen]);
 
