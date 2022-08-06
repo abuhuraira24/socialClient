@@ -18,6 +18,7 @@ const AuthContext = createContext({
   themeMode: () => {},
   deletedPostId: (data) => {},
   UpdatedPost: (data) => {},
+  bioUpdate: (data) => {},
 });
 
 const init = {
@@ -27,6 +28,7 @@ const init = {
   posts: null,
   notification: null,
   isDark: "",
+  bio: "",
 };
 
 if (localStorage.getItem("jwtToken")) {
@@ -116,14 +118,13 @@ const authReducer = (state, action) => {
 
     // Updated post
     case "UPADATED_POST":
-      // const objByIndex = state.posts.findIndex(
-      //   (obj) => obj._id === action.payload._id
-      // );
-      // state.posts[objByIndex].body = action.payload.body;
-
-      console.log(state.posts);
       return {
         ...state,
+      };
+    case "UPDATED_BIO":
+      return {
+        ...state,
+        bio: action.payload,
       };
     default:
       return state;
@@ -243,6 +244,14 @@ const AuthProvider = (props) => {
       payload: data,
     });
   };
+
+  // Update Bio
+  const bioUpdate = (data) => {
+    dispatch({
+      type: "UPDATED_BIO",
+      payload: data,
+    });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -265,6 +274,8 @@ const AuthProvider = (props) => {
         isDark: state.isDark,
         deletedPostId,
         UpdatedPost,
+        bio: state.bio,
+        bioUpdate,
       }}
       {...props}
     />

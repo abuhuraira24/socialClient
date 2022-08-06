@@ -2,7 +2,6 @@ import { useContext } from "react";
 
 import { useParams } from "react-router-dom";
 
-
 import PrivateProfile from "./PrivateProfile";
 
 import PublicProfile from "./PublicProfile";

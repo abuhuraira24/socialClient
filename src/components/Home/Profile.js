@@ -21,13 +21,8 @@ const Profile = () => {
   const { data } = useQuery(GET_USER);
 
   const { data: bio } = useQuery(GET_BIO_DATA, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
     variables: { userId: user.id },
   });
-
-  console.log(user.id);
 
   return (
     <Wrapper>
@@ -53,7 +48,7 @@ const Profile = () => {
       )}
       <BioNames>
         {user && <Name>{user.firstName + " " + user.lastName}</Name>}
-        <Bio>Web Application Developer</Bio>
+        <Bio>{bio && bio.getUserById && bio.getUserById.bio}</Bio>
       </BioNames>
     </Wrapper>
   );

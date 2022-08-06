@@ -47,6 +47,7 @@ import CreatePost from "../CreatePosts";
 import Friends from "./Friends";
 
 import UpdatedModale from "./UpdateProfile/Modal";
+import Intro from "./Intro";
 
 const PrivateProfile = () => {
   const [cover, setCover] = useState();
@@ -219,6 +220,7 @@ const PrivateProfile = () => {
       <Container>
         <Row>
           <Col w="30" md="100" sm="100">
+            <Intro />
             <ImageWrapper display="none">
               <Header>
                 <Photos>Photos</Photos>
