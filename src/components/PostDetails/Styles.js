@@ -6,10 +6,9 @@ export const Wrapper = styled.div`
 `;
 
 export const UserProfile = styled.div`
-  margin-bottom: 1rem;
   display: flex;
-  justify-content: left;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const UserImage = styled.div`
@@ -140,4 +139,20 @@ export const ArrowLeft = styled.i`
   font-size: 30px;
   margin-left: 4px;
   margin-bottom: 1rem;
+`;
+
+export const Left = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+`;
+
+export const Right = styled.div`
+  color: ${(props) => props.theme.text};
+  position: relative;
+`;
+
+export const Icon = styled.i`
+  padding: 0.5rem;
+  cursor: pointer;
 `;

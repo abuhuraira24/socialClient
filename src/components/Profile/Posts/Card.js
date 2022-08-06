@@ -46,6 +46,7 @@ const PostCart = () => {
     });
   }, [id, getDog]);
 
+  console.log(posts && posts.length === 0);
   return (
     <div>
       <Card className="mb-4">
@@ -54,7 +55,7 @@ const PostCart = () => {
           Object.keys(posts).length !== 0 &&
           posts.map((post, index) => <Post key={index} data={post} />)}
       </Card>
-      {empty && <NomorePost>No more posts</NomorePost>}
+      {posts && posts.length === 0 && <NomorePost>No more posts</NomorePost>}
       {/* {posts && typeof posts !== "undefined" && posts.length > 9 && (
         <LoadMore>
           <Load type="button" onClick={morePost}>

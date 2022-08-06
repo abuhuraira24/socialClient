@@ -21,7 +21,7 @@ const ConfirmAccount = () => {
 
   useEffect(() => {
     axios
-      .post("https://serverforsocial.herokuapp.com/activeUser", {
+      .post("https://myserver222.herokuapp.com/", {
         email: user.email,
       })
       .then((data) => {

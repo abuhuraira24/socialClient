@@ -6,7 +6,6 @@ import { Form, Button } from "react-bootstrap";
 
 import { gql, useMutation } from "@apollo/client";
 
-
 import { RegisterWrapper, H2, H5 } from "./styles";
 
 import { Input } from "../../Styles/ElementsStyles";
@@ -16,7 +15,6 @@ import axios from "axios";
 import Loading from "../Loading/index";
 
 const Register = () => {
-
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     firstName: "",
@@ -39,10 +37,10 @@ const Register = () => {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data }) {
       axios
-        .post(`https://serverforsocial.herokuapp.com/verify`, {
+        .post(`https://myserver222.herokuapp.com/verify`, {
           email: values.email,
           subject: "Email Verification",
-          url: `https://socialmedia24.herokuapp.com/confirm/${data.register.token}`,
+          url: `https://mysocialmedia22.herokuapp.com/confirm/${data.register.token}`,
           token: data.register.token,
         })
         .then((res) => {

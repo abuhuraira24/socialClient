@@ -31,10 +31,10 @@ const Forgot = () => {
     if (input.email) {
       setLoading(true);
       axios
-        .post("https://serverforsocial.herokuapp.com/forgotpassword", {
+        .post("https://myserver222.herokuapp.com/forgotpassword", {
           email: input.email,
           subject: "Email Verification",
-          url: "https://socialmedia24.herokuapp.com/recovery_password",
+          url: "https://mysocialmedia22.herokuapp.com/recovery_password",
         })
         .then((res) => {
           setLoading(false);

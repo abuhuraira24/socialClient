@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import { gql, useQuery } from "@apollo/client";
 import {
   Comments,
@@ -19,15 +17,7 @@ import {
   Users,
   Left,
   Right,
-  PostSetting,
   Dot,
-  Edit,
-  UpdatePost,
-  DeletePost,
-  Icon,
-  H6,
-  Report,
-  Name,
 } from "./CartStyles";
 
 import LikeButton from "../LikeButton";
@@ -50,24 +40,14 @@ import SingleComment from "../Comments";
 
 import { getCommnetAvatar } from "../Helper/helper";
 
-import PostPopup from "./DeletePopup";
-
-import PostUpdatePopup from "./UpdatePopup";
-
-import PostUpdateForm from "./UpdatePost";
-
-import Delete from "./DeletePost";
+import UpdatedPost from "../UpdatePost";
 
 const Post = ({ ...props }) => {
   let [toggleComment, setToggleComment] = useState(false);
 
   const [image, setImage] = useState(null);
 
-  const [toggle, setTogle] = useState(false);
-
-  const [isOpen, setOpen] = useState(false);
-
-  const [isUpdate, setUpdate] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -95,41 +75,20 @@ const Post = ({ ...props }) => {
       const { images } = getAvatar(data);
       setImage(images);
     },
+    onError(error) {
+      console.log(error);
+    },
   });
   useEffect(() => {
     getCommnetAvatar(data.comments);
   }, [data.comments]);
 
-  const toggler = () => {
+  const postToggler = () => {
     if (toggle) {
-      setTogle(false);
+      setToggle(false);
     } else {
-      setTogle(true);
+      setToggle(true);
     }
-  };
-
-  const isOpenHandler = () => {
-    setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-    setTogle(false);
-  };
-
-  const updateOpen = () => {
-    setUpdate(true);
-  };
-
-  const updateClose = () => {
-    setUpdate(false);
-    setTogle(false);
-  };
-
-  const navigate = useNavigate();
-
-  const profileRedirect = (id) => {
-    navigate();
   };
 
   return (
@@ -141,57 +100,14 @@ const Post = ({ ...props }) => {
               <CircleImage src={avatar} alt="user" />
             )}
           </UserPic>
-          {/* <UserName>
-            <Name onClick={() => profileRedirect(data.user)}>
-              {data.firstName + " " + data.lastName}
-            </Name>
-          </UserName> */}
+
           <Link to={`/profile/${data.userId}`}>
             <UserName>{data.firstName + " " + data.lastName}</UserName>
           </Link>
         </Left>
         <Right>
-          <Dot onClick={toggler} className="fa-solid fa-ellipsis"></Dot>
-          {toggle && (
-            <PostSetting>
-              {data.userId === user.id ? (
-                <>
-                  <UpdatePost>
-                    <Edit>
-                      <Icon
-                        onClick={updateOpen}
-                        className="fa-solid fa-pen"
-                      ></Icon>
-                      <H6 onClick={updateOpen}>Edit</H6>
-                    </Edit>
-                    <PostUpdatePopup closeModal={updateClose} isOpen={isUpdate}>
-                      <PostUpdateForm closeModal={updateClose} post={data} />
-                    </PostUpdatePopup>
-                  </UpdatePost>
-                  <DeletePost>
-                    <Icon
-                      onClick={isOpenHandler}
-                      className="fa-solid fa-trash-can"
-                    ></Icon>
-                    <H6 onClick={isOpenHandler}>Delete</H6>
-                    <PostPopup
-                      title="Delete Post"
-                      text="Are you sure you want to delete?"
-                      isOpen={isOpen}
-                      closeModal={closeModal}
-                    >
-                      <Delete closeModal={closeModal} postId={data._id} />
-                    </PostPopup>
-                  </DeletePost>
-                </>
-              ) : (
-                <Report>
-                  <Icon className="fa-solid fa-bug"></Icon>
-                  <H6>Report Post</H6>
-                </Report>
-              )}
-            </PostSetting>
-          )}
+          <Dot onClick={postToggler} className="fa-solid fa-ellipsis"></Dot>
+          <UpdatedPost toggler={toggle} post={data} />
         </Right>
       </Users>
 

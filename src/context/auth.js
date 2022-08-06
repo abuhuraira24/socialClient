@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 import jwtDecode from "jwt-decode";
-
+import toast, { Toaster } from "react-hot-toast";
 const AuthContext = createContext({
   user: null,
   comments: null,
@@ -110,7 +110,6 @@ const authReducer = (state, action) => {
     // Delete Post
     case "DELETEDPOST":
       let posts = state.posts.filter((post) => post._id !== action.payload);
-
       return {
         ...state,
         posts: posts,
@@ -231,6 +230,8 @@ const AuthProvider = (props) => {
 
   // Delete post
   const deletedPostId = (postId) => {
+    const notify = () => toast("Successfully deleted");
+    notify();
     dispatch({
       type: "DELETEDPOST",
       payload: postId,
@@ -276,6 +277,7 @@ const AuthProvider = (props) => {
         UpdatedPost,
         bio: state.bio,
         bioUpdate,
+        Toaster,
       }}
       {...props}
     />

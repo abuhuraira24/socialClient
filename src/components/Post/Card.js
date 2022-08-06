@@ -14,7 +14,7 @@ const PostCart = () => {
     offset: 0,
   });
 
-  let { getPosts, posts } = useContext(AuthContext);
+  let { getPosts, posts, Toaster } = useContext(AuthContext);
 
   // Lazy Query
   let [getDog] = useLazyQuery(FETCH_POSTT, {
@@ -38,6 +38,7 @@ const PostCart = () => {
 
   return (
     <div>
+      <Toaster position="bottom-left" reverseOrder={false} />
       <Card className="mb-4">
         {posts &&
           typeof posts !== "undefined" &&

@@ -14,6 +14,8 @@ import {
   P,
   Name,
   Picture,
+  Time,
+  Reply,
 } from "./CommentsStyles";
 
 import moment from "moment";
@@ -28,6 +30,32 @@ const SingleComment = ({ c }) => {
     },
   });
 
+  const time = (time) => {
+    let getTime = {};
+    if (time.includes("hours")) {
+      getTime.time = time.replace("hours", "h");
+    }
+    if (time.includes("minutes")) {
+      getTime.time = time.replace("minutes", "m");
+    }
+    if (time.includes("seconds")) {
+      getTime.time = time.replace("seconds", "s");
+    }
+    if (time.includes("an hour")) {
+      getTime.time = time.replace("hour", "h");
+    }
+    if (time.includes("day")) {
+      getTime.time = time.replace("day", "d");
+    }
+
+    return {
+      getTime,
+    };
+  };
+
+  const { getTime } = time(moment(c.createdAt).fromNow(true));
+
+  console.log(moment(c.createdAt).fromNow(true));
   return (
     <Wrapper>
       <CommentWrapper>
@@ -52,8 +80,14 @@ const SingleComment = ({ c }) => {
           </P>
           <TimeLine>
             <Like>
-              <Span>{moment(c.createdAt).fromNow(true)}</Span>
+              <Span>Like</Span>
             </Like>
+            <Reply>
+              <Span>Reply</Span>
+            </Reply>
+            <Time>
+              <Span>{getTime.time}</Span>
+            </Time>
           </TimeLine>
         </CommentBody>
       </CommentWrapper>

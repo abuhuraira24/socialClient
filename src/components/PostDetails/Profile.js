@@ -11,6 +11,8 @@ import {
   Joined,
   PostAvatar,
   Image,
+  Left,
+  Right,
 } from "./Styles";
 
 const Profile = ({ post }) => {

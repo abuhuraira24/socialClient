@@ -1,18 +1,9 @@
-
-
 import Modal from "react-modal";
 import { useTheme } from "styled-components";
 
 import { Close, H5, P } from "./PopupStyles";
 
-const PostUpdatePopup = ({
-  isOpen,
-  closeModal,
-  children,
-  title,
-  text,
-  toggler,
-}) => {
+const PostUpdatePopup = ({ isOpen, closeModal, children, title, text }) => {
   const theme = useTheme();
   // Popup stye
   const customStyles = {

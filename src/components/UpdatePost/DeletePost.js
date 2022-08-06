@@ -1,5 +1,6 @@
 import { useContext } from "react";
 
+import { useNavigate, useParams } from "react-router-dom";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -8,14 +9,23 @@ import { Button, Buttons } from "./PopupStyles";
 import { AuthContext } from "../../context/auth";
 
 const DeletePost = ({ postId, closeModal }) => {
-
-
   const { deletedPostId } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  // const notify = () => toast("Successfully deleted");
+  const params = useParams();
 
   const [deletePost] = useMutation(DELETE, {
     onCompleted: (data) => {
+      navigate("/");
       deletedPostId(postId);
       closeModal();
+
+      if (params.id) {
+        navigate(`/profile/${params.id}`);
+      } else {
+        navigate("/");
+      }
     },
     onError(error) {
       console.log(error);

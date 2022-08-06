@@ -6,11 +6,14 @@ import { useTheme } from "styled-components";
 
 import { gql, useQuery } from "@apollo/client";
 
+import UpdatedPost from "../UpdatePost";
+
 import {
   ArrowLeft,
   AuthorName,
   Comments,
   H5,
+  Left,
   P,
   PostAvatar,
   PostBody,
@@ -18,6 +21,8 @@ import {
   UserImage,
   UserProfile,
   Wrapper,
+  Right,
+  Icon,
 } from "./Styles";
 
 import { Container, Row, Col } from "../../Styles/ElementsStyles";
@@ -46,7 +51,10 @@ const PostDetails = () => {
 
   let [image, setImage] = useState(null);
 
+  const [toggle, setToggle] = useState(false);
+
   const { getComments, comments, themeMode } = useContext(AuthContext);
+
   const postId = useParams().id;
 
   useQuery(GET_USER_PIC, {
@@ -68,10 +76,14 @@ const PostDetails = () => {
 
   useQuery(GET_COMMENTS, {
     onCompleted: (data) => {
+      console.log(data);
       getComments(data.getSinglePost.comments);
     },
     variables: {
       postId: postId,
+    },
+    onError(error) {
+      console.log(error);
     },
   });
 
@@ -89,6 +101,13 @@ const PostDetails = () => {
     body[0].style.overflow = "auto";
   });
 
+  const postToggler = () => {
+    if (toggle) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  };
   return (
     <Wrapper>
       {/* <NavBar /> */}
@@ -101,20 +120,29 @@ const PostDetails = () => {
         <Row>
           <Col w="70" sm="100">
             <UserProfile>
-              <UserImage>
-                <Link to={`/profile/${post?.userId}`}>
-                  {typeof avatar !== "function" && (
-                    <PostAvatar src={avatar} alt="post" />
-                  )}
-                </Link>
-              </UserImage>
-              <AuthorName>
-                <Link to={`/profile/${post?.userId}`}>
-                  <H5>{post && post.firstName + " " + post.lastName}</H5>
-                </Link>
+              <Left>
+                <UserImage>
+                  <Link to={`/profile/${post?.userId}`}>
+                    {typeof avatar !== "function" && (
+                      <PostAvatar src={avatar} alt="post" />
+                    )}
+                  </Link>
+                </UserImage>
+                <AuthorName>
+                  <Link to={`/profile/${post?.userId}`}>
+                    <H5>{post && post.firstName + " " + post.lastName}</H5>
+                  </Link>
 
-                <Span>{post && moment(post.createdAt).fromNow(true)}</Span>
-              </AuthorName>
+                  <Span>{post && moment(post.createdAt).fromNow(true)}</Span>
+                </AuthorName>
+              </Left>
+              <Right>
+                <Icon
+                  onClick={postToggler}
+                  className="fa-solid fa-ellipsis"
+                ></Icon>
+                <UpdatedPost toggler={toggle} post={post} />
+              </Right>
             </UserProfile>
 
             <PostBody>
@@ -153,6 +181,7 @@ const GET_POST = gql`
       avatar
       body
       createdAt
+      _id
     }
   }
 `;

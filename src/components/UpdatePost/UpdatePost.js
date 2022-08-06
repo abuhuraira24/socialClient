@@ -2,13 +2,14 @@ import { gql, useMutation } from "@apollo/client";
 
 import { useEffect, useState, useContext } from "react";
 
-import { Form, TextArea, Update } from "./PopupStyles";
+import { Form, TextArea, Update } from "../UpdatePost/PopupStyles";
 
 import { AuthContext } from "../../context/auth";
 
 const PostUpdateForm = ({ post, closeModal }) => {
   let [value, setValue] = useState("");
 
+  console.log(post);
   const { user, UpdatedPost } = useContext(AuthContext);
 
   useEffect(() => {

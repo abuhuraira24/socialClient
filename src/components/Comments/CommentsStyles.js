@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CommentWrapper = styled.div`
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export const UserImage = styled.div``;
@@ -41,9 +41,21 @@ export const Image = styled.div`
   }
 `;
 
-export const TimeLine = styled.div``;
+export const TimeLine = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
 
-export const Like = styled.div``;
+export const Like = styled.div`
+  color: ${(props) => props.theme.text};
+`;
+
+export const Reply = styled.div`
+  color: ${(props) => props.theme.text};
+`;
+
+export const Time = styled.div``;
 
 export const Wrapper = styled.div``;
 

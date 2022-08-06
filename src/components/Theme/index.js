@@ -16,7 +16,7 @@ export const light = {
   bg: "#f0f2f5",
   gray: "#fff",
   white: "#fff",
-  text: "#41464b99",
+  text: "#000",
   input: "#eef3f8",
   grayColor: "#41464bcc",
   dark: false,

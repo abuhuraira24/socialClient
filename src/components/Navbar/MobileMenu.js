@@ -2,14 +2,12 @@ import { useContext } from "react";
 
 import { Icon, Main, NavWrapper } from "./mobile";
 
-
 import { NavLink } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth";
 
 const MobileMenu = () => {
   // Get Notification
-
   const { user } = useContext(AuthContext);
 
   return (
@@ -34,7 +32,5 @@ const MobileMenu = () => {
     </NavWrapper>
   );
 };
-
-
 
 export default MobileMenu;

@@ -1,8 +1,6 @@
 import "./App.css";
 
-
 import Register from "./components/Register/Register";
-
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -19,7 +17,6 @@ import QueryPage from "./components/SearchPage/QueryPage";
 import People from "./components/People";
 
 import PostDetails from "./components/PostDetails";
-
 
 import Profile from "./components/Profile/Profile";
 
@@ -39,8 +36,6 @@ import Follower from "./components/Home/Followers";
 import Notification from "./components/Notifications";
 
 function App() {
-
-  
   return (
     <AuthProvider>
       <Theme>
@@ -55,18 +50,46 @@ function App() {
               }
             />
             {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route
+              path="/profile/:id"
+              element={
+                <PrivatRouter rediredct="/login">
+                  <Profile />
+                </PrivatRouter>
+              }
+            />
             <Route path="/search" element={<QueryPage />} />
             <Route path="/search/people" element={<People />} />
-            <Route path="/post/:id" element={<PostDetails />} />
+            <Route
+              path="/post/:id"
+              element={
+                <PrivatRouter rediredct="/login">
+                  <PostDetails />
+                </PrivatRouter>
+              }
+            />
             <Route path="/search/post/:id" element={<PostDetails />} />
             <Route path="/verify/" element={<CheckMail />} />
             <Route path="/confirm/:text" element={<ConfirmAccount />} />
             <Route path="/notfound" element={<NotFound />} />
             <Route path="/forgot" element={<Forgot />} />
             <Route path="/successmail" element={<SuccessMail />} />
-            <Route path="/friends" element={<Follower />} />
-            <Route path="/notifications" element={<Notification />} />
+            <Route
+              path="/friends"
+              element={
+                <PrivatRouter rediredct="/login">
+                  <Follower />
+                </PrivatRouter>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <PrivatRouter rediredct="/login">
+                  <Notification />
+                </PrivatRouter>
+              }
+            />
             <Route
               path="/recovery_password/:token"
               element={<SetNewPassword />}
