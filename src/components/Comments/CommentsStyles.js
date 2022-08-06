@@ -20,16 +20,18 @@ export const P = styled.p`
   a {
     display: block;
   }
+  font-size: 14px;
 `;
 export const Name = styled.span`
   display: block;
   font-weight: 700;
   color: ${(props) => props.theme.color};
+  font-size: 14px;
 `;
 export const Image = styled.div`
   background: #ddd;
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +45,7 @@ export const Image = styled.div`
 
 export const TimeLine = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
 `;
 
@@ -53,6 +55,7 @@ export const Like = styled.div`
 
 export const Reply = styled.div`
   color: ${(props) => props.theme.text};
+  cursor: pointer;
 `;
 
 export const Time = styled.div``;
@@ -63,6 +66,8 @@ export const Span = styled.span`
   color: #6c757d !important;
   padding: 6px;
   display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
 `;
 
 export const Picture = styled.img`

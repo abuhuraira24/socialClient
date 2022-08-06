@@ -20,7 +20,12 @@ import {
 
 import moment from "moment";
 
+import ReplyComment from "./reply";
+import { useState } from "react";
+
 const SingleComment = ({ c }) => {
+  const [toggle, setToggle] = useState(false);
+
   let { data } = useQuery(GET_USER, {
     variables: {
       userId: c.userId,
@@ -55,7 +60,10 @@ const SingleComment = ({ c }) => {
 
   const { getTime } = time(moment(c.createdAt).fromNow(true));
 
-  console.log(moment(c.createdAt).fromNow(true));
+  const toggleHandler = () => {
+    setToggle(true);
+  };
+
   return (
     <Wrapper>
       <CommentWrapper>
@@ -83,12 +91,13 @@ const SingleComment = ({ c }) => {
               <Span>Like</Span>
             </Like>
             <Reply>
-              <Span>Reply</Span>
+              <Span onClick={toggleHandler}>Reply</Span>
             </Reply>
             <Time>
               <Span>{getTime.time}</Span>
             </Time>
           </TimeLine>
+          {toggle && <ReplyComment />}
         </CommentBody>
       </CommentWrapper>
     </Wrapper>

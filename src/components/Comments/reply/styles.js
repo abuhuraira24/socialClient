@@ -1,0 +1,19 @@
+import styled from "styled-components";
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const Avatar = styled.div``;
+
+export const Forms = styled.div``;
+
+export const Input = styled.input`
+  background: ${(props) => props.theme.input};
+  border: none;
+  border-radius: 50px;
+  height: 32px;
+  color: ${(props) => props.theme.text};
+`;
