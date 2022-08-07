@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { gql, useQuery } from "@apollo/client";
 
@@ -16,15 +16,22 @@ import {
   Picture,
   Time,
   Reply,
+  CountReply,
+  Arrow,
 } from "./CommentsStyles";
 
 import moment from "moment";
 
 import ReplyComment from "./reply";
 import { useState } from "react";
+import SingleReply from "./reply/SingleReply";
+
+import { time } from "../Utils/timeFormater";
 
 const SingleComment = ({ c }) => {
   const [toggle, setToggle] = useState(false);
+
+  const [replys, setReplys] = useState([]);
 
   let { data } = useQuery(GET_USER, {
     variables: {
@@ -35,34 +42,28 @@ const SingleComment = ({ c }) => {
     },
   });
 
-  const time = (time) => {
-    let getTime = {};
-    if (time.includes("hours")) {
-      getTime.time = time.replace("hours", "h");
-    }
-    if (time.includes("minutes")) {
-      getTime.time = time.replace("minutes", "m");
-    }
-    if (time.includes("seconds")) {
-      getTime.time = time.replace("seconds", "s");
-    }
-    if (time.includes("an hour")) {
-      getTime.time = time.replace("hour", "h");
-    }
-    if (time.includes("day")) {
-      getTime.time = time.replace("day", "d");
-    }
-
-    return {
-      getTime,
-    };
-  };
-
   const { getTime } = time(moment(c.createdAt).fromNow(true));
 
   const toggleHandler = () => {
     setToggle(true);
   };
+
+  // post id
+  const { id } = useParams();
+
+  // Get Replys
+  useQuery(GET_REPLY, {
+    onCompleted: (data) => {
+      setReplys(data.getReply);
+    },
+    variables: {
+      postId: id,
+      commentId: c._id,
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
 
   return (
     <Wrapper>
@@ -97,7 +98,23 @@ const SingleComment = ({ c }) => {
               <Span>{getTime.time}</Span>
             </Time>
           </TimeLine>
-          {toggle && <ReplyComment />}
+          {replys.length !== 0 && !toggle && (
+            <CountReply>
+              <Span
+                style={{ cursor: "pointer", padding: "0" }}
+                onClick={toggleHandler}
+              >
+                <Arrow className="fa-solid fa-arrow-turn-up"></Arrow>
+                {replys.length} Replies
+              </Span>
+            </CountReply>
+          )}
+          {toggle &&
+            replys.length !== 0 &&
+            replys.map((reply, index) => (
+              <SingleReply key={index} reply={reply} />
+            ))}
+          {toggle && <ReplyComment commentId={c._id} />}
         </CommentBody>
       </CommentWrapper>
     </Wrapper>
@@ -110,6 +127,18 @@ const GET_USER = gql`
       avatars {
         avatar
       }
+    }
+  }
+`;
+
+const GET_REPLY = gql`
+  query ($postId: ID!, $commentId: ID!) {
+    getReply(postId: $postId, commentId: $commentId) {
+      username
+      body
+      _id
+      userId
+      createdAt
     }
   }
 `;

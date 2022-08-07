@@ -81,3 +81,12 @@ export const Author = styled.span`
   margin-left: 4px;
   border-radius: 10px;
 `;
+
+export const CountReply = styled.div`
+  color: ${(props) => props.theme.color};
+`;
+
+export const Arrow = styled.i`
+  transform: rotate(89deg);
+  margin-right: 0.5rem;
+`;

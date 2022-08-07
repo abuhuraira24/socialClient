@@ -16,9 +16,13 @@ const CommentBar = ({ postId }) => {
 
   const [addCommnet] = useMutation(CREATE_COMMENT, {
     onCompleted: (data) => {
+      console.log(data);
       getComments(data.createComment.comments);
     },
     variables: { postId: postId, body: value.body },
+    onError(error) {
+      console.log(error);
+    },
   });
 
   const changeHandler = (e) => {
@@ -75,6 +79,7 @@ const CREATE_COMMENT = gql`
         username
         createdAt
         userId
+        _id
       }
     }
   }

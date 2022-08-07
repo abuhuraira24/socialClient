@@ -76,7 +76,6 @@ const PostDetails = () => {
 
   useQuery(GET_COMMENTS, {
     onCompleted: (data) => {
-      console.log(data);
       getComments(data.getSinglePost.comments);
     },
     variables: {
@@ -194,6 +193,7 @@ const GET_COMMENTS = gql`
         userId
         username
         createdAt
+        _id
       }
     }
   }
