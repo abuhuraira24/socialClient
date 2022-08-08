@@ -11,7 +11,7 @@ export const Avatar = styled.div``;
 export const Form = styled.form``;
 
 export const Input = styled.input`
-  background: ${(props) => props.theme.input};
+  background: ${(props) => props.theme.gray};
   border: none;
   border-radius: 50px;
   height: 32px;

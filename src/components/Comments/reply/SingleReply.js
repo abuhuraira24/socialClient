@@ -28,16 +28,16 @@ const SingleReply = ({ reply }) => {
 
   useQuery(GET_USER, {
     onCompleted: (data) => {
-      console.log(data.getUserById);
       setUser(data.getUserById);
     },
     variables: {
       userId: reply.userId,
     },
     onError(error) {
-      console.log(error);
+      console.log(error.graphQLErrors);
     },
   });
+
 
   const { getTime } = time(moment(reply.createdAt).fromNow(true));
   return (

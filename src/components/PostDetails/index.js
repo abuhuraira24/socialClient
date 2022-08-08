@@ -98,7 +98,7 @@ const PostDetails = () => {
     const body = document.getElementsByTagName("body");
     body[0].style.backgroundColor = theme.bg;
     body[0].style.overflow = "auto";
-  });
+  }, [theme.bg]);
 
   const postToggler = () => {
     if (toggle) {
@@ -107,6 +107,8 @@ const PostDetails = () => {
       setToggle(true);
     }
   };
+
+  console.log("Rendered post details");
   return (
     <Wrapper>
       {/* <NavBar /> */}

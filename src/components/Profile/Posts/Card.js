@@ -46,7 +46,6 @@ const PostCart = () => {
     });
   }, [id, getDog]);
 
-  console.log(posts && posts.length === 0);
   return (
     <div>
       <Card className="mb-4">

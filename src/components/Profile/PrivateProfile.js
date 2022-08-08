@@ -203,7 +203,7 @@ const PrivateProfile = () => {
                 <MyFollowers />
               </Followers>
             </ProfileAvatar>
-            <Buttons>
+            {/* <Buttons>
               <EdidButton onClick={modalIsOpen}>
                 <EditIcon className="fa-solid fa-pen"></EditIcon>
                 Edit Profile
@@ -213,7 +213,7 @@ const PrivateProfile = () => {
                 modalIsOpen={isOpen}
                 closeModal={closeModal}
               />
-            </Buttons>
+            </Buttons> */}
           </Avatars>
         </Col>
       </Container>

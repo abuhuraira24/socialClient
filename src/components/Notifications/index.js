@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import SingleNoti from "./SingleNoti";
-import {  Wrapper } from "./styles";
+import { Wrapper } from "./styles";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
 

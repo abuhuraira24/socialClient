@@ -23,10 +23,12 @@ import {
 import moment from "moment";
 
 import ReplyComment from "./reply";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleReply from "./reply/SingleReply";
 
 import { time } from "../Utils/timeFormater";
+
+import { socket } from "../../hooks/socketio";
 
 const SingleComment = ({ c }) => {
   const [toggle, setToggle] = useState(false);
@@ -63,6 +65,13 @@ const SingleComment = ({ c }) => {
     onError(error) {
       console.log(error);
     },
+  });
+
+  useEffect(() => {
+    socket.on("sendReply", (data) => {
+      setReplys((prev) => [...prev, data]);
+      console.log(data);
+    });
   });
 
   return (

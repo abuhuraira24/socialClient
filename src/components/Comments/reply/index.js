@@ -9,7 +9,10 @@ import { Image, Picture } from "../CommentsStyles";
 import { gql, useQuery, useMutation } from "@apollo/client";
 
 import { AuthContext } from "../../../context/auth";
+
 import { useState } from "react";
+
+import { socket } from "../../../hooks/socketio";
 
 const Reply = ({ commentId }) => {
   const [value, setValue] = useState("");
@@ -31,9 +34,7 @@ const Reply = ({ commentId }) => {
   });
 
   const [addReply, { loading }] = useMutation(COMMET_REPLY, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
+    onCompleted: () => {},
     onError(error) {
       console.log(error);
     },
@@ -53,6 +54,13 @@ const Reply = ({ commentId }) => {
         body: value,
       },
     });
+    socket.emit("getReply", {
+      userId: id,
+      username: user.firstName + " " + user.lastName,
+      body: value,
+      createdAt: new Date().toISOString(),
+    });
+    setValue("");
   };
 
   return (
@@ -67,7 +75,11 @@ const Reply = ({ commentId }) => {
         </Image>
       </Avatar>
       <Form onSubmit={submitHandler}>
-        <Input onChange={changeHandler} placeholder="reply to ..." />
+        <Input
+          onChange={changeHandler}
+          value={value}
+          placeholder="reply to ..."
+        />
         <Submit type="submit"></Submit>
       </Form>
     </Wrapper>

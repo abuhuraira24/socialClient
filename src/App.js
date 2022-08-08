@@ -23,10 +23,15 @@ import Profile from "./components/Profile/Profile";
 import PrivatRouter from "./hooks/PrivetRouter";
 
 import CheckMail from "./components/Email/CheckMail";
+
 import ConfirmAccount from "./components/Email/ConfirmAccount";
+
 import NotFound from "./components/Email/NotFound/NotFound";
+
 import Forgot from "./components/ForgotPassword";
+
 import SuccessMail from "./components/ForgotPassword/SuccessMail";
+
 import SetNewPassword from "./components/ForgotPassword/SetPassword";
 
 import Theme from "./components/Theme/Theme";
@@ -35,7 +40,26 @@ import Follower from "./components/Home/Followers";
 
 import Notification from "./components/Notifications";
 
+import { socket } from "./hooks/socketio";
+
+import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
+
 function App() {
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const user = jwtDecode(token);
+      socket.emit("join", { userId: user.id });
+    }
+  });
+
+  // useEffect(() => {
+  //   socket.on("getUsers", (data) => {
+
+  //   });
+  // });
+
   return (
     <AuthProvider>
       <Theme>

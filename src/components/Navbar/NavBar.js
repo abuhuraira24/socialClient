@@ -132,7 +132,7 @@ const Navbar = () => {
           <Logo>
             <NavLogo issticky={sticky.toString()} to="/">
               {/* <LogoImg src={logo} alt="logo" /> */}
-              <i class="fa-brands fa-facebook"></i>
+              <i className="fa-brands fa-facebook"></i>
             </NavLogo>
           </Logo>
 
