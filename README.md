@@ -1,6 +1,6 @@
 ### [accountill.com](https://accountill.com/)
 
-# MERN Stack Invoicing Application
+# MERN Stack Social Media Application
 
 Built with the MERN stack (MongoDB, Express, React and NodeJS).
 ![Invoice](https://res.cloudinary.com/dza2t1htw/image/upload/v1659948547/Screenshot_75_q8cedq.png)
