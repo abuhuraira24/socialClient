@@ -3,7 +3,7 @@
 # MERN Stack Invoicing Application
 
 Built with the MERN stack (MongoDB, Express, React and NodeJS).
-![Invoice](https://res.cloudinary.com/almpo/image/upload/v1637311386/invoice/invoice-app_tcz0dj.png)
+![Invoice](https://res.cloudinary.com/dza2t1htw/image/upload/v1659948547/Screenshot_75_q8cedq.png)
 
 ## Update
 
