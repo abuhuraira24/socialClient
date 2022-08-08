@@ -183,9 +183,9 @@ to keep improving the project.
 ## Author
 
 - Twitter: [@panshak\_](https://twitter.com/panshak_)
-- Github: [@panshak](https://github.com/panshak)
+- Github: [@panshak](https://github.com/abuhuraira24)
 - Linkedin: [@panshak](https://www.linkedin.com/in/panshak/)
-- Email: [@ipanshak](mailto:ipanshak@gmail.com)
+- Email: [@ipanshak](devloperabuhuraira@gmail.com)
 
 ## License
 
