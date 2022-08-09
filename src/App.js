@@ -76,7 +76,14 @@ function App() {
                 </PrivatRouter>
               }
             />
-            <Route path="/search/:text" element={<QueryPage />} />
+            <Route
+              path="/search/:text"
+              element={
+                <PrivatRouter rediredct="/login">
+                  <QueryPage />
+                </PrivatRouter>
+              }
+            />
             <Route path="/search/people" element={<People />} />
             <Route
               path="/post/:id"
