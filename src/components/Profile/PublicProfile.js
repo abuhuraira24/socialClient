@@ -32,6 +32,7 @@ import {
   SeeAll,
   Span,
   FollowButton,
+  Comming,
 } from "./styles";
 import { useParams } from "react-router-dom";
 
@@ -40,6 +41,8 @@ import PostCart from "../Profile/Posts/Card";
 import CreatePost from "../CreatePosts";
 
 import Friends from "./Friends";
+
+import Title from "../title";
 
 const PublicProfile = () => {
   const [profileUser, setProfileUser] = useState(null);
@@ -108,6 +111,10 @@ const PublicProfile = () => {
 
   return (
     <CoverWrapper>
+      <Title>
+        {" "}
+        {profileUser?.firstName} {profileUser?.lastName}
+      </Title>
       <Container>
         <Col w="100">
           <Cover>
@@ -168,6 +175,7 @@ const PublicProfile = () => {
                   profileUser.avatars.map((img, index) => (
                     <Image key={index}>
                       <Img src={img.avatar} alt="abu" />
+                      <Comming>Comming...</Comming>
                     </Image>
                   ))}
                 {profileUser &&
@@ -175,6 +183,7 @@ const PublicProfile = () => {
                   profileUser.cover.map((img, index) => (
                     <Image key={index}>
                       <Img src={img.url} alt="abu" />
+                      <Comming>Comming...</Comming>
                     </Image>
                   ))}
               </Images>

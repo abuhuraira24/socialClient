@@ -278,6 +278,16 @@ export const Image = styled.div`
   margin: 8px;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #9b9b9ba3;
+  }
 `;
 
 export const Img = styled.img`
@@ -289,4 +299,12 @@ export const NomorePost = styled.div`
   color: ${(props) => props.theme.text};
   text-align: center;
   margin-top: 5rem;
+`;
+
+export const Comming = styled.span`
+  position: absolute;
+  color: #fff;
+  left: 9px;
+  top: 45%;
+  font-size: 13px;
 `;

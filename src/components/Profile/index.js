@@ -8,6 +8,8 @@ import Axios from "axios";
 
 import { AuthContext } from "../../context/auth";
 
+import Title from "../title/index";
+
 import {
   Avatar,
   Avatars,
@@ -101,6 +103,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    document.title = "firstName;";
     if (data && typeof data.getUser !== "undefined") {
       setAvatar(data.getUser.avatar);
       setCover(data.getUser.cover);
@@ -108,8 +111,13 @@ const Profile = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    alert();
+  }, [user]);
+
   return (
     <CoverWrapper id="profile">
+      <Title>ANME</Title>
       <Container>
         <Col w="100">
           <Cover>

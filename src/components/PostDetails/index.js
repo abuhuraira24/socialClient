@@ -108,7 +108,6 @@ const PostDetails = () => {
     }
   };
 
-  console.log("Rendered post details");
   return (
     <Wrapper>
       {/* <NavBar /> */}
@@ -164,7 +163,7 @@ const PostDetails = () => {
               ))}
             </Comments>
           </Col>
-          <Col w="30" sm="100">
+          <Col w="30" mdnone="true">
             {post && <Profile post={post} />}
           </Col>
         </Row>

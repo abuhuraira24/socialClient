@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   background: ${(props) => props.theme.gray};
   padding: 1rem;
   border-radius: 10px;
-  position: fixed;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%),
     0 8px 10px -6px rgb(0 0 0 / 10%);
   @media (max-width: 768px) {

@@ -17,6 +17,7 @@ import {
   Avatars,
   Buttons,
   Camera,
+  Comming,
   Cover,
   CoverPic,
   CoverWrapper,
@@ -48,6 +49,7 @@ import Friends from "./Friends";
 
 import UpdatedModale from "./UpdateProfile/Modal";
 import Intro from "./Intro";
+import Title from "../title";
 
 const PrivateProfile = () => {
   const [cover, setCover] = useState();
@@ -162,6 +164,10 @@ const PrivateProfile = () => {
 
   return (
     <CoverWrapper>
+      <Title>
+        {user.firstName}
+        {user.lastName}
+      </Title>
       <Container>
         <Col w="100">
           <Cover>
@@ -232,6 +238,7 @@ const PrivateProfile = () => {
                   profileUser.avatars.map((img, index) => (
                     <Image key={index}>
                       <Img src={img.avatar} alt="abu" />
+                      <Comming>Comming...</Comming>
                     </Image>
                   ))}
                 {profileUser &&
@@ -239,6 +246,7 @@ const PrivateProfile = () => {
                   profileUser.cover.map((img, index) => (
                     <Image key={index}>
                       <Img src={img.url} alt="abu" />
+                      <Comming>Comming...</Comming>
                     </Image>
                   ))}
               </Images>

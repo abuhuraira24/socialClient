@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -15,6 +15,7 @@ import {
   Icon,
   Text,
 } from "./Styles";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SearchPanel = () => {
   const [text, setText] = useState("");
@@ -52,9 +53,21 @@ const SearchPanel = () => {
     setResults(null);
   };
 
+  const navigate = useNavigate();
+
+  const querText = useParams();
+
+  useEffect(() => {
+    if (querText.text) {
+      setText(querText.text);
+    }
+  }, [querText]);
+
   // Submit Handler
   const submitHandler = (e) => {
     e.preventDefault();
+    navigate(`/search/${text}`);
+    setToggle(false);
   };
 
   return (

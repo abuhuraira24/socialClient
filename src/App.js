@@ -54,12 +54,6 @@ function App() {
     }
   });
 
-  // useEffect(() => {
-  //   socket.on("getUsers", (data) => {
-
-  //   });
-  // });
-
   return (
     <AuthProvider>
       <Theme>
@@ -82,7 +76,7 @@ function App() {
                 </PrivatRouter>
               }
             />
-            <Route path="/search" element={<QueryPage />} />
+            <Route path="/search/:text" element={<QueryPage />} />
             <Route path="/search/people" element={<People />} />
             <Route
               path="/post/:id"

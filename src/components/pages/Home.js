@@ -17,11 +17,11 @@ import Navbar from "../Navbar/NavBar";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
 
-
 const Home = () => {
   const theme = useTheme();
 
   useEffect(() => {
+    document.title = "Adda with Abu";
     const body = document.getElementsByTagName("body");
     body[0].style.backgroundColor = theme.bg;
     body[0].style.overflow = "auto";
