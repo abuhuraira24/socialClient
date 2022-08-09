@@ -111,10 +111,10 @@ const PublicProfile = () => {
 
   return (
     <CoverWrapper>
-      <Title>
+      {/* <Title>
         {" "}
         {profileUser?.firstName} {profileUser?.lastName}
-      </Title>
+      </Title> */}
       <Container>
         <Col w="100">
           <Cover>

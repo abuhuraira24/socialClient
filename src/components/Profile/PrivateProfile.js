@@ -120,18 +120,17 @@ const PrivateProfile = () => {
 
       formData.append("upload_preset", "ml_default");
 
-      Axios.post(
-        "https://api.cloudinary.com/v1_1/dza2t1htw/image/upload",
-        formData
-      ).then((res) => {
-        console.log(res);
-        mutate({
-          variables: {
-            url: res.data.url,
-            userId: user.id,
-          },
-        });
-      });
+      Axios.post(process.env.REACT_APP_CLOUDINRY_UPLOAD_API, formData).then(
+        (res) => {
+          console.log(res);
+          mutate({
+            variables: {
+              url: res.data.url,
+              userId: user.id,
+            },
+          });
+        }
+      );
     }
   };
 
