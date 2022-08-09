@@ -45,7 +45,7 @@ const Register = () => {
         })
         .then((res) => {
           setLoading(false);
-          navigate(`/`);
+          navigate(`/verify`);
         })
         .catch((error) => {
           console.log(error);
