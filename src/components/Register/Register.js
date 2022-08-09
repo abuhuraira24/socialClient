@@ -37,10 +37,10 @@ const Register = () => {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data }) {
       axios
-        .post(`https://myserver222.herokuapp.com/verify`, {
+        .post(`https://myserver222.herokuapp.com//verify`, {
           email: values.email,
           subject: "Email Verification",
-          url: `https://mysocialmedia22.herokuapp.com/confirm/${data.register.token}`,
+          url: `https://myclient22.herokuapp.com/confirm/${data.register.token}`,
           token: data.register.token,
         })
         .then((res) => {

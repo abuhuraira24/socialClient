@@ -34,7 +34,7 @@ const Forgot = () => {
         .post("https://myserver222.herokuapp.com/forgotpassword", {
           email: input.email,
           subject: "Email Verification",
-          url: "https://mysocialmedia22.herokuapp.com/recovery_password",
+          url: "https://myclient22.herokuapp.com/recovery_password",
         })
         .then((res) => {
           setLoading(false);
