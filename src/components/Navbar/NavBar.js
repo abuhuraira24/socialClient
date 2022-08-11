@@ -35,6 +35,9 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import useAvatar from "../../hooks/useAvatar";
 
 import SearchPanel from "../SearchBar";
+import Conversations from "../Massages/Conversations/Conversations";
+
+import Massage from "../Massages/Messages";
 
 const Navbar = () => {
   // Theme
@@ -48,6 +51,8 @@ const Navbar = () => {
 
   // Toggler Notification
   const [toggleNoti, setToggleNoti] = useState(false);
+
+  const [message, setMessage] = useState(false);
 
   // Get Notification
   const [notifications, setNotifications] = useState([]);
@@ -90,6 +95,15 @@ const Navbar = () => {
     seenNotification();
   };
 
+  // Messsage Toggler
+  const messageToggler = () => {
+    if (message) {
+      setMessage(false);
+    } else {
+      setMessage(true);
+    }
+  };
+
   const isHeaderSticky = () => {
     if (window.scrollY >= 1000) {
       setSticky(true);
@@ -127,6 +141,7 @@ const Navbar = () => {
 
   return (
     <NavLarge>
+      <Massage />
       <Nav issticky={sticky.toString()}>
         <NavbarContainer>
           <Logo>
@@ -152,9 +167,13 @@ const Navbar = () => {
               </Icons>
             )}
 
-            <Icons>
-              <Iconn className="fa-solid fa-message"></Iconn>
-            </Icons>
+            <HeaderItem>
+              <Icons onClick={messageToggler}>
+                <Iconn className="fa-solid fa-message"></Iconn>
+              </Icons>
+              {message && <Conversations />}
+            </HeaderItem>
+
             <HeaderItem>
               <Icons onClick={notificationToggler}>
                 {data && data.getUser.readNotification !== 0 ? (

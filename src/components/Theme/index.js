@@ -4,7 +4,8 @@ export const dark = {
   gray: "#182133",
   white: "#fff",
   text: "#dfe5ee",
-  input: "#1e293b",
+  // input: "#1e293b",
+  input: "#3a3b3ce0",
   grayColor: "#41464bcc",
   dark: true,
   light: "#fff",
@@ -21,5 +22,5 @@ export const light = {
   grayColor: "#41464bcc",
   dark: false,
   light: "#fff",
-  link: "#2c51ca",
+  link: "#2374e1",
 };

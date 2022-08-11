@@ -342,4 +342,6 @@ export const Count = styled.span`
   border-radius: 50px;
 `;
 
-export const HeaderItem = styled.div``;
+export const HeaderItem = styled.div`
+  position: relative;
+`;
