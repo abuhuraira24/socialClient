@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { gql, useQuery } from "@apollo/client";
 
 import { Span } from "../MassagesStyle";
 
 import { Wrapper, Text } from "./Styles";
+
 import SingleText from "./SingleText";
+
+import { AuthContext } from "../../../context/auth";
 
 const Chats = ({ receiver }) => {
   const [messages, setMessages] = useState([]);
 
+  const { user } = useContext(AuthContext);
+
   useQuery(GET_TEXT, {
     onCompleted: (data) => {
-      setMessages(data.getMessages);
+      const arr = [...data.getMessages, data.getMessages];
+      arr.sort(function (a, b) {
+        var dateA = new Date(a.createdAt),
+          dateB = new Date(b.createdAt);
+        return dateA - dateB;
+      });
+
+      setMessages(arr);
     },
     variables: {
+      sender: user.id,
       receiver: receiver,
     },
     onError(error) {
@@ -34,8 +47,8 @@ const Chats = ({ receiver }) => {
 };
 
 const GET_TEXT = gql`
-  query ($receiver: String!) {
-    getMessages(receiver: $receiver) {
+  query ($sender: String!, $receiver: String!) {
+    getMessages(sender: $sender, receiver: $receiver) {
       text
       sender
       receiver

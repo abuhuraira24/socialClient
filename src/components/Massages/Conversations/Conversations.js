@@ -12,9 +12,10 @@ const Conversations = ({ closeChat }) => {
   const { user } = useContext(AuthContext);
   useQuery(GET_CONVERSATIONS, {
     onCompleted: (data) => {
+      console.log(data);
       setUsers(data.getConversations);
     },
-    variables: { userId: user.id },
+    variables: { sender: user.id },
     onError(error) {
       console.log(error);
     },
@@ -38,8 +39,8 @@ const Conversations = ({ closeChat }) => {
 };
 
 const GET_CONVERSATIONS = gql`
-  query ($userId: ID!) {
-    getConversations(userId: $userId) {
+  query ($sender: ID!) {
+    getConversations(sender: $sender) {
       id
       creator_id
       participant_id

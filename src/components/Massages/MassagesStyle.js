@@ -87,6 +87,7 @@ export const Footer = styled.div`
 export const Icon = styled.i`
   color: ${(props) => props.theme.text};
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export const Span = styled.span`

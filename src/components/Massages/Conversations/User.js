@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import moment from "moment";
 
@@ -16,8 +16,12 @@ import {
 
 import { time } from "../../Utils/timeFormater";
 
+import { AuthContext } from "../../../context/auth";
+
 const User = ({ user }) => {
   const [data, setData] = useState(null);
+
+  const { setInbox } = useContext(AuthContext);
 
   useQuery(GET_USER, {
     onCompleted: (data) => {
@@ -29,8 +33,12 @@ const User = ({ user }) => {
     },
   });
 
+  const OpenHandler = (id) => {
+    setInbox(user.creator_id, user.participant_id, true);
+  };
+
   const { getTime } = time(moment(user.createdAt).fromNow(true));
-  console.log(getTime);
+
   return (
     <UserWrapper>
       <Left>
@@ -39,7 +47,9 @@ const User = ({ user }) => {
         </Avatar>
       </Left>
       <Right>
-        <Name>{data && data.firstName + " " + data.lastName}</Name>
+        <Name onClick={() => OpenHandler()}>
+          {data && data.firstName + " " + data.lastName}
+        </Name>
         <Text>Hello.</Text>
         <Date>{getTime.time}</Date>
       </Right>

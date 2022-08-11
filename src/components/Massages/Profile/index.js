@@ -1,18 +1,17 @@
 import { Avatar, Img, Name, On, ProfileWrapper, Span } from "./Styles";
 
-const Profile = () => {
+const Profile = ({ profile }) => {
   return (
     <ProfileWrapper>
       <Avatar>
-        <Img
-          src="https://res.cloudinary.com/dza2t1htw/image/upload/v1660142979/285283233_359965916232900_2354054775476849342_n_fu4qam.jpg"
-          alt="user"
-        />
+        <Img src={profile.avatars[0].avatar} alt="user" />
         <On></On>
       </Avatar>
 
-      <Name>Abu Huraira</Name>
-      <Span>Full stack developera</Span>
+      <Name>
+        {profile.firstName} {profile.lastName}
+      </Name>
+      <Span>{profile.bio}</Span>
     </ProfileWrapper>
   );
 };

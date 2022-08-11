@@ -1,4 +1,5 @@
-import Form from "./Form";
+import { useContext, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
 import {
   Activate,
   Avatar,
@@ -10,7 +11,6 @@ import {
   Img,
   Left,
   Name,
-  On,
   Right,
   Span,
   Wrapper,
@@ -23,40 +23,79 @@ import SendMessage from "./Form";
 
 import Chats from "./Text";
 
-const Messages = () => {
-  const id = "62ecf181a346ccb8522b870f";
+import { AuthContext } from "../../context/auth";
 
+const Messages = () => {
+  const [profile, setProfile] = useState(null);
+
+  const { openInbox, setInbox } = useContext(AuthContext);
+
+  const closeInbox = () => {
+    setInbox("", "", false);
+  };
+
+  useQuery(GET_USER, {
+    onCompleted: (data) => {
+      setProfile(data.getUserById);
+    },
+    variables: { userId: openInbox.receiver },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  console.log(openInbox);
   return (
     <Wrapper>
       <Header>
         <Left>
-          <Avatar>
-            <Img
-              src="https://res.cloudinary.com/dza2t1htw/image/upload/v1660142979/285283233_359965916232900_2354054775476849342_n_fu4qam.jpg"
-              alt="user"
-            />
-          </Avatar>
-          <Name>
-            <H5>Abu Huraria</H5>
-            <Span>Active now</Span>
-          </Name>
-          <Activate></Activate>
+          {profile && (
+            <Avatar>
+              <Img src={profile.avatars[0].avatar} alt="user" />
+            </Avatar>
+          )}
+
+          {profile && (
+            <>
+              <Name>
+                <H5>
+                  {profile.firstName} {profile.lastName}
+                </H5>
+                <Span>Active now</Span>
+              </Name>
+              <Activate></Activate>
+            </>
+          )}
         </Left>
         <Right>
-          <Close>
+          <Close onClick={closeInbox}>
             <Icon className="fa-solid fa-xmark"></Icon>
           </Close>
         </Right>
       </Header>
       <Body>
-        <Profile />
-        <Chats receiver={id} />
+        {profile && <Profile profile={profile} />}
+
+        <Chats receiver={openInbox.receiver} />
       </Body>
       <Footer>
-        <SendMessage receiver={id} />
+        <SendMessage receiver={openInbox.receiver} />
       </Footer>
     </Wrapper>
   );
 };
+
+const GET_USER = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      firstName
+      lastName
+      avatars {
+        avatar
+      }
+      bio
+    }
+  }
+`;
 
 export default Messages;

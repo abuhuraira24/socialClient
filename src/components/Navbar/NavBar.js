@@ -57,7 +57,8 @@ const Navbar = () => {
   // Get Notification
   const [notifications, setNotifications] = useState([]);
 
-  const { user, logout, themeMode, isDark } = useContext(AuthContext);
+  const { user, logout, themeMode, isDark, openInbox } =
+    useContext(AuthContext);
 
   useQuery(GET_NOTIFICATIONS, {
     onCompleted: (data) => {
@@ -141,7 +142,8 @@ const Navbar = () => {
 
   return (
     <NavLarge>
-      <Massage />
+      {openInbox.isOpen && <Massage />}
+
       <Nav issticky={sticky.toString()}>
         <NavbarContainer>
           <Logo>

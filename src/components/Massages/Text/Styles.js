@@ -69,14 +69,11 @@ export const Receiver = styled.div`
 `;
 
 export const P = styled.span`
-  /* background: ${(props) => props.theme.link};
-  font-weight: 700;
-  color: #fff;
-  padding: 10px 12px;
-  border-radius: 50px;
-  font-size: 14px; */
-
   color: ${(props) => props.color};
+`;
+
+export const Pa = styled.span`
+  color: ${(props) => props.theme.text};
 `;
 
 export const Avatar = styled.div`

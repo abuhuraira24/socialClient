@@ -19,6 +19,7 @@ const AuthContext = createContext({
   deletedPostId: (data) => {},
   UpdatedPost: (data) => {},
   bioUpdate: (data) => {},
+  setInbox: (creator, receiver, isOpen) => {},
 });
 
 const init = {
@@ -29,6 +30,7 @@ const init = {
   notification: null,
   isDark: "",
   bio: "",
+  openInbox: {},
 };
 
 if (localStorage.getItem("jwtToken")) {
@@ -124,6 +126,13 @@ const authReducer = (state, action) => {
       return {
         ...state,
         bio: action.payload,
+      };
+
+    // Open Inbox
+    case "OPEN_INBOX":
+      return {
+        ...state,
+        openInbox: action.payload,
       };
     default:
       return state;
@@ -253,6 +262,18 @@ const AuthProvider = (props) => {
       payload: data,
     });
   };
+
+  // Open Inbox
+  const setInbox = (creator, receiver, isOpen) => {
+    dispatch({
+      type: "OPEN_INBOX",
+      payload: {
+        creator,
+        receiver,
+        isOpen,
+      },
+    });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -278,6 +299,8 @@ const AuthProvider = (props) => {
         bio: state.bio,
         bioUpdate,
         Toaster,
+        openInbox: state.openInbox,
+        setInbox,
       }}
       {...props}
     />

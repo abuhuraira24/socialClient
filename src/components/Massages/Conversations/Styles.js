@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   background: ${(props) => props.theme.gray};
   box-shadow: 0px 5px 20px rgb(0 0 0 / 15%);
   padding: 1rem;
-  width: 400px;
+  width: 300px;
   height: 90vh;
   overflow: hidden;
   border-radius: 10px;
@@ -57,6 +57,7 @@ export const Name = styled.h4`
   font-weight: 500;
   margin: 0;
   color: ${(props) => props.theme.text};
+  cursor: pointer;
 `;
 
 export const Text = styled.span`
