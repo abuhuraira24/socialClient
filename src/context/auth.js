@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from "react";
 import jwtDecode from "jwt-decode";
 import toast, { Toaster } from "react-hot-toast";
 const AuthContext = createContext({
-  user: null,
+  user: [],
   comments: null,
   likes: null,
   posts: null,
@@ -20,10 +20,12 @@ const AuthContext = createContext({
   UpdatedPost: (data) => {},
   bioUpdate: (data) => {},
   setInbox: (creator, receiver, isOpen) => {},
+  getMessages: (data) => {},
+  getUserInfo: (data) => {},
 });
 
 const init = {
-  user: null,
+  user: [],
   searchText: null,
   comments: null,
   posts: null,
@@ -31,6 +33,8 @@ const init = {
   isDark: "",
   bio: "",
   openInbox: {},
+  messages: [],
+  userInfo: [],
 };
 
 if (localStorage.getItem("jwtToken")) {
@@ -133,6 +137,16 @@ const authReducer = (state, action) => {
       return {
         ...state,
         openInbox: action.payload,
+      };
+    case "GET_MESSAGE":
+      return {
+        ...state,
+        messages: action.payload,
+      };
+    case "USER_INFO":
+      return {
+        ...state,
+        userInfo: action.payload,
       };
     default:
       return state;
@@ -274,6 +288,20 @@ const AuthProvider = (props) => {
       },
     });
   };
+
+  // get Messages
+  const getMessages = (data) => {
+    dispatch({
+      type: "GET_MESSAGE",
+      payload: data,
+    });
+  };
+  const getUserInfo = (data) => {
+    dispatch({
+      type: "USER_INFO",
+      payload: data,
+    });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -301,6 +329,10 @@ const AuthProvider = (props) => {
         Toaster,
         openInbox: state.openInbox,
         setInbox,
+        getMessages,
+        messages: state.messages,
+        userInfo: state.userInfo,
+        getUserInfo,
       }}
       {...props}
     />

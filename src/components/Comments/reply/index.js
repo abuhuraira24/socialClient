@@ -21,7 +21,7 @@ const Reply = ({ commentId }) => {
 
   const { user } = useContext(AuthContext);
 
-  const { id } = useParams();
+  const { postId, userId } = useParams();
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
@@ -49,13 +49,14 @@ const Reply = ({ commentId }) => {
 
     addReply({
       variables: {
-        postId: id,
+        postId: postId,
         commentId: commentId,
         body: value,
       },
     });
     socket.emit("getReply", {
-      userId: id,
+      userId: user.id,
+      creatorId: user.id,
       username: user.firstName + " " + user.lastName,
       body: value,
       createdAt: new Date().toISOString(),

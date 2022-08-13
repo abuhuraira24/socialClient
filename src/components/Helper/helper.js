@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-
+import jwtDecode from "jwt-decode";
 export const Avatar = (postId) => {
   const [users, setUsers] = useState();
   useQuery(FET_ALL_USERS, {
@@ -42,5 +42,14 @@ const FET_ALL_USERS = gql`
 
 export const getCommnetAvatar = (userId, users) => {
   let user = users?.find((u) => u.id === userId);
-  return user
+  return user;
 };
+
+// export const userId = () => {
+//   const token = localStorage.getItem("jwtToken");
+//   if (token) {
+//     const user = jwtDecode(token);
+
+//     return user;
+//   }
+// };

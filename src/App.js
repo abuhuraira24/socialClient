@@ -86,7 +86,7 @@ function App() {
             />
             <Route path="/search/people" element={<People />} />
             <Route
-              path="/post/:id"
+              path="/post/:postId/:userId"
               element={
                 <PrivatRouter rediredct="/login">
                   <PostDetails />

@@ -17,18 +17,20 @@ import {
 } from "./FollowerStyles";
 import { NavLink } from "react-router-dom";
 
-import getAvatarById from "../../hooks/avatarById";
-
 const User = (user) => {
   let [isFollow, setFollow] = useState(false);
+  const [avatar, setAvatar] = useState("");
 
-  let { data, loading } = useQuery(GET_AVATAE_BY_ID, {
+  useQuery(GET_AVATAE_BY_ID, {
+    onCompleted: (data) => {
+      if (data) {
+        setAvatar(data.getUserById.avatars[0].avatar);
+      }
+    },
     variables: {
       userId: user.user.id,
     },
   });
-
-  let avatar = getAvatarById(data, loading);
 
   let [addFollower] = useMutation(ADD_FOLLOWER, {
     onCompleted: (data) => {
@@ -52,7 +54,7 @@ const User = (user) => {
       <Avatars>
         <NavLink to={`profile/${user.user.id}`}>
           <Avatar>
-            {avatar.images && <Img src={avatar.images.avatar} alt="user" />}
+            {avatar && <Img src={avatar} alt="user" />}
 
             <Empty>
               <UserIcon className="fa-solid fa-user"></UserIcon>

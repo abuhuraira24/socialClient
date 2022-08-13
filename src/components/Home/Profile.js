@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import { gql, useQuery } from "@apollo/client";
 
 import {
@@ -13,13 +15,13 @@ import {
   CoverImage,
 } from "./ProfileStyles";
 
-import decoder from "jwt-decode";
+import { AuthContext } from "../../context/auth";
+
 import { Link } from "react-router-dom";
 const Profile = () => {
-  let token = localStorage.getItem("jwtToken");
-
-  let user = decoder(token);
   const { data } = useQuery(GET_USER);
+
+  const { user } = useContext(AuthContext);
 
   const { data: bio } = useQuery(GET_BIO_DATA, {
     variables: { userId: user.id },

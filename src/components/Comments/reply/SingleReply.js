@@ -38,8 +38,8 @@ const SingleReply = ({ reply }) => {
     },
   });
 
-
   const { getTime } = time(moment(reply.createdAt).fromNow(true));
+
   return (
     <Wrapper>
       <CommentWrapper>

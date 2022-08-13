@@ -33,34 +33,39 @@ import SingleComment from "../Comments";
 
 import { AuthContext } from "../../context/auth";
 
-import { Avatar } from "../Helper/helper";
-
 import CommentBar from "../commentInput/CommentInput";
 
 import { CommentsArea, UserPic, CircleImage } from "../Post/CartStyles";
 
-import getAvatar from "../../hooks/useAvatar";
-
 import { BackButton } from "./Styles";
 
 import Profile from "./Profile";
+import { socket } from "../../hooks/socketio";
 
 const PostDetails = () => {
   // Commet value
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState([]);
 
-  let [image, setImage] = useState(null);
+  let [image, setImage] = useState("");
 
   const [toggle, setToggle] = useState(false);
 
-  const { getComments, comments, themeMode } = useContext(AuthContext);
+  const { getComments, comments, themeMode, userInfo } =
+    useContext(AuthContext);
 
-  const postId = useParams().id;
+  const { postId, userId } = useParams();
 
-  useQuery(GET_USER_PIC, {
+  console.log(userId);
+  useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
-      const { images } = getAvatar(data);
-      setImage(images);
+      console.log(data);
+      if (data) {
+        setImage(data.getUserById.avatars[0].avatar);
+      }
+    },
+    variables: { userId: userId },
+    onError(err) {
+      console.log(err);
     },
   });
 
@@ -86,8 +91,6 @@ const PostDetails = () => {
     },
   });
 
-  let avatar = Avatar(post && post.userId);
-
   const theme = useTheme();
 
   useEffect(() => {
@@ -108,6 +111,11 @@ const PostDetails = () => {
     }
   };
 
+  useEffect(() => {
+    socket.off("getComment").on("getComment", (data) => {
+      getComments([data, ...comments]);
+    });
+  }, [getComments, comments]);
   return (
     <Wrapper>
       {/* <NavBar /> */}
@@ -123,9 +131,7 @@ const PostDetails = () => {
               <Left>
                 <UserImage>
                   <Link to={`/profile/${post?.userId}`}>
-                    {typeof avatar !== "function" && (
-                      <PostAvatar src={avatar} alt="post" />
-                    )}
+                    {image && <PostAvatar src={image} alt="post" />}
                   </Link>
                 </UserImage>
                 <AuthorName>
@@ -151,8 +157,8 @@ const PostDetails = () => {
             <Comments>
               <CommentsArea>
                 <UserPic>
-                  {image && image.avatar && (
-                    <CircleImage src={image.avatar} alt="user" />
+                  {userInfo.length !== 0 && (
+                    <CircleImage src={userInfo.avatars[0].avatar} alt="user" />
                   )}
                 </UserPic>
                 <CommentBar postId={postId} />
@@ -164,7 +170,7 @@ const PostDetails = () => {
             </Comments>
           </Col>
           <Col w="30" mdnone="true">
-            {post && <Profile post={post} />}
+            {post.length !== 0 && <Profile post={post} />}
           </Col>
         </Row>
       </Container>
@@ -199,11 +205,12 @@ const GET_COMMENTS = gql`
     }
   }
 `;
-const GET_USER_PIC = gql`
-  query {
-    getUser {
-      avatar
-      cover
+const GET_AVATAE_BY_ID = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;

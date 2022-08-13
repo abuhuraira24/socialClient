@@ -30,11 +30,7 @@ import moment from "moment";
 
 import { AuthContext } from "../../context/auth";
 
-import { Avatar } from "../Helper/helper";
-
 import CommentBar from "../commentInput/CommentInput";
-
-import getAvatar from "../../hooks/useAvatar";
 
 import SingleComment from "../Comments";
 
@@ -53,8 +49,6 @@ const Post = ({ ...props }) => {
 
   let { data } = props;
 
-  let avatar = Avatar(data.userId);
-
   let sortText;
   let text;
 
@@ -70,11 +64,13 @@ const Post = ({ ...props }) => {
 
   // Query User avata or data
 
-  useQuery(GET_USER_PIC, {
+  useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
-      const { images } = getAvatar(data);
-      setImage(images);
+      if (data) {
+        setImage(data.getUserById.avatars[0].avatar);
+      }
     },
+    variables: { userId: data.userId },
     onError(error) {
       console.log(error);
     },
@@ -95,11 +91,7 @@ const Post = ({ ...props }) => {
     <CardBody className="mb-4 ">
       <Users>
         <Left>
-          <UserPic>
-            {typeof avatar !== "function" && (
-              <CircleImage src={avatar} alt="user" />
-            )}
-          </UserPic>
+          <UserPic>{image && <CircleImage src={image} alt="user" />}</UserPic>
 
           <Link to={`/profile/${data.userId}`}>
             <UserName>{data.firstName + " " + data.lastName}</UserName>
@@ -120,7 +112,9 @@ const Post = ({ ...props }) => {
         {text}
         {sortText && (
           <More>
-            <NavLink to={`/post/${data._id}`}>See more...</NavLink>
+            <NavLink to={`/post/${data._id}/${data.userId}`}>
+              See more...
+            </NavLink>
           </More>
         )}
       </CardText>
@@ -137,7 +131,7 @@ const Post = ({ ...props }) => {
           )}
 
           <Comment onClick={togglerInput}>
-            <NavLink to={`/post/${data._id}`}>
+            <NavLink to={`/post/${data._id}/${data.userId}`}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path d="M511.1 63.1v287.1c0 35.25-28.75 63.1-64 63.1h-144l-124.9 93.68c-7.875 5.75-19.12 .0497-19.12-9.7v-83.98h-96c-35.25 0-64-28.75-64-63.1V63.1c0-35.25 28.75-63.1 64-63.1h384C483.2 0 511.1 28.75 511.1 63.1z" />
               </svg>
@@ -166,11 +160,12 @@ const Post = ({ ...props }) => {
     </CardBody>
   );
 };
-const GET_USER_PIC = gql`
-  query {
-    getUser {
-      avatar
-      cover
+const GET_AVATAE_BY_ID = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;

@@ -51,7 +51,7 @@ const SingleComment = ({ c }) => {
   };
 
   // post id
-  const { id } = useParams();
+  const { postId } = useParams();
 
   // Get Replys
   useQuery(GET_REPLY, {
@@ -59,7 +59,7 @@ const SingleComment = ({ c }) => {
       setReplys(data.getReply);
     },
     variables: {
-      postId: id,
+      postId: postId,
       commentId: c._id,
     },
     onError(error) {
@@ -68,11 +68,17 @@ const SingleComment = ({ c }) => {
   });
 
   useEffect(() => {
-    socket.on("sendReply", (data) => {
+    socket.off("sendReply").on("sendReply", (data) => {
       setReplys((prev) => [...prev, data]);
       console.log(data);
     });
   });
+
+  useEffect(() => {
+    socket.off("reply").on("reply", (data) => {
+      setReplys((prev) => [...prev, data]);
+    });
+  }, []);
 
   return (
     <Wrapper>

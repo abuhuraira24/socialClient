@@ -3,15 +3,15 @@ import styled from "styled-components";
 export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
-  max-width: 1450px;
+  max-width: ${(props) => (props.fluid ? "100%" : "1450px")};
   margin: auto;
 
   margin: ${(props) => (props.margin ? "55px auto" : "auto")};
   position: relative;
   flex-direction: ${(props) => (props.direction === "column" ? "column" : "")};
   @media (max-width: 1200px) {
-    max-width: 960px;
-    padding: 0px 28px;
+    max-width: ${(props) => (props.fluid ? "100%" : "960")};
+    padding: 0;
   }
   @media (max-width: 576px) {
     padding: 0;

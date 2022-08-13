@@ -32,12 +32,10 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 
 // import socket from "../../hooks/socketio";
 
-import useAvatar from "../../hooks/useAvatar";
-
 import SearchPanel from "../SearchBar";
-import Conversations from "../Massages/Conversations/Conversations";
 
-import Massage from "../Massages/Messages";
+import { socket } from "../../hooks/socketio";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   // Theme
@@ -45,6 +43,9 @@ const Navbar = () => {
 
   // Toggler
   const [isToggle, setToggle] = useState(false);
+
+  // Get user Data
+  const [userInfo, setUserInfo] = useState([]);
 
   // Stickey Hader
   const [sticky, setSticky] = useState(false);
@@ -71,9 +72,16 @@ const Navbar = () => {
   let [seenNotification] = useMutation(SEE_NOTIFICATION);
 
   // Query User avata or data
-  const { data } = useQuery(GET_USER_PIC);
+  useQuery(GET_AVATAE_BY_ID, {
+    onCompleted: (data) => {
+      setUserInfo(data.getUserById);
+    },
+    variables: { userId: user.id },
+    onError(err) {
+      console.log(err);
+    },
+  });
 
-  const { images } = useAvatar(data);
   // User account Toggler
   const toggle = () => {
     if (isToggle) {
@@ -140,10 +148,14 @@ const Navbar = () => {
     themeMode();
   }, []);
 
+  useEffect(() => {
+    socket.on("getUsers", (data) => {
+      console.log(data);
+    });
+  }, []);
+
   return (
     <NavLarge>
-      {openInbox.isOpen && <Massage />}
-
       <Nav issticky={sticky.toString()}>
         <NavbarContainer>
           <Logo>
@@ -170,19 +182,17 @@ const Navbar = () => {
             )}
 
             <HeaderItem>
-              <Icons onClick={messageToggler}>
-                <Iconn className="fa-solid fa-message"></Iconn>
-              </Icons>
-              {message && <Conversations />}
+              {/* <Link to="/messanger">
+                <Icons>
+                  <Iconn className="fa-solid fa-message"></Iconn>
+                </Icons>
+              </Link> */}
+
+              {/* {message && <Conversations />} */}
             </HeaderItem>
 
             <HeaderItem>
               <Icons onClick={notificationToggler}>
-                {data && data.getUser.readNotification !== 0 ? (
-                  <Count> {data.getUser.readNotification} </Count>
-                ) : (
-                  ""
-                )}
                 <Iconn className="fa-solid fa-bell"></Iconn>
               </Icons>
               {toggleNoti && <Notification />}
@@ -192,13 +202,13 @@ const Navbar = () => {
               <>
                 <SmallAccount onClick={toggle}>
                   <Avatar>
-                    {images.avatar && (
-                      <NavAvatar src={images.avatar} alt="user" />
+                    {userInfo.length !== 0 && (
+                      <NavAvatar src={userInfo.avatars[0].avatar} alt="user" />
                     )}
 
-                    {!images.avatar && (
+                    {/* {!userInfo.avatars[0] && (
                       <UserIconn className="fa-solid fa-user"></UserIconn>
-                    )}
+                    )} */}
                   </Avatar>
 
                   <Ul isToggle={isToggle} className="scrollbar-hidden">
@@ -223,12 +233,12 @@ const Navbar = () => {
   );
 };
 
-const GET_USER_PIC = gql`
-  query {
-    getUser {
-      avatar
-      cover
-      readNotification
+const GET_AVATAE_BY_ID = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;

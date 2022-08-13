@@ -8,16 +8,13 @@ import { Img } from "../styles";
 
 import { Name, User, Users } from "../Friends/elemetStyles";
 
-import { avatar } from "../../../hooks/avatar";
-
 const Friend = (user) => {
   let [image, setIamge] = useState("");
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
       if (data) {
-        let img = avatar(data.getUserById.avatars);
-        setIamge(img);
+        setIamge(data.getUserById.avatars[0].avatar);
       }
     },
     variables: {

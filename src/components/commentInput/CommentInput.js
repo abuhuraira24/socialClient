@@ -5,6 +5,7 @@ import { gql, useMutation } from "@apollo/client";
 import { CommentBox, Button, CommentInput, Form } from "../Post/CartStyles";
 
 import { AuthContext } from "../../context/auth";
+import { socket } from "../../hooks/socketio";
 
 const CommentBar = ({ postId }) => {
   // Commet value
@@ -36,6 +37,12 @@ const CommentBar = ({ postId }) => {
 
     setValues({
       body: "",
+    });
+    socket.emit("createComment", {
+      userId: user.id,
+      postId: postId,
+      body: value.body,
+      username: user.firstName + " " + user.lastName,
     });
 
     addCommnet();

@@ -17,21 +17,14 @@ import {
 import MobileMenu from "./MobileMenu";
 
 const SmallNavbar = () => {
-
-
   const [sticky, setSticky] = useState(false);
 
-
-
   const { user } = useContext(AuthContext);
-
-
-
 
   const isHeaderSticky = () => {
     if (window.scrollY >= 1000) {
       setSticky(true);
-    }  else {
+    } else {
       setSticky(false);
     }
   };
@@ -40,7 +33,6 @@ const SmallNavbar = () => {
   }, []);
 
   window.addEventListener("scroll", isHeaderSticky);
-
 
   return (
     <NavSm>
@@ -57,7 +49,6 @@ const SmallNavbar = () => {
                 <CreatrAccount to="/register">Create Account</CreatrAccount>
               </>
             )}
-           
           </RightNav>
         </NavbarContainer>
 
