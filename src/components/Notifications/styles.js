@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 export const Wrapper = styled.div`
   position: absolute;
   background: ${(props) => props.theme.gray};
@@ -10,6 +12,13 @@ export const Wrapper = styled.div`
   padding: 1rem;
   right: 0px;
   padding-bottom: 2rem;
+  height: 80vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   @media (max-width: 768px) {
     position: relative;
     width: 100%;
@@ -41,11 +50,11 @@ export const SeeAll = styled.span`
   color: ${(props) => props.theme.text};
 `;
 
-export const NotWrapper = styled.div`
-  margin-top: 1rem;
-`;
+export const NotWrapper = styled.div``;
 
-export const Avatars = styled.div``;
+export const Avatars = styled.div`
+  position: relative;
+`;
 
 export const Avatar = styled.div`
   width: 40px;
@@ -63,6 +72,7 @@ export const Body = styled.div`
 
 export const Img = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 export const Single = styled.div`
@@ -85,4 +95,40 @@ export const Time = styled.div`
 export const Empty = styled.p`
   text-align: center;
   color: ${(props) => props.theme.text};
+`;
+
+export const Heart = styled.i`
+  color: red;
+  display: inline-block;
+`;
+
+export const Comment = styled.i`
+  color: green;
+  display: inline-block;
+`;
+
+export const Icon = styled.div`
+  position: absolute;
+  left: 60%;
+  color: green;
+  top: 60%;
+  background: #fff;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  border-radius: 50px;
+`;
+
+export const Follow = styled.i`
+  color: #000;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+`;
+
+export const Linkk = styled(Link)`
+  margin: 0.5rem 0;
 `;

@@ -1,6 +1,8 @@
+import { useContext } from "react";
+
 import { Link, useParams } from "react-router-dom";
 
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 import {
   CommentBody,
@@ -18,6 +20,10 @@ import {
   Reply,
   CountReply,
   Arrow,
+  Love,
+  Dot,
+  Left,
+  Right,
 } from "./CommentsStyles";
 
 import moment from "moment";
@@ -30,10 +36,16 @@ import { time } from "../Utils/timeFormater";
 
 import { socket } from "../../hooks/socketio";
 
+import { AuthContext } from "../../context/auth";
+
 const SingleComment = ({ c }) => {
   const [toggle, setToggle] = useState(false);
 
   const [replys, setReplys] = useState([]);
+
+  const [isReact, setIsReact] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   let { data } = useQuery(GET_USER, {
     variables: {
@@ -50,23 +62,6 @@ const SingleComment = ({ c }) => {
     setToggle(true);
   };
 
-  // post id
-  const { postId } = useParams();
-
-  // Get Replys
-  useQuery(GET_REPLY, {
-    onCompleted: (data) => {
-      setReplys(data.getReply);
-    },
-    variables: {
-      postId: postId,
-      commentId: c._id,
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
-
   useEffect(() => {
     socket.off("sendReply").on("sendReply", (data) => {
       setReplys((prev) => [...prev, data]);
@@ -80,58 +75,107 @@ const SingleComment = ({ c }) => {
     });
   }, []);
 
+  const [addLike, { loading }] = useMutation(REACT_TO_COMMENT, {
+    onCompleted: (data) => {
+      if (data.reactionTocomment.likes.length !== 0) {
+        setIsReact(true);
+      } else {
+        setIsReact(false);
+      }
+      console.log(data);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    addLike({ variables: { commentId: c._id, userId: user.id } });
+  }, [addLike, user, c]);
+
+  const commentLikeHandler = (commentId) => {
+    addLike({ variables: { commentId, userId: user.id } });
+  };
+
   return (
     <Wrapper>
-      <CommentWrapper>
-        <UserImage>
-          <Image>
-            <Link to={`/profile/${c.userId}`}>
-              <Picture
-                src={
-                  data && data.getUserById && data.getUserById.avatars[0].avatar
-                }
-                alt="abu"
-              />
-            </Link>
-          </Image>
-        </UserImage>
-        <CommentBody>
-          <P>
-            <Link to={`/profile/${c.userId}`}>
-              <Name>{c.username}</Name>
-            </Link>
-            {c.body}
-          </P>
-          <TimeLine>
-            <Like>
-              <Span>Like</Span>
-            </Like>
-            <Reply>
-              <Span onClick={toggleHandler}>Reply</Span>
-            </Reply>
-            <Time>
-              <Span>{getTime.time}</Span>
-            </Time>
-          </TimeLine>
-          {replys.length !== 0 && !toggle && (
-            <CountReply>
-              <Span
-                style={{ cursor: "pointer", padding: "0" }}
-                onClick={toggleHandler}
-              >
-                <Arrow className="fa-solid fa-arrow-turn-up"></Arrow>
-                {replys.length} Replies
-              </Span>
-            </CountReply>
-          )}
-          {toggle &&
-            replys.length !== 0 &&
-            replys.map((reply, index) => (
-              <SingleReply key={index} reply={reply} />
-            ))}
-          {toggle && <ReplyComment commentId={c._id} />}
-        </CommentBody>
-      </CommentWrapper>
+      <Left>
+        <CommentWrapper>
+          <UserImage>
+            <Image>
+              <Link to={`/profile/${c.userId}`}>
+                <Picture
+                  src={`${process.env.REACT_APP_SERVER_URL}/${
+                    data &&
+                    data.getUserById &&
+                    data.getUserById.avatars[0].avatar
+                  }`}
+                  alt="abu"
+                />
+              </Link>
+            </Image>
+          </UserImage>
+          <CommentBody>
+            <P>
+              <Link to={`/profile/${c.userId}`}>
+                <Name>
+                  {data &&
+                    data.getUserById &&
+                    data.getUserById.firstName +
+                      " " +
+                      data.getUserById.lastName}
+                </Name>
+              </Link>
+              {c.text}
+            </P>
+            <TimeLine>
+              {!loading && (
+                <Like onClick={() => commentLikeHandler(c._id)}>
+                  {isReact ? (
+                    <Span>
+                      <Love className="fa-solid fa-heart"></Love>
+                    </Span>
+                  ) : (
+                    <Span>
+                      <i className="fa-solid fa-heart"></i>
+                    </Span>
+                  )}
+                </Like>
+              )}
+
+              <Reply>
+                <Span onClick={toggleHandler}>Reply</Span>
+              </Reply>
+              <Time>
+                <Span>{getTime.time}</Span>
+              </Time>
+            </TimeLine>
+            {replys.length !== 0 && !toggle && (
+              <CountReply>
+                <Span
+                  style={{ cursor: "pointer", padding: "0" }}
+                  onClick={toggleHandler}
+                >
+                  <Arrow className="fa-solid fa-arrow-turn-up"></Arrow>
+                  {replys.length} Replies
+                </Span>
+              </CountReply>
+            )}
+            {toggle &&
+              replys.length !== 0 &&
+              replys.map((reply, index) => (
+                <SingleReply key={index} reply={reply} />
+              ))}
+            {toggle && <ReplyComment commentId={c._id} />}
+          </CommentBody>
+        </CommentWrapper>
+      </Left>
+
+      <Right>
+        <Dot>
+          <i className="fa-solid fa-ellipsis"></i>
+        </Dot>
+      </Right>
     </Wrapper>
   );
 };
@@ -139,6 +183,8 @@ const SingleComment = ({ c }) => {
 const GET_USER = gql`
   query ($userId: ID!) {
     getUserById(userId: $userId) {
+      firstName
+      lastName
       avatars {
         avatar
       }
@@ -146,14 +192,13 @@ const GET_USER = gql`
   }
 `;
 
-const GET_REPLY = gql`
-  query ($postId: ID!, $commentId: ID!) {
-    getReply(postId: $postId, commentId: $commentId) {
-      username
-      body
-      _id
-      userId
-      createdAt
+const REACT_TO_COMMENT = gql`
+  mutation ($commentId: ID!, $userId: ID!) {
+    reactionTocomment(commentId: $commentId, userId: $userId) {
+      postId
+      likes {
+        createdAt
+      }
     }
   }
 `;

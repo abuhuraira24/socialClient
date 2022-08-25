@@ -35,17 +35,21 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import SearchPanel from "../SearchBar";
 
 import { socket } from "../../hooks/socketio";
-import { Link } from "react-router-dom";
+
+import axios from "axios";
 
 const Navbar = () => {
   // Theme
   const [dark, setDark] = useState("light");
 
+  // Unread Notifications
+  const [unRead, setUnReacd] = useState(null);
+
   // Toggler
   const [isToggle, setToggle] = useState(false);
 
   // Get user Data
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState(null);
 
   // Stickey Hader
   const [sticky, setSticky] = useState(false);
@@ -58,8 +62,7 @@ const Navbar = () => {
   // Get Notification
   const [notifications, setNotifications] = useState([]);
 
-  const { user, logout, themeMode, isDark, openInbox } =
-    useContext(AuthContext);
+  const { user, logout, themeMode, isDark } = useContext(AuthContext);
 
   useQuery(GET_NOTIFICATIONS, {
     onCompleted: (data) => {
@@ -95,6 +98,7 @@ const Navbar = () => {
   // Notification Toggler
 
   const notificationToggler = () => {
+    setUnReacd(null);
     if (toggleNoti) {
       setToggleNoti(false);
     } else {
@@ -149,10 +153,33 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    socket.on("getUsers", (data) => {
-      console.log(data);
-    });
+    socket.on("getUsers", (data) => {});
   }, []);
+
+  // fetch unread notifications
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/getisread/${user.id}`)
+      .then((res) => {
+        if (res.data.unread) {
+          setUnReacd(res.data.unread);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    socket.off("notiCounter").on("notiCounter", (data) => {
+      setUnReacd((prev) => prev + data.count);
+    });
+  });
+
+  const logOutHandler = () => {
+    logout();
+    localStorage.removeItem("jwtToken");
+  };
 
   return (
     <NavLarge>
@@ -193,6 +220,7 @@ const Navbar = () => {
 
             <HeaderItem>
               <Icons onClick={notificationToggler}>
+                {unRead && unRead !== 0 && <Count>{unRead}</Count>}
                 <Iconn className="fa-solid fa-bell"></Iconn>
               </Icons>
               {toggleNoti && <Notification />}
@@ -202,13 +230,15 @@ const Navbar = () => {
               <>
                 <SmallAccount onClick={toggle}>
                   <Avatar>
-                    {userInfo.length !== 0 && (
-                      <NavAvatar src={userInfo.avatars[0].avatar} alt="user" />
+                    {userInfo && userInfo.avatars.length !== 0 && (
+                      <NavAvatar
+                        src={`${process.env.REACT_APP_SERVER_URL}/${userInfo.avatars[0].avatar}`}
+                      ></NavAvatar>
                     )}
 
-                    {/* {!userInfo.avatars[0] && (
-                      <UserIconn className="fa-solid fa-user"></UserIconn>
-                    )} */}
+                    {userInfo && userInfo.avatars.length === 0 && (
+                      <NavAvatar src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"></NavAvatar>
+                    )}
                   </Avatar>
 
                   <Ul isToggle={isToggle} className="scrollbar-hidden">
@@ -219,7 +249,7 @@ const Navbar = () => {
                     <Li to="/createpost">Create Post</Li>
                     <Li to="/setting">Setting</Li> */}
 
-                    <Li to="" onClick={logout}>
+                    <Li to="" onClick={logOutHandler}>
                       Logout
                     </Li>
                   </Ul>

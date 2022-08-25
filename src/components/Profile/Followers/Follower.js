@@ -11,7 +11,16 @@ const MyFollower = ({ user }) => {
     },
     variables: { userId: user.userId },
   });
-  return <Image>{avatar && <Img src={avatar} alt="avatar" />}</Image>;
+  return (
+    <Image>
+      {avatar && (
+        <Img
+          src={`${process.env.REACT_APP_SERVER_URL}/${avatar}`}
+          alt="avatar"
+        />
+      )}
+    </Image>
+  );
 };
 
 // Get Single user

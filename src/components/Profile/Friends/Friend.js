@@ -25,7 +25,11 @@ const Friend = (user) => {
   return (
     <Users>
       <Link to={`/profile/${user.user.userId}`}>
-        <User>{image && <Img src={image} alt="" />}</User>
+        <User>
+          {image && (
+            <Img src={`${process.env.REACT_APP_SERVER_URL}/${image}`} alt="" />
+          )}
+        </User>
       </Link>
       <Link to={`/profile/${user.user.userId}`}>
         <Name>{user.user.name}</Name>

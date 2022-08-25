@@ -205,3 +205,18 @@ export const H6 = styled.h6`
 `;
 
 export const Delete = styled.div``;
+
+export const ImageWrapper = styled.div`
+  height: 20rem;
+  overflow: hidden;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+`;
+
+export const SubText = styled.p`
+  font-size: 16px;
+  display: inline-block;
+  font-weight: 200;
+`;

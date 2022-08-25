@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
 import Post from "./Post";
 
@@ -14,7 +14,7 @@ const PostCart = () => {
     offset: 0,
   });
 
-  let { getPosts, posts, Toaster } = useContext(AuthContext);
+  let { getPosts, posts, Toaster, user } = useContext(AuthContext);
 
   // Lazy Query
   let [getDog] = useLazyQuery(FETCH_POSTT, {
@@ -31,7 +31,7 @@ const PostCart = () => {
   useEffect(() => {
     getDog();
     setValues({
-      limit: 10,
+      limit: 100,
       offset: 0,
     });
   }, [getDog]);
@@ -43,7 +43,7 @@ const PostCart = () => {
         {posts &&
           typeof posts !== "undefined" &&
           Object.keys(posts).length !== 0 &&
-          posts.map((post, index) => <Post key={index} data={post} />)}
+          posts.map((post, index) => <Post key={index} post={post} />)}
       </Card>
       {/* {posts && typeof posts !== "undefined" && posts.length > 9 && (
         <LoadMore>
@@ -64,17 +64,13 @@ const FETCH_POSTT = gql`
       lastName
       _id
       body
-      comments {
-        username
-        body
-        createdAt
-        userId
-      }
       likes {
         userId
         createdAt
       }
-      readTime
+      postType
+      image
+
       createdAt
     }
   }

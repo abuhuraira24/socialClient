@@ -23,9 +23,15 @@ import {
   Wrapper,
   Right,
   Icon,
+  SeeMore,
+  SubText,
+  ImageWrapper,
+  Images,
 } from "./Styles";
 
 import { Container, Row, Col } from "../../Styles/ElementsStyles";
+
+import axios from "axios";
 
 import moment from "moment";
 
@@ -40,27 +46,35 @@ import { CommentsArea, UserPic, CircleImage } from "../Post/CartStyles";
 import { BackButton } from "./Styles";
 
 import Profile from "./Profile";
+
 import { socket } from "../../hooks/socketio";
+
+import Modal from "./Modal";
 
 const PostDetails = () => {
   // Commet value
   const [post, setPost] = useState([]);
 
-  let [image, setImage] = useState("");
+  let [author, setAuthor] = useState("");
+  let [userAvata, setUserAvatar] = useState("");
 
   const [toggle, setToggle] = useState(false);
 
-  const { getComments, comments, themeMode, userInfo } =
-    useContext(AuthContext);
+  const [comments, setComments] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const [visible, setVisible] = useState(20);
+
+  const { themeMode, user } = useContext(AuthContext);
 
   const { postId, userId } = useParams();
 
-  console.log(userId);
+  // Author
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
-      console.log(data);
       if (data) {
-        setImage(data.getUserById.avatars[0].avatar);
+        setAuthor(data.getUserById.avatars[0].avatar);
       }
     },
     variables: { userId: userId },
@@ -69,6 +83,18 @@ const PostDetails = () => {
     },
   });
 
+  // User
+  useQuery(GET_AVATAE_BY_ID, {
+    onCompleted: (data) => {
+      if (data) {
+        setUserAvatar(data.getUserById.avatars[0].avatar);
+      }
+    },
+    variables: { userId: user.id },
+    onError(err) {
+      console.log(err);
+    },
+  });
   // Get single post
   useQuery(GET_POST, {
     onCompleted: (data) => {
@@ -81,7 +107,7 @@ const PostDetails = () => {
 
   useQuery(GET_COMMENTS, {
     onCompleted: (data) => {
-      getComments(data.getSinglePost.comments);
+      setComments(data.getSinglePost.comments);
     },
     variables: {
       postId: postId,
@@ -111,70 +137,117 @@ const PostDetails = () => {
     }
   };
 
+  // Fetch comments
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/getComments/${postId}/`)
+      .then((res) => {
+        setComments(res.data.comments);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }, [postId]);
+
   useEffect(() => {
     socket.off("getComment").on("getComment", (data) => {
-      getComments([data, ...comments]);
+      setComments((prev) => [data, ...comments]);
     });
-  }, [getComments, comments]);
+  }, [comments]);
+
+  useEffect(() => {
+    socket.off("creatorComment").on("creatorComment", (comment) => {
+      setComments((prev) => [comment, ...comments]);
+    });
+  }, [comments]);
+
+  console.log(post);
   return (
-    <Wrapper>
-      {/* <NavBar /> */}
-      <Container>
-        <BackButton>
-          <Link to="/">
-            <ArrowLeft className="fa-solid fa-arrow-left"></ArrowLeft>
-          </Link>
-        </BackButton>
-        <Row>
-          <Col w="70" sm="100">
-            <UserProfile>
-              <Left>
-                <UserImage>
-                  <Link to={`/profile/${post?.userId}`}>
-                    {image && <PostAvatar src={image} alt="post" />}
-                  </Link>
-                </UserImage>
-                <AuthorName>
-                  <Link to={`/profile/${post?.userId}`}>
-                    <H5>{post && post.firstName + " " + post.lastName}</H5>
-                  </Link>
+    <Modal>
+      <Wrapper>
+        {/* <NavBar /> */}
+        <Container>
+          <Row>
+            <Col w="100" sm="100">
+              <UserProfile>
+                <Left>
+                  <UserImage>
+                    <Link to={`/profile/${post?.userId}`}>
+                      {author && (
+                        <PostAvatar
+                          src={`${process.env.REACT_APP_SERVER_URL}/${author}`}
+                          alt="post"
+                        />
+                      )}
+                    </Link>
+                  </UserImage>
+                  <AuthorName>
+                    <Link
+                      style={{ display: "flex" }}
+                      to={`/profile/${post?.userId}`}
+                    >
+                      <H5>{post && post.firstName + " " + post.lastName}</H5>
 
-                  <Span>{post && moment(post.createdAt).fromNow(true)}</Span>
-                </AuthorName>
-              </Left>
-              <Right>
-                <Icon
-                  onClick={postToggler}
-                  className="fa-solid fa-ellipsis"
-                ></Icon>
-                <UpdatedPost toggler={toggle} post={post} />
-              </Right>
-            </UserProfile>
+                      {post && post.postType === "profile" && (
+                        <SubText>{post.body}</SubText>
+                      )}
+                    </Link>
 
-            <PostBody>
-              <P>{post && post.body}</P>
-            </PostBody>
-            <Comments>
-              <CommentsArea>
-                <UserPic>
-                  {userInfo.length !== 0 && (
-                    <CircleImage src={userInfo.avatars[0].avatar} alt="user" />
-                  )}
-                </UserPic>
-                <CommentBar postId={postId} />
-              </CommentsArea>
+                    <Span>{post && moment(post.createdAt).fromNow(true)}</Span>
+                  </AuthorName>
+                </Left>
+                <Right>
+                  <Icon
+                    onClick={postToggler}
+                    className="fa-solid fa-ellipsis"
+                  ></Icon>
+                  <UpdatedPost toggler={toggle} post={post} />
+                </Right>
+              </UserProfile>
 
-              {comments?.map((c, index) => (
-                <SingleComment key={index} c={c} />
-              ))}
-            </Comments>
-          </Col>
-          <Col w="30" mdnone="true">
-            {post.length !== 0 && <Profile post={post} />}
-          </Col>
-        </Row>
-      </Container>
-    </Wrapper>
+              {post && post.postType === "profile" && (
+                <ImageWrapper>
+                  <Images
+                    src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
+                  />
+                </ImageWrapper>
+              )}
+
+              {post && post.postType === "normal" && (
+                <PostBody>
+                  <P>{post && post.body}</P>
+                </PostBody>
+              )}
+
+              <Comments>
+                <CommentsArea>
+                  <UserPic>
+                    {userAvata && (
+                      <CircleImage
+                        src={`${process.env.REACT_APP_SERVER_URL}/${userAvata}`}
+                        alt="user"
+                      />
+                    )}
+                  </UserPic>
+                  <CommentBar postId={postId} userId={userId} />
+                </CommentsArea>
+
+                {comments?.slice(0, visible).map((c, index) => (
+                  <SingleComment key={index} c={c} />
+                ))}
+
+                {/* <SeeMore onClick={getMoreComment}>View more comments</SeeMore> */}
+              </Comments>
+            </Col>
+            {/* <Col w="30" mdnone="true">
+              {post.length !== 0 && <Profile post={post} />}
+            </Col> */}
+          </Row>
+        </Container>
+      </Wrapper>
+    </Modal>
   );
 };
 
@@ -184,8 +257,9 @@ const GET_POST = gql`
       userId
       firstName
       lastName
-      avatar
+      image
       body
+      postType
       createdAt
       _id
     }

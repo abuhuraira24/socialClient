@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 import Posts from "../Post";
 
@@ -16,6 +16,8 @@ import Follower from "../Home/Followers";
 import Navbar from "../Navbar/NavBar";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
+
+import { AuthContext } from "../../context/auth";
 
 const Home = () => {
   const theme = useTheme();

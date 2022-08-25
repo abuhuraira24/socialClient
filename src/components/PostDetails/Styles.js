@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding-top: 1rem;
+  padding: 1rem 0;
   background: ${(props) => props.theme.bg};
+  border-radius: 10px;
 `;
 
 export const UserProfile = styled.div`
@@ -155,4 +156,21 @@ export const Right = styled.div`
 export const Icon = styled.i`
   padding: 0.5rem;
   cursor: pointer;
+`;
+
+export const SeeMore = styled.div`
+  cursor: pointer;
+`;
+
+export const SubText = styled.span`
+  font-size: 16px;
+  display: inline-block;
+  font-weight: 200;
+  margin-left: 0.5rem;
+`;
+
+export const ImageWrapper = styled.div``;
+
+export const Images = styled.img`
+  width: 100%;
 `;

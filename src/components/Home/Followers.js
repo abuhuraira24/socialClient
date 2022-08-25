@@ -19,7 +19,7 @@ const Follower = () => {
       <SmallNavbar />
       <Followers>
         <Title>
-          <H5>Add to your feed</H5>
+          <H5>People You May Know</H5>
         </Title>
 
         {publicUsers &&

@@ -12,13 +12,17 @@ import {
   CircleImage,
   UserPic,
   More,
-  CommentsArea,
   CardText,
   Users,
   Left,
   Right,
   Dot,
+  Image,
+  ImageWrapper,
+  SubText,
 } from "./CartStyles";
+
+import axios from "axios";
 
 import LikeButton from "../LikeButton";
 
@@ -30,54 +34,46 @@ import moment from "moment";
 
 import { AuthContext } from "../../context/auth";
 
-import CommentBar from "../commentInput/CommentInput";
-
-import SingleComment from "../Comments";
-
 import { getCommnetAvatar } from "../Helper/helper";
 
 import UpdatedPost from "../UpdatePost";
 
-const Post = ({ ...props }) => {
-  let [toggleComment, setToggleComment] = useState(false);
-
-  const [image, setImage] = useState(null);
-
+const Post = ({ post }) => {
   const [toggle, setToggle] = useState(false);
+
+  const [commnetSize, setCommentSize] = useState(null);
+
+  const [userInfo, setUserInfo] = useState(null);
 
   const { user } = useContext(AuthContext);
 
-  let { data } = props;
+  // let { post } = props;
 
   let sortText;
   let text;
 
-  if (data.body.length > 400) {
-    sortText = data.body.slice(0, 400);
+  if (post.body.length > 400) {
+    sortText = post.body.slice(0, 400);
   } else {
-    text = data.body;
+    text = post.body;
   }
-  // Show Comment Input
-  const togglerInput = () => {
-    setToggleComment(true);
-  };
 
   // Query User avata or data
 
+  // Get user avatar
+
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
-      if (data) {
-        setImage(data.getUserById.avatars[0].avatar);
-      }
+      setUserInfo(data.getUserById.avatars);
     },
-    variables: { userId: data.userId },
+    variables: { userId: user.id },
     onError(error) {
       console.log(error);
     },
   });
   useEffect(() => {
-    getCommnetAvatar(data.comments);
-  }, [data.comments]);
+    getCommnetAvatar(post.comments);
+  }, [post.comments]);
 
   const postToggler = () => {
     if (toggle) {
@@ -87,76 +83,103 @@ const Post = ({ ...props }) => {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/getcomments/${post._id}`)
+      .then((res) => {
+        setCommentSize(res.data.comments.length);
+      })
+      .catch((error) => {});
+  }, [post]);
+
+  console.log(post.postType);
+
   return (
-    <CardBody className="mb-4 ">
+    <CardBody id={`${post._id}`} className="mb-4 ">
       <Users>
         <Left>
-          <UserPic>{image && <CircleImage src={image} alt="user" />}</UserPic>
+          <UserPic>
+            {userInfo && userInfo.length !== 0 && (
+              <CircleImage
+                src={`${process.env.REACT_APP_SERVER_URL}/${userInfo[0].avatar}`}
+                alt="user"
+              />
+            )}
+            {userInfo && userInfo.length === 0 && (
+              <CircleImage
+                src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                alt="user"
+              />
+            )}
+          </UserPic>
 
-          <Link to={`/profile/${data.userId}`}>
-            <UserName>{data.firstName + " " + data.lastName}</UserName>
+          <Link to={`/profile/${post.userId}`}>
+            <UserName>
+              {post.firstName + " " + post.lastName}{" "}
+              {post.postType === "profile" && <SubText>{post.body}</SubText>}
+            </UserName>
           </Link>
         </Left>
         <Right>
           <Dot onClick={postToggler} className="fa-solid fa-ellipsis"></Dot>
-          <UpdatedPost toggler={toggle} post={data} />
+          <UpdatedPost toggler={toggle} post={post} />
         </Right>
       </Users>
 
       <CardSubtitle className="mb-2 mt-2 text-muted pb-1" tag="h6">
-        {moment(data.createdAt).fromNow(true)}
+        {moment(post.createdAt).fromNow(true)}
       </CardSubtitle>
 
-      <CardText id="post">
-        {sortText}
-        {text}
-        {sortText && (
-          <More>
-            <NavLink to={`/post/${data._id}/${data.userId}`}>
-              See more...
-            </NavLink>
-          </More>
-        )}
-      </CardText>
+      {/* Normal post  */}
+
+      {post.postType === "normal" && (
+        <CardText id="post">
+          {sortText}
+          {text}
+          {sortText && (
+            <More>
+              <NavLink to={`/post/${post._id}/${post.userId}`}>
+                See more...
+              </NavLink>
+            </More>
+          )}
+        </CardText>
+      )}
+      {post.postType === "profile" && (
+        <ImageWrapper>
+          <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
+        </ImageWrapper>
+      )}
+      {post.postType === "normal" && post.image !== "" && (
+        <ImageWrapper>
+          <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
+        </ImageWrapper>
+      )}
 
       <Comments>
         <LikeComments>
-          {!user && <Popup>{data.likes.length + " "}Like</Popup>}
+          {!user && <Popup>{post.likes.length + " "}Like</Popup>}
           {user && (
             <LikeButton
-              likes={data.likes}
-              postId={data._id}
-              userId={data.userId}
+              likes={post.likes}
+              postId={post._id}
+              userId={post.userId}
             />
           )}
 
-          <Comment onClick={togglerInput}>
-            <NavLink to={`/post/${data._id}/${data.userId}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path d="M511.1 63.1v287.1c0 35.25-28.75 63.1-64 63.1h-144l-124.9 93.68c-7.875 5.75-19.12 .0497-19.12-9.7v-83.98h-96c-35.25 0-64-28.75-64-63.1V63.1c0-35.25 28.75-63.1 64-63.1h384C483.2 0 511.1 28.75 511.1 63.1z" />
-              </svg>
-              <Span> {data.comments.length} comments</Span>
-            </NavLink>
-          </Comment>
+          <Link to={`/post/${post._id}/${post.userId}`}>
+            <Comment>
+              <i class="fa-solid fa-comments"></i>
+              <Span> {commnetSize && commnetSize}</Span>
+            </Comment>
+          </Link>
+
           <CardSubtitle className="text-muted" tag="h6">
             {/* {data.readTime} min read */}
             <i className="fa-solid fa-share"></i> Share
           </CardSubtitle>
         </LikeComments>
       </Comments>
-
-      {toggleComment && (
-        <CommentsArea>
-          <UserPic>
-            {image && image.avatar && (
-              <CircleImage src={image.avatar} alt="user" />
-            )}
-          </UserPic>
-          <CommentBar postId={data._id} />
-        </CommentsArea>
-      )}
-      {toggleComment &&
-        data.comments.map((c, index) => <SingleComment key={index} c={c} />)}
     </CardBody>
   );
 };

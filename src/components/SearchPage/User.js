@@ -45,7 +45,10 @@ const User = ({ result }) => {
       <Left>
         <Image>
           <Link to={`/profile/${result.id}`}>
-            <Img src={avata} alt="user" />
+            <Img
+              src={`${process.env.REACT_APP_SERVER_URL}/${avata}`}
+              alt="user"
+            />
           </Link>
         </Image>
 

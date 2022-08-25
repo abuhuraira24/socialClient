@@ -41,7 +41,7 @@ import {
 } from "./styles";
 import { useParams } from "react-router-dom";
 
-import PostCart from "../Profile/Posts/Card";
+import Posts from "../Profile/Posts/Posts";
 
 import CreatePost from "../CreatePosts";
 
@@ -51,10 +51,13 @@ import UpdatedModale from "./UpdateProfile/Modal";
 import Intro from "./Intro";
 import Title from "../title";
 
+import Modall from "./UpdateAvatar/Modal";
+
 const PrivateProfile = () => {
   const [cover, setCover] = useState();
   const [avatar, setAvatar] = useState();
   const [profileUser, setProfileUser] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   // Open Modal
   const [isOpen, setIsOpen] = useState(false);
   // File Upload Mutation
@@ -108,32 +111,6 @@ const PrivateProfile = () => {
     },
   });
 
-  // Submit Avatar
-  const onChange = (e) => {
-    if (e.target.validity.valid && user) {
-      let file = e.target.files[0];
-      setAvatar(URL.createObjectURL(file));
-
-      let formData = new FormData();
-
-      formData.append("file", file);
-
-      formData.append("upload_preset", "ml_default");
-
-      Axios.post(process.env.REACT_APP_CLOUDINRY_UPLOAD_API, formData).then(
-        (res) => {
-          console.log(res);
-          mutate({
-            variables: {
-              url: res.data.url,
-              userId: user.id,
-            },
-          });
-        }
-      );
-    }
-  };
-
   useEffect(() => {
     if (data && typeof data.getUser !== "undefined") {
       setAvatar(data.getUser.avatar);
@@ -161,6 +138,13 @@ const PrivateProfile = () => {
     body[0].style.overflow = "auto";
   });
 
+  // Profile avatar changer modal hander
+  const openAvatarChangerModal = () => {
+    setOpenModal(true);
+  };
+  const closeAvatarChangerModal = () => {
+    setOpenModal(false);
+  };
   return (
     <CoverWrapper>
       <Title>
@@ -185,13 +169,17 @@ const PrivateProfile = () => {
           {/* Profile avatar */}
           <Avatars>
             <Avatar file={avatar}>
+              {/* <Modal /> */}
               {/* Set Avatar */}
               {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>}
-              {avatar && <Img src={avatar} alt="me" />}
-
+              {avatar && (
+                <Img
+                  src={`${process.env.REACT_APP_SERVER_URL}/${avatar}`}
+                  alt="me"
+                />
+              )}
               {/* File Upload Input */}
-              <UploadAvatar>
-                <UploadInput type="file" onChange={onChange} />
+              <UploadAvatar onClick={openAvatarChangerModal}>
                 <Camera className="fa-solid fa-camera"></Camera>
               </UploadAvatar>
             </Avatar>
@@ -208,7 +196,7 @@ const PrivateProfile = () => {
                 <MyFollowers />
               </Followers>
             </ProfileAvatar>
-            <Buttons>
+            {/* <Buttons>
               <EdidButton onClick={modalIsOpen}>
                 <EditIcon className="fa-solid fa-pen"></EditIcon>
                 Edit Profile
@@ -218,8 +206,9 @@ const PrivateProfile = () => {
                 modalIsOpen={isOpen}
                 closeModal={closeModal}
               />
-            </Buttons>
+            </Buttons> */}
           </Avatars>
+          <Modall openModal={openModal} closeModal={closeAvatarChangerModal} />
         </Col>
       </Container>
       <Container>
@@ -236,7 +225,10 @@ const PrivateProfile = () => {
                   profileUser.avatars.length !== 0 &&
                   profileUser.avatars.map((img, index) => (
                     <Image key={index}>
-                      <Img src={img.avatar} alt="abu" />
+                      <Img
+                        src={`${process.env.REACT_APP_SERVER_URL}/${img.avatar}`}
+                        alt="abu"
+                      />
                       <Comming>Comming...</Comming>
                     </Image>
                   ))}
@@ -255,7 +247,7 @@ const PrivateProfile = () => {
           </Col>
           <Col w="50" md="100" sm="100">
             <CreatePost />
-            <PostCart />
+            <Posts />
           </Col>
           <Col w="20" mdnone="true" none="true"></Col>
         </Row>

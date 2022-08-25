@@ -60,7 +60,10 @@ export const Reply = styled.div`
 
 export const Time = styled.div``;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: start;
+`;
 
 export const Span = styled.span`
   color: #6c757d !important;
@@ -68,6 +71,9 @@ export const Span = styled.span`
   display: inline-block;
   font-size: 14px;
   font-weight: 700;
+  i {
+    cursor: pointer;
+  }
 `;
 
 export const Picture = styled.img`
@@ -90,3 +96,18 @@ export const Arrow = styled.i`
   transform: rotate(89deg);
   margin-right: 0.5rem;
 `;
+
+export const Love = styled.i`
+  color: red;
+  cursor: pointer;
+`;
+
+export const Dot = styled.div`
+  margin-left: 1rem;
+  margin-top: 12px;
+  color: #000;
+`;
+
+export const Left = styled.div``;
+
+export const Right = styled.div``;

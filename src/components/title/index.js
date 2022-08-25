@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet";
 const Title = ({ children }) => {
-  console.log(children);
   return (
     <Helmet>
       <meta charSet="utf-8" />

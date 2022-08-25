@@ -7,20 +7,22 @@ import { CommentBox, Button, CommentInput, Form } from "../Post/CartStyles";
 import { AuthContext } from "../../context/auth";
 import { socket } from "../../hooks/socketio";
 
-const CommentBar = ({ postId }) => {
+import axios from "axios";
+
+const CommentBar = ({ postId, userId }) => {
   // Commet value
   const [value, setValues] = useState({
     body: "",
   });
 
-  const { user, getComments } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [addCommnet] = useMutation(CREATE_COMMENT, {
-    onCompleted: (data) => {
-      console.log(data);
-      getComments(data.createComment.comments);
+    variables: {
+      userId: user.id,
+      postId: postId,
+      text: value.body,
     },
-    variables: { postId: postId, body: value.body },
     onError(error) {
       console.log(error);
     },
@@ -32,20 +34,46 @@ const CommentBar = ({ postId }) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // Send Notification
+  const addNotifications = (data) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/notification`, data)
+      .then((result) => {
+        socket.emit("sendNotification", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const submitHandler = (e) => {
     e.preventDefault();
 
-    setValues({
-      body: "",
-    });
-    socket.emit("createComment", {
-      userId: user.id,
-      postId: postId,
-      body: value.body,
-      username: user.firstName + " " + user.lastName,
-    });
+    if (value.body) {
+      socket.emit("createComment", {
+        userId: user.id,
+        postId: postId,
+        text: value.body,
+        username: user.firstName + " " + user.lastName,
+        createdAt: new Date().toISOString(),
+      });
 
-    addCommnet();
+      addCommnet();
+
+      if (user.id !== userId)
+        addNotifications({
+          sender: user.id,
+          receiver: userId,
+          notiType: "comment",
+          content: "is commented on your post.",
+          isRead: false,
+          refId: postId,
+        });
+
+      setValues({
+        body: "",
+      });
+    }
   };
 
   return (
@@ -79,15 +107,12 @@ const CommentBar = ({ postId }) => {
 };
 
 const CREATE_COMMENT = gql`
-  mutation ($postId: ID!, $body: String!) {
-    createComment(postId: $postId, body: $body) {
-      comments {
-        body
-        username
-        createdAt
-        userId
-        _id
-      }
+  mutation ($userId: ID!, $postId: ID!, $text: String!) {
+    createComment(userId: $userId, postId: $postId, text: $text) {
+      postId
+      userId
+      text
+      createdAt
     }
   }
 `;

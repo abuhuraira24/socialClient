@@ -1,22 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import React, { useEffect, useState, useContext } from "react";
+
 import SingleNoti from "./SingleNoti";
 import { Wrapper } from "./styles";
 
 import SmallNavbar from "../Navbar/SmallNavbar";
 
-import { Header, New, SeeAll, SubHeader, Title } from "./styles";
+import axios from "axios";
+
+import { AuthContext } from "../../context/auth";
+
+import { Header, New, SeeAll, SubHeader, Title, Empty } from "./styles";
+
+import { socket } from "../../hooks/socketio";
+
 const Notification = () => {
   // Get Notification
   const [notifications, setNotifications] = useState([]);
 
-  useQuery(GET_NOTIFICATIONS, {
-    onCompleted: (data) => {
-      if (data) {
-        setNotifications(...notifications, data.notifications);
-      }
-    },
-  });
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/getNotifications/${user.id}`)
+      .then((result) => {
+        const sortedAsc = result.data.result.sort(
+          (objA, objB) => Number(objA.createdAt) - Number(objB.createdAt)
+        );
+
+        console.log(sortedAsc);
+        setNotifications(result.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [user]);
+
+  useEffect(() => {
+    socket.off("getNotification").on("getNotification", (data) => {
+      setNotifications((prev) => [data, ...prev]);
+    });
+  }, []);
 
   return (
     <>
@@ -29,12 +52,11 @@ const Notification = () => {
             <SeeAll>See All</SeeAll>
           </SubHeader>
 
-          {/* <Empty>
+          <Empty>
             {notifications &&
-              typeof notifications !== "notifications" &&
               notifications.length === 0 &&
               "There is no Notification"}
-          </Empty> */}
+          </Empty>
         </Header>
 
         {notifications &&
@@ -46,14 +68,4 @@ const Notification = () => {
   );
 };
 
-const GET_NOTIFICATIONS = gql`
-  query {
-    notifications {
-      name
-      text
-      avatar
-      createdAt
-    }
-  }
-`;
 export default Notification;

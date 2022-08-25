@@ -18,7 +18,7 @@ const DeletePost = ({ postId, closeModal }) => {
   const [deletePost] = useMutation(DELETE, {
     onCompleted: (data) => {
       navigate("/");
-      deletedPostId(postId);
+      // deletedPostId(postId);
       closeModal();
 
       if (params.id) {
@@ -40,6 +40,7 @@ const DeletePost = ({ postId, closeModal }) => {
     closeModal();
   };
 
+  console.log(postId);
   return (
     <Buttons>
       <Button onClick={dontDelete}>No</Button>
@@ -56,12 +57,7 @@ const DELETE = gql`
       lastName
       _id
       body
-      comments {
-        username
-        body
-        createdAt
-        userId
-      }
+
       likes {
         userId
         createdAt

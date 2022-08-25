@@ -3,14 +3,14 @@ import React, { createContext, useReducer } from "react";
 import jwtDecode from "jwt-decode";
 import toast, { Toaster } from "react-hot-toast";
 const AuthContext = createContext({
-  user: [],
+  user: null,
   comments: null,
   likes: null,
   posts: null,
   login: (userData) => {},
   logout: () => {},
   queryText: (text, navigate, createSearchParams) => {},
-  getComments: (data) => {},
+  getComment: (data) => {},
   getLikes: (data) => {},
   getPosts: (data) => {},
   getNotification: (data) => {},
@@ -25,7 +25,7 @@ const AuthContext = createContext({
 });
 
 const init = {
-  user: [],
+  user: null,
   searchText: null,
   comments: null,
   posts: null,
@@ -52,9 +52,10 @@ const authReducer = (state, action) => {
   switch (action.type) {
     // Login
     case "LOGIN":
+      let token = jwtDecode(action.payload);
       return {
         ...state,
-        user: action.payload,
+        user: token,
       };
 
     // Log Out
@@ -74,7 +75,6 @@ const authReducer = (state, action) => {
       return {
         ...state,
         comments: action.payload,
-        commentLoading: false,
       };
 
     // Get Likes
@@ -167,8 +167,8 @@ const AuthProvider = (props) => {
 
   // Logout
   const logout = () => {
-    localStorage.removeItem("jwtToken");
-    dispatch({ type: "LOGIN" });
+    // localStorage.removeItem("jwtToken");
+    dispatch({ type: "LOGOUT" });
   };
 
   // Query User
@@ -201,7 +201,7 @@ const AuthProvider = (props) => {
   };
 
   // Get Commnets
-  const getComments = (data) => {
+  const getComment = (data) => {
     if (data) {
       dispatch({
         type: "GET_COMMENTS",
@@ -302,12 +302,13 @@ const AuthProvider = (props) => {
       payload: data,
     });
   };
+
   return (
     <AuthContext.Provider
       value={{
         user: state.user,
         login,
-        getComments,
+        getComment,
         comLoading,
         comments: state.comments,
         logout,

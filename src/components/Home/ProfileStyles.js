@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 
 export const Cover = styled.div`
   height: 100px;
-  background: ${(props) => props.theme.gray};
+  background: ${(props) => props.theme.bg};
   position: relative;
   border-radius: 2%;
   background-position: center;

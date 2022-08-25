@@ -12,6 +12,10 @@ import { AuthContext } from "../../context/auth";
 
 import MyFollowers from "./Followers";
 
+import { socket } from "../../hooks/socketio";
+
+import axios from "axios";
+
 import {
   Avatar,
   Avatars,
@@ -36,7 +40,7 @@ import {
 } from "./styles";
 import { useParams } from "react-router-dom";
 
-import PostCart from "../Profile/Posts/Card";
+import Posts from "./Posts/Posts";
 
 import CreatePost from "../CreatePosts";
 
@@ -65,13 +69,6 @@ const PublicProfile = () => {
   // Context api
   let { user } = useContext(AuthContext);
 
-  // Get posts
-  useQuery(GET_POSTS_BY_USERS_ID, {
-    variables: {
-      userId: user.id,
-    },
-  });
-
   const theme = useTheme();
 
   useEffect(() => {
@@ -97,10 +94,31 @@ const PublicProfile = () => {
       console.log(data);
     },
   });
-
+  const addNotifications = (data, liked) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/notification`, data)
+      .then((result) => {
+        console.log(result);
+        if (!isFollow) {
+          console.log(result);
+          socket.emit("sendNotification", data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const FollowHandler = () => {
     addFollow({
       variables: { receiverId: userId.id },
+    });
+    addNotifications({
+      sender: user.id,
+      receiver: userId.id,
+      notiType: "follow",
+      content: "is following you.",
+      isRead: false,
+      refId: user.id,
     });
     if (isFollow) {
       setFollow(false);
@@ -128,7 +146,10 @@ const PublicProfile = () => {
           <Avatars>
             <Avatar>
               {profileUser && (
-                <img src={profileUser.avatars[0].avatar} alt="me" />
+                <img
+                  src={`${process.env.REACT_APP_SERVER_URL}/${profileUser.avatars[0].avatar}`}
+                  alt="me"
+                />
               )}
             </Avatar>
 
@@ -174,7 +195,10 @@ const PublicProfile = () => {
                   profileUser.avatars.length !== 0 &&
                   profileUser.avatars.map((img, index) => (
                     <Image key={index}>
-                      <Img src={img.avatar} alt="abu" />
+                      <Img
+                        src={`${process.env.REACT_APP_SERVER_URL}/${img.avatar}`}
+                        alt="abu"
+                      />
                       <Comming>Comming...</Comming>
                     </Image>
                   ))}
@@ -192,8 +216,8 @@ const PublicProfile = () => {
             <Friends />
           </Col>
           <Col w="50" md="100" sm="100">
-            <CreatePost />
-            <PostCart />
+            {/* <CreatePost /> */}
+            <Posts />
           </Col>
           <Col w="20" mdnone="true" none="true"></Col>
         </Row>
@@ -220,28 +244,6 @@ const GET_USER_BY_ID = gql`
       following {
         name
         userId
-      }
-    }
-  }
-`;
-
-const GET_POSTS_BY_USERS_ID = gql`
-  query ($userId: ID!) {
-    getPostsByUserId(userId: $userId) {
-      firstName
-      lastName
-      body
-      userId
-      createdAt
-      likes {
-        userId
-      }
-      userId
-      comments {
-        body
-        createdAt
-        userId
-        username
       }
     }
   }

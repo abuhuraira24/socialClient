@@ -37,6 +37,7 @@ const Login = () => {
     update(_, result) {
       if (result.data.login.isVerified) {
         const token = result.data.login.token;
+        // const user = jwt_decode(token);
         context.login(token);
         navigate("/");
       } else {

@@ -170,7 +170,7 @@ export const MassageButton = styled(Link)`
   }
 `;
 
-export const UploadCover = styled.div`
+export const UploadCover = styled.form`
   position: absolute;
   right: 2%;
   bottom: 24%;
@@ -186,7 +186,7 @@ export const UploadCover = styled.div`
   z-index: 99;
 `;
 
-export const UploadAvatar = styled.div`
+export const UploadAvatar = styled.form`
   position: absolute;
   right: -3%;
   bottom: 24%;

@@ -38,16 +38,29 @@ const Popup = ({ children }) => {
 
   const [body, setBody] = useState("");
 
+  const [userInfo, setUserInfo] = useState(null);
+
   const [createPost, { loading }] = useMutation(CREATE_POST, {
     onCompleted: (data) => {
       setIsOpen(false);
     },
     onError(error) {},
 
-    variables: { body },
+    variables: { body, postType: "normal", image: "" },
   });
 
   let { user } = useContext(AuthContext);
+
+  useQuery(GET_AVATAE_BY_ID, {
+    onCompleted: (data) => {
+      setUserInfo(data.getUserById.avatars);
+      console.log(data.getUserById.avatars);
+    },
+    variables: { userId: user.id },
+    onError(error) {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -57,12 +70,6 @@ const Popup = ({ children }) => {
       body.style.overflow = "auto";
     }
   }, [modalIsOpen]);
-
-  useQuery(GET_USER, {
-    onCompleted: (data) => {
-      setAvatar(data.getUser.avatar);
-    },
-  });
 
   const openModal = () => {
     setIsOpen(true);
@@ -114,7 +121,20 @@ const Popup = ({ children }) => {
           <Close onClick={closeModal} className="fa-solid fa-xmark"></Close>
         </ClosedModal>
         <Header>
-          <Avatar>{avatar && <Img src={avatar} alt="avatar" />}</Avatar>
+          <Avatar>
+            {userInfo && userInfo.length !== 0 && (
+              <Img
+                src={`${process.env.REACT_APP_SERVER_URL}/${userInfo[0].avatar}`}
+                alt="avatar"
+              />
+            )}
+            {userInfo && userInfo.length === 0 && (
+              <Img
+                src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                alt="avatar"
+              />
+            )}
+          </Avatar>
           <Privacy>
             <Name>
               <H5></H5>
@@ -164,19 +184,20 @@ const Popup = ({ children }) => {
   );
 };
 
-const GET_USER = gql`
-  query {
-    getUser {
-      avatar
-      cover
+const CREATE_POST = gql`
+  mutation createPost($body: String!, $postType: String!, $image: String!) {
+    createPost(body: $body, postType: $postType, image: $image) {
+      body
     }
   }
 `;
 
-const CREATE_POST = gql`
-  mutation createPost($body: String!) {
-    createPost(body: $body) {
-      body
+const GET_AVATAE_BY_ID = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;

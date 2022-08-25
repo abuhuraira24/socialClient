@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { gql, useQuery } from "@apollo/client";
 
@@ -19,9 +19,20 @@ import { AuthContext } from "../../context/auth";
 
 import { Link } from "react-router-dom";
 const Profile = () => {
-  const { data } = useQuery(GET_USER);
-
+  // Get user Data
+  const [userInfo, setUserInfo] = useState(null);
   const { user } = useContext(AuthContext);
+
+  useQuery(GET_AVATAE_BY_ID, {
+    onCompleted: (data) => {
+      setUserInfo(data.getUserById.avatars);
+      console.log(data.getUserById.avatars);
+    },
+    variables: { userId: user.id },
+    onError(error) {
+      console.log(error);
+    },
+  });
 
   const { data: bio } = useQuery(GET_BIO_DATA, {
     variables: { userId: user.id },
@@ -29,29 +40,37 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      {data && typeof data.getUser !== "undefined" && (
-        <Cover>
-          {data.getUser.cover !== "false" && data.getUser.cover !== 0 && (
-            <CoverImage src={data.getUser.cover} alt="cover" />
-          )}
+      <Cover>
+        {/* <CoverImage
+          src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+          alt="cover"
+        /> */}
 
-          <Avatar>
-            {data.getUser.avatar !== "false" && data.getUser.avatar !== 0 && (
-              <EmptyAvatar>
-                <Image src={data.getUser.avatar} alt="user" />
-              </EmptyAvatar>
+        <Avatar>
+          <EmptyAvatar>
+            {userInfo && userInfo.length === 0 && (
+              <Image
+                src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                alt=""
+              />
             )}
-            {data && data.getUser.avatar === "false" && (
-              <EmptyAvatar>
-                <Icon className="fa-solid fa-user"></Icon>
-              </EmptyAvatar>
+            {userInfo && userInfo.length !== 0 && (
+              <Image
+                src={`${process.env.REACT_APP_SERVER_URL}/${userInfo[0].avatar}`}
+                alt=""
+              />
             )}
-          </Avatar>
-        </Cover>
-      )}
+          </EmptyAvatar>
+        </Avatar>
+      </Cover>
+
       <BioNames>
         <Link to={`/profile/${user.id}`}>
-          {user && <Name>{user.firstName + " " + user.lastName}</Name>}
+          {bio && bio.getUserById && (
+            <Name>
+              {bio.getUserById.firstName + " " + bio.getUserById.lastName}
+            </Name>
+          )}
         </Link>
         <Bio>{bio && bio.getUserById && bio.getUserById.bio}</Bio>
       </BioNames>
@@ -59,11 +78,12 @@ const Profile = () => {
   );
 };
 
-const GET_USER = gql`
-  query {
-    getUser {
-      avatar
-      cover
+const GET_AVATAE_BY_ID = gql`
+  query ($userId: ID!) {
+    getUserById(userId: $userId) {
+      avatars {
+        avatar
+      }
     }
   }
 `;
@@ -72,6 +92,8 @@ const GET_BIO_DATA = gql`
   query ($userId: ID!) {
     getUserById(userId: $userId) {
       bio
+      firstName
+      lastName
     }
   }
 `;
