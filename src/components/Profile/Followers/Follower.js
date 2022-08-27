@@ -7,15 +7,20 @@ const MyFollower = ({ user }) => {
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
-      setAvatar(data.getUserById.avatars[0].avatar);
+      setAvatar(data.getUserById);
     },
     variables: { userId: user.userId },
   });
   return (
     <Image>
-      {avatar && (
+      {avatar && avatar.avatars.length !== 0 ? (
         <Img
-          src={`${process.env.REACT_APP_SERVER_URL}/${avatar}`}
+          src={`${process.env.REACT_APP_SERVER_URL}/${avatar.avatars[0].avatar}`}
+          alt="avatar"
+        />
+      ) : (
+        <Img
+          src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
           alt="avatar"
         />
       )}

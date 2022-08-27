@@ -66,7 +66,7 @@ const Post = ({ post }) => {
     onCompleted: (data) => {
       setUserInfo(data.getUserById.avatars);
     },
-    variables: { userId: user.id },
+    variables: { userId: post.userId },
     onError(error) {
       console.log(error);
     },
@@ -91,8 +91,6 @@ const Post = ({ post }) => {
       })
       .catch((error) => {});
   }, [post]);
-
-  console.log(post.postType);
 
   return (
     <CardBody id={`${post._id}`} className="mb-4 ">
@@ -132,7 +130,7 @@ const Post = ({ post }) => {
 
       {/* Normal post  */}
 
-      {post.postType === "normal" && (
+      {post.postType === "normal" && post.body && (
         <CardText id="post">
           {sortText}
           {text}
@@ -150,7 +148,7 @@ const Post = ({ post }) => {
           <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
         </ImageWrapper>
       )}
-      {post.postType === "normal" && post.image !== "" && (
+      {post.postType === "normal" && post.image && (
         <ImageWrapper>
           <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
         </ImageWrapper>

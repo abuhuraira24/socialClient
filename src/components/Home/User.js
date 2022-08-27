@@ -26,14 +26,14 @@ import { AuthContext } from "../../context/auth";
 
 const User = (user) => {
   let [isFollow, setFollow] = useState(false);
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(null);
 
   const { user: userInfo } = useContext(AuthContext);
 
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
       if (data) {
-        setAvatar(data.getUserById.avatars[0].avatar);
+        setAvatar(data.getUserById);
       }
     },
     variables: {
@@ -81,21 +81,24 @@ const User = (user) => {
     }
   };
 
+  console.log(avatar);
+
   return (
     <Users>
       <Avatars>
         <NavLink to={`profile/${user.user.id}`}>
           <Avatar>
-            {avatar && (
+            {avatar && avatar.avatars.length !== 0 ? (
               <Img
-                src={`${process.env.REACT_APP_SERVER_URL}/${avatar}`}
+                src={`${process.env.REACT_APP_SERVER_URL}/${avatar.avatars[0].avatar}`}
+                alt="user"
+              />
+            ) : (
+              <Img
+                src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
                 alt="user"
               />
             )}
-
-            <Empty>
-              <UserIcon className="fa-solid fa-user"></UserIcon>
-            </Empty>
           </Avatar>
         </NavLink>
       </Avatars>

@@ -62,7 +62,7 @@ const DELETE = gql`
         userId
         createdAt
       }
-      readTime
+
       createdAt
     }
   }
