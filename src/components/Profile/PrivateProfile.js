@@ -171,11 +171,16 @@ const PrivateProfile = () => {
             <Avatar file={avatar}>
               {/* <Modal /> */}
               {/* Set Avatar */}
-              {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>}
-              {avatar && (
+              {/* {!avatar && <UserIcon className="fa-solid fa-user"></UserIcon>} */}
+              {profileUser && profileUser.avatars.length !== 0 ? (
                 <Img
-                  src={`${process.env.REACT_APP_SERVER_URL}/${avatar}`}
+                  src={`${process.env.REACT_APP_SERVER_URL}/${profileUser.avatars[0].avatar}`}
                   alt="me"
+                />
+              ) : (
+                <Img
+                  src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                  alt=""
                 />
               )}
               {/* File Upload Input */}

@@ -129,10 +129,6 @@ const PublicProfile = () => {
 
   return (
     <CoverWrapper>
-      {/* <Title>
-        {" "}
-        {profileUser?.firstName} {profileUser?.lastName}
-      </Title> */}
       <Container>
         <Col w="100">
           <Cover>
@@ -145,10 +141,15 @@ const PublicProfile = () => {
           {/* Profile avatar */}
           <Avatars>
             <Avatar>
-              {profileUser && (
+              {profileUser && profileUser.avatars.length !== 0 ? (
                 <img
                   src={`${process.env.REACT_APP_SERVER_URL}/${profileUser.avatars[0].avatar}`}
                   alt="me"
+                />
+              ) : (
+                <img
+                  src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                  alt=""
                 />
               )}
             </Avatar>
