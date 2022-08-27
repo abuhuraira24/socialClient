@@ -20,7 +20,7 @@ const User = ({ user }) => {
           <Avatar>
             {user.avatars.length !== 0 ? (
               <Img
-                src={`${process.env.REACT_APP_SERVER_URL}/images/user.avatars[0].avatar`}
+                src={`${process.env.REACT_APP_SERVER_URL}/images/${user.avatars[0].avatar}`}
                 alt="user"
               />
             ) : (
