@@ -109,7 +109,6 @@ const Login = () => {
     </LogginWrapper>
   );
 };
-
 const LOGIN_USER = gql`
   mutation ($email: String!, $password: String!) {
     login(email: $email, password: $password) {
