@@ -19,7 +19,10 @@ const User = ({ user }) => {
         <Link to={`/profile/${user.id}`}>
           <Avatar>
             {user.avatars.length !== 0 ? (
-              <Img src={user.avatars[0].avatar} alt="user" />
+              <Img
+                src={`${process.env.REACT_APP_SERVER_URL}/images/user.avatars[0].avatar`}
+                alt="user"
+              />
             ) : (
               <Empty>
                 <UserIcon className="fa-solid fa-user"></UserIcon>
