@@ -122,7 +122,7 @@ const Popup = ({ children }) => {
       formData.append("avatar", avatar);
       console.log(avatar);
       axios
-        .post("http://localhost:5000/createpost", formData, {
+        .post(`${process.env.REACT_APP_SERVER_URL}/createpost`, formData, {
           headers: {
             "Content-Types": "application/json",
             Authorization: `Bearer ${token}`,
