@@ -18,11 +18,13 @@ const User = ({ user }) => {
       <Avatars>
         <Link to={`/profile/${user.id}`}>
           <Avatar>
-            <Img src={user.avatars[0].avatar} alt="user" />
-
-            <Empty>
-              <UserIcon className="fa-solid fa-user"></UserIcon>
-            </Empty>
+            {user.avatars.length !== 0 ? (
+              <Img src={user.avatars[0].avatar} alt="user" />
+            ) : (
+              <Empty>
+                <UserIcon className="fa-solid fa-user"></UserIcon>
+              </Empty>
+            )}
           </Avatar>
         </Link>
       </Avatars>
