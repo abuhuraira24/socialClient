@@ -53,7 +53,7 @@ export const ClosedModal = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd3;
 `;
 
 export const H4 = styled.span`
@@ -108,15 +108,20 @@ export const Body = styled.div`
 export const Form = styled.form``;
 
 export const Input = styled.input`
-  background: ${(props) => props.theme.input};
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
 `;
 
 export const TextArea = styled.textarea`
   resize: none;
   width: 100%;
   border: none;
-  background: ${(props) => props.theme.input};
+  background: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.text};
+  font-size: 22px;
+  padding: 0.5rem;
 `;
 
 export const Footer = styled.div`
@@ -149,3 +154,59 @@ export const EmoiIcon = styled.i`
 `;
 
 export const Text = styled.p``;
+
+export const ImgWrapper = styled.div`
+  height: 15rem;
+  background: ${(props) => props.theme.bg};
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
+
+export const Image = styled.img``;
+
+export const Photo = styled.i`
+  color: ${(props) => props.theme.text};
+  font-size: 28px;
+`;
+
+export const InnerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const H3 = styled.h4`
+  margin-top: 1rem;
+  color: ${(props) => props.theme.text};
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const MenuBar = styled.div`
+  border: 1px solid #ddd3;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+`;
+
+export const List = styled.span``;
+
+export const Icon = styled.i`
+  color: ${(props) => props.theme.text};
+  font-size: 22px;
+  cursor: pointer;
+`;
+
+export const CloseToggle = styled.div`
+  position: absolute;
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  padding: 1rem;
+  z-index: 999;
+  cursor: pointer;
+`;

@@ -31,7 +31,7 @@ const SingleNoti = ({ notification }) => {
     },
   });
 
-  console.log(notification);
+  console.log(user);
   return (
     user.length !== 0 && (
       <Linkk
@@ -63,10 +63,17 @@ const SingleNoti = ({ notification }) => {
               )}
 
               <Avatar>
-                <Img
-                  src={`${process.env.REACT_APP_SERVER_URL}/${user.avatars[0].avatar}`}
-                  alt="use"
-                />
+                {user.avatars.length !== 0 ? (
+                  <Img
+                    src={`${process.env.REACT_APP_SERVER_URL}/${user.avatars[0].avatar}`}
+                    alt="use"
+                  />
+                ) : (
+                  <Img
+                    src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                    alt="use"
+                  />
+                )}
               </Avatar>
             </Avatars>
             <Body>
