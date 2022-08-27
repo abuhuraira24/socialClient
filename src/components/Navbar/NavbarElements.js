@@ -232,7 +232,7 @@ export const Ul = styled.ul`
   position: absolute;
   background: ${(props) => props.theme.gray};
   width: 336px;
-  height: ${(props) => (props.isToggle ? "300px" : "0")};
+  height: ${(props) => (props.isToggle ? "auto" : "0")};
   top: 145%;
   border-radius: 5px;
   visibility: ${(props) => (props.isToggle ? "visible" : "hidden")};
