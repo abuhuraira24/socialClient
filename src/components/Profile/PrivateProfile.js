@@ -58,6 +58,7 @@ const PrivateProfile = () => {
   const [avatar, setAvatar] = useState();
   const [profileUser, setProfileUser] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [posts, setPosts] = useState(null);
   // Open Modal
   const [isOpen, setIsOpen] = useState(false);
   // File Upload Mutation
@@ -106,6 +107,9 @@ const PrivateProfile = () => {
 
   // Get posts
   useQuery(GET_POSTS_BY_USERS_ID, {
+    onCompleted: (data) => {
+      setPosts(data.getPostsByUserId);
+    },
     variables: {
       userId: user.id,
     },
@@ -145,6 +149,7 @@ const PrivateProfile = () => {
   const closeAvatarChangerModal = () => {
     setOpenModal(false);
   };
+
   return (
     <CoverWrapper>
       <Title>
@@ -226,24 +231,18 @@ const PrivateProfile = () => {
                 <SeeAll>See All Photos</SeeAll>
               </Header>
               <Images>
-                {profileUser &&
-                  profileUser.avatars.length !== 0 &&
-                  profileUser.avatars.map((img, index) => (
-                    <Image key={index}>
-                      <Img
-                        src={`${process.env.REACT_APP_SERVER_URL}/${img.avatar}`}
-                        alt="abu"
-                      />
-                      <Comming>Comming...</Comming>
-                    </Image>
-                  ))}
-                {profileUser &&
-                  profileUser.cover.length !== 0 &&
-                  profileUser.cover.map((img, index) => (
-                    <Image key={index}>
-                      <Img src={img.url} alt="abu" />
-                      <Comming>Comming...</Comming>
-                    </Image>
+                {posts &&
+                  posts.map((post, index) => (
+                    <>
+                      {post.image !== "" && (
+                        <Image key={index}>
+                          <Img
+                            src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
+                            alt="abu"
+                          />
+                        </Image>
+                      )}
+                    </>
                   ))}
               </Images>
             </ImageWrapper>
@@ -316,17 +315,20 @@ const GET_POSTS_BY_USERS_ID = gql`
       lastName
       body
       userId
+      image
+      postType
       createdAt
       likes {
         userId
       }
+      _id
       userId
-      comments {
-        body
-        createdAt
-        userId
-        username
-      }
+      # comments {
+      #   body
+      #   createdAt
+      #   userId
+      #   username
+      # }
     }
   }
 `;

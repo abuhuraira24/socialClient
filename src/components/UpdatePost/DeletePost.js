@@ -8,7 +8,7 @@ import { Button, Buttons } from "./PopupStyles";
 
 import { AuthContext } from "../../context/auth";
 
-const DeletePost = ({ postId, closeModal }) => {
+const DeletePost = ({ postId, closeModal, postToggler }) => {
   const { deletedPostId } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -34,13 +34,13 @@ const DeletePost = ({ postId, closeModal }) => {
 
   const deleteHandler = () => {
     deletePost({ variables: { postId } });
+    postToggler();
   };
 
   const dontDelete = () => {
     closeModal();
   };
 
-  console.log(postId);
   return (
     <Buttons>
       <Button onClick={dontDelete}>No</Button>

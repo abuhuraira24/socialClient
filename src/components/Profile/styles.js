@@ -279,7 +279,7 @@ export const Image = styled.div`
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  &::before {
+  /* &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -287,7 +287,7 @@ export const Image = styled.div`
     width: 100%;
     height: 100%;
     background: #9b9b9ba3;
-  }
+  } */
 `;
 
 export const Img = styled.img`

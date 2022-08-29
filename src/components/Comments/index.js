@@ -45,9 +45,14 @@ const SingleComment = ({ c }) => {
 
   const [isReact, setIsReact] = useState(false);
 
+  let [userInfo, setUserInfo] = useState(null);
+
   const { user } = useContext(AuthContext);
 
-  let { data } = useQuery(GET_USER, {
+  useQuery(GET_USER, {
+    onCompleted: (data) => {
+      setUserInfo(data.getUserById);
+    },
     variables: {
       userId: c.userId,
     },
@@ -104,14 +109,17 @@ const SingleComment = ({ c }) => {
           <UserImage>
             <Image>
               <Link to={`/profile/${c.userId}`}>
-                <Picture
-                  src={`${process.env.REACT_APP_SERVER_URL}/${
-                    data &&
-                    data.getUserById &&
-                    data.getUserById.avatars[0].avatar
-                  }`}
-                  alt="abu"
-                />
+                {userInfo && userInfo.avatars.length !== 0 ? (
+                  <Picture
+                    src={`${process.env.REACT_APP_SERVER_URL}/${userInfo.avatars[0].avatar}`}
+                    alt="abu"
+                  />
+                ) : (
+                  <Picture
+                    src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                    alt=""
+                  />
+                )}
               </Link>
             </Image>
           </UserImage>
@@ -119,11 +127,7 @@ const SingleComment = ({ c }) => {
             <P>
               <Link to={`/profile/${c.userId}`}>
                 <Name>
-                  {data &&
-                    data.getUserById &&
-                    data.getUserById.firstName +
-                      " " +
-                      data.getUserById.lastName}
+                  {userInfo && userInfo.firstName + " " + userInfo.lastName}
                 </Name>
               </Link>
               {c.text}

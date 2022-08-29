@@ -20,7 +20,7 @@ import PostUpdatePopup from "../UpdatePost/UpdatePopup";
 
 import PostUpdateForm from "./UpdatePost";
 
-const UpdatedPost = ({ post, isUpdate, isOpen, toggler }) => {
+const UpdatedPost = ({ post, isUpdate, isOpen, toggler, postToggler }) => {
   const [openUpdate, setUpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const { user } = useContext(AuthContext);
@@ -66,7 +66,11 @@ const UpdatedPost = ({ post, isUpdate, isOpen, toggler }) => {
                   isOpen={openDelete}
                   closeModal={closeModal}
                 >
-                  <DeletedPost closeModal={closeModal} postId={post._id} />
+                  <DeletedPost
+                    postToggler={postToggler}
+                    closeModal={closeModal}
+                    postId={post._id}
+                  />
                 </DeletePopup>
               </DeletePost>
             </>

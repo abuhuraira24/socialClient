@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/auth";
 
 import { H2, H5, LogginWrapper } from "./Styles";
 
-import { Input, Button } from "../../Styles/ElementsStyles";
+import { Input } from "../../Styles/ElementsStyles";
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -99,9 +99,16 @@ const Login = () => {
         <H5 type="button" onClick={forgot}>
           Forgot Password?
         </H5>
-        <Button bg="#2c51ca" color="#fff" type="submit">
-          Submit
-        </Button>
+        {loading ? (
+          <Button disabled variant="primary" type="submit">
+            Login
+          </Button>
+        ) : (
+          <Button variant="primary" type="submit">
+            Login
+          </Button>
+        )}
+
         <H5>
           <NavLink to="/register">Haven't an Account? Join</NavLink>
         </H5>

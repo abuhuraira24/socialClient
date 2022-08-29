@@ -1,5 +1,7 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 
+import { useNavigate } from "react-router-dom";
+
 import React, { useContext, useEffect, useState } from "react";
 
 import Modal from "react-modal";
@@ -53,16 +55,11 @@ const Popup = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
 
   const [img, setImg] = useState(null);
+
   const [avatar, setAvatar] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [createPost, { loading }] = useMutation(CREATE_POST, {
-    onCompleted: (data) => {
-      setIsOpen(false);
-    },
-    onError(error) {},
-
-    variables: { body, postType: "normal", image: "" },
-  });
+  const navigate = useNavigate();
 
   let { user } = useContext(AuthContext);
 
@@ -111,6 +108,7 @@ const Popup = ({ children }) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    setLoading(true);
     // createPost();
 
     let token = localStorage.getItem("jwtToken");
@@ -129,9 +127,12 @@ const Popup = ({ children }) => {
           },
         })
         .then((res) => {
-          console.log(res);
+          setLoading(false);
+          setIsOpen(false);
+          navigate("/");
         })
         .catch((error) => {
+          setLoading(false);
           console.log(error);
         });
     }
@@ -272,14 +273,6 @@ const Popup = ({ children }) => {
     </div>
   );
 };
-
-const CREATE_POST = gql`
-  mutation createPost($body: String!, $postType: String!, $image: String!) {
-    createPost(body: $body, postType: $postType, image: $image) {
-      body
-    }
-  }
-`;
 
 const GET_AVATAE_BY_ID = gql`
   query ($userId: ID!) {

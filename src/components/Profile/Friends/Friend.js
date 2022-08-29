@@ -9,12 +9,12 @@ import { Img } from "../styles";
 import { Name, User, Users } from "../Friends/elemetStyles";
 
 const Friend = (user) => {
-  let [image, setIamge] = useState("");
+  let [image, setIamge] = useState(null);
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
       if (data) {
-        setIamge(data.getUserById.avatars[0].avatar);
+        setIamge(data.getUserById.avatars);
       }
     },
     variables: {
@@ -26,8 +26,16 @@ const Friend = (user) => {
     <Users>
       <Link to={`/profile/${user.user.userId}`}>
         <User>
-          {image && (
-            <Img src={`${process.env.REACT_APP_SERVER_URL}/${image}`} alt="" />
+          {image && image.length !== 0 ? (
+            <Img
+              src={`${process.env.REACT_APP_SERVER_URL}/${image[0].avatar}`}
+              alt=""
+            />
+          ) : (
+            <Img
+              src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+              alt=""
+            />
           )}
         </User>
       </Link>

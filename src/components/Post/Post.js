@@ -120,7 +120,7 @@ const Post = ({ post }) => {
         </Left>
         <Right>
           <Dot onClick={postToggler} className="fa-solid fa-ellipsis"></Dot>
-          <UpdatedPost toggler={toggle} post={post} />
+          <UpdatedPost toggler={toggle} postToggler={postToggler} post={post} />
         </Right>
       </Users>
 

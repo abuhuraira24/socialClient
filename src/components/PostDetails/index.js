@@ -55,8 +55,8 @@ const PostDetails = () => {
   // Commet value
   const [post, setPost] = useState([]);
 
-  let [author, setAuthor] = useState("");
-  let [userAvata, setUserAvatar] = useState("");
+  let [author, setAuthor] = useState(null);
+  let [userAvatar, setUserAvatar] = useState(null);
 
   const [toggle, setToggle] = useState(false);
 
@@ -74,7 +74,7 @@ const PostDetails = () => {
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
       if (data) {
-        setAuthor(data.getUserById.avatars[0].avatar);
+        setAuthor(data.getUserById.avatars);
       }
     },
     variables: { userId: userId },
@@ -87,7 +87,7 @@ const PostDetails = () => {
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
       if (data) {
-        setUserAvatar(data.getUserById.avatars[0].avatar);
+        setUserAvatar(data.getUserById.avatars);
       }
     },
     variables: { userId: user.id },
@@ -163,7 +163,8 @@ const PostDetails = () => {
     });
   }, [comments]);
 
-  console.log(post);
+  console.log(author);
+
   return (
     <Modal>
       <Wrapper>
@@ -175,10 +176,15 @@ const PostDetails = () => {
                 <Left>
                   <UserImage>
                     <Link to={`/profile/${post?.userId}`}>
-                      {author && (
+                      {author && author.length !== 0 ? (
                         <PostAvatar
-                          src={`${process.env.REACT_APP_SERVER_URL}/${author}`}
+                          src={`${process.env.REACT_APP_SERVER_URL}/${author.avatars[0].avatar}`}
                           alt="post"
+                        />
+                      ) : (
+                        <PostAvatar
+                          src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                          alt=""
                         />
                       )}
                     </Link>
@@ -224,10 +230,15 @@ const PostDetails = () => {
               <Comments>
                 <CommentsArea>
                   <UserPic>
-                    {userAvata && (
+                    {userAvatar && userAvatar.length !== 0 ? (
                       <CircleImage
-                        src={`${process.env.REACT_APP_SERVER_URL}/${userAvata}`}
+                        src={`${process.env.REACT_APP_SERVER_URL}/${userAvatar[0].avatar}`}
                         alt="user"
+                      />
+                    ) : (
+                      <CircleImage
+                        src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                        alt=""
                       />
                     )}
                   </UserPic>

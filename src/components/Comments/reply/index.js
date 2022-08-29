@@ -25,7 +25,7 @@ const Reply = ({ commentId }) => {
 
   useQuery(GET_USER_BY_ID, {
     onCompleted: (data) => {
-      setAvatar(data.getUserById.avatars[0].avatar);
+      setAvatar(data.getUserById.avatars);
     },
     variables: { userId: user.id },
     onError(error) {
@@ -68,15 +68,23 @@ const Reply = ({ commentId }) => {
     <Wrapper>
       <Avatar>
         <Image>
-          {avatar && (
+          {avatar && avatar.length !== 0 ? (
             <Link to={`/profile/`}>
               <Picture src={avatar} alt="abu" />
+            </Link>
+          ) : (
+            <Link to="">
+              <Picture
+                src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
+                alt=""
+              />
             </Link>
           )}
         </Image>
       </Avatar>
       <Form onSubmit={submitHandler}>
         <Input
+          disabled
           onChange={changeHandler}
           value={value}
           placeholder="reply to ..."
