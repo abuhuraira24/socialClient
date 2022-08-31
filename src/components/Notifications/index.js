@@ -27,7 +27,6 @@ const Notification = () => {
           (objA, objB) => Number(objA.createdAt) - Number(objB.createdAt)
         );
 
-        console.log(sortedAsc);
         setNotifications(result.data.result);
       })
       .catch((error) => {

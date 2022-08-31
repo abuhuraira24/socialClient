@@ -26,7 +26,6 @@ const Profile = () => {
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
       setUserInfo(data.getUserById.avatars);
-      console.log(data.getUserById.avatars);
     },
     variables: { userId: user.id },
     onError(error) {

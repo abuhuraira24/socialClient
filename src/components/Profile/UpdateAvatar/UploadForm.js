@@ -42,10 +42,6 @@ const UploadForm = ({ closeModal }) => {
   };
 
   const [creatPost] = useMutation(CREATE_POST, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-
     onError(error) {
       console.log(error);
     },

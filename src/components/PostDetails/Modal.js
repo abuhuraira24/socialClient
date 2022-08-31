@@ -13,7 +13,7 @@ const Modal = ({ children }) => {
         <CloseModal>
           <Close>
             <HashLink to={`/#${postId}`}>
-              <i class="fa-solid fa-ban"></i>
+              <i className="fa-solid fa-ban"></i>
             </HashLink>
           </Close>
         </CloseModal>

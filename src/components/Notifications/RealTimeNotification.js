@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import {
   Avatar,
   Body,
@@ -14,15 +13,6 @@ import {
 } from "./styles";
 import moment from "moment";
 const RealTimeNotification = ({ realtTimeNoti }) => {
-  // const [realtTimeNoti, setRealTimeNoti] = useState([]);
-
-  // useEffect(() => {
-  //   socket.on("getNotification", (data) => {
-  //     console.log(data);
-  //     setRealTimeNoti(data);
-  //   });
-  // });
-  console.log(realtTimeNoti);
   return (
     realtTimeNoti && (
       <NotWrapper>

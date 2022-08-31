@@ -31,7 +31,6 @@ const SingleNoti = ({ notification }) => {
     },
   });
 
-  console.log(user);
   return (
     user.length !== 0 && (
       <Linkk

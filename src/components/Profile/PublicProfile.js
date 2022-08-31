@@ -89,18 +89,13 @@ const PublicProfile = () => {
     }
   }, [profileUser, user.id]);
 
-  let [addFollow] = useMutation(ADD_FOLLOWER, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-  });
+  let [addFollow] = useMutation(ADD_FOLLOWER);
   const addNotifications = (data, liked) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/notification`, data)
       .then((result) => {
         console.log(result);
         if (!isFollow) {
-          console.log(result);
           socket.emit("sendNotification", data);
         }
       })

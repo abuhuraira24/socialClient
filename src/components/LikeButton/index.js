@@ -60,7 +60,7 @@ const LikeButton = ({ postId, likes, userId }) => {
   ) : (
     <Like onClick={likeHandler} liked={liked}>
       {/* <i className="fa-brands fa-gratipay"></i> */}
-      <i class="fa-solid fa-heart"></i>
+      <i className="fa-solid fa-heart"></i>
       <Span>{likes.length !== 0 && likes.length + " "}</Span>
     </Like>
   );

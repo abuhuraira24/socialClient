@@ -19,18 +19,6 @@ const AvatarUpload = () => {
       formData.append("file", file);
 
       formData.append("upload_preset", "ml_default");
-
-      // Axios.post(process.env.REACT_APP_CLOUDINRY_UPLOAD_API, formData).then(
-      //   (res) => {
-      //     console.log(res);
-      //     mutate({
-      //       variables: {
-      //         url: res.data.url,
-      //         userId: user.id,
-      //       },
-      //     });
-      //   }
-      // );
     }
   };
   return (

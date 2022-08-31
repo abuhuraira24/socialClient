@@ -70,7 +70,6 @@ const SingleComment = ({ c }) => {
   useEffect(() => {
     socket.off("sendReply").on("sendReply", (data) => {
       setReplys((prev) => [...prev, data]);
-      console.log(data);
     });
   });
 
@@ -87,7 +86,6 @@ const SingleComment = ({ c }) => {
       } else {
         setIsReact(false);
       }
-      console.log(data);
     },
     onError(error) {
       console.log(error);

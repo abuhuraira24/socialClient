@@ -118,7 +118,7 @@ const Popup = ({ children }) => {
 
       formData.append("body", body);
       formData.append("avatar", avatar);
-      console.log(avatar);
+
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/createpost`, formData, {
           headers: {

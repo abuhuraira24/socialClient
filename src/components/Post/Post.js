@@ -144,14 +144,18 @@ const Post = ({ post }) => {
         </CardText>
       )}
       {post.postType === "profile" && (
-        <ImageWrapper>
-          <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
-        </ImageWrapper>
+        <NavLink to={`/post/${post._id}/${post.userId}`}>
+          <ImageWrapper>
+            <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
+          </ImageWrapper>
+        </NavLink>
       )}
       {post.postType === "normal" && post.image && (
-        <ImageWrapper>
-          <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
-        </ImageWrapper>
+        <NavLink to={`/post/${post._id}/${post.userId}`}>
+          <ImageWrapper>
+            <Image src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`} />
+          </ImageWrapper>
+        </NavLink>
       )}
 
       <Comments>
@@ -167,7 +171,7 @@ const Post = ({ post }) => {
 
           <Link to={`/post/${post._id}/${post.userId}`}>
             <Comment>
-              <i class="fa-solid fa-comments"></i>
+              <i className="fa-solid fa-comments"></i>
               <Span> {commnetSize && commnetSize}</Span>
             </Comment>
           </Link>

@@ -42,9 +42,6 @@ const User = (user) => {
   });
 
   let [addFollower] = useMutation(ADD_FOLLOWER, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
     onError(err) {
       console.log(err.graphQLErrors[0]);
     },
@@ -54,9 +51,7 @@ const User = (user) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/notification`, data)
       .then((result) => {
-        console.log(result);
         if (!isFollow) {
-          console.log(result);
           socket.emit("sendNotification", data);
         }
       })
@@ -80,8 +75,6 @@ const User = (user) => {
       setFollow(true);
     }
   };
-
-  console.log(avatar);
 
   return (
     <Users>

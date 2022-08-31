@@ -39,7 +39,7 @@ import {
   UploadInput,
   UserIcon,
 } from "./styles";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Posts from "../Profile/Posts/Posts";
 
@@ -206,17 +206,6 @@ const PrivateProfile = () => {
                 <MyFollowers />
               </Followers>
             </ProfileAvatar>
-            {/* <Buttons>
-              <EdidButton onClick={modalIsOpen}>
-                <EditIcon className="fa-solid fa-pen"></EditIcon>
-                Edit Profile
-              </EdidButton>
-              <UpdatedModale
-                avatar={avatar}
-                modalIsOpen={isOpen}
-                closeModal={closeModal}
-              />
-            </Buttons> */}
           </Avatars>
           <Modall openModal={openModal} closeModal={closeAvatarChangerModal} />
         </Col>
@@ -235,12 +224,17 @@ const PrivateProfile = () => {
                   posts.map((post, index) => (
                     <>
                       {post.image !== "" && (
-                        <Image key={index}>
-                          <Img
-                            src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
-                            alt="abu"
-                          />
-                        </Image>
+                        <Link
+                          key={index}
+                          to={`post/${post._id}/${post.userId}`}
+                        >
+                          <Image>
+                            <Img
+                              src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
+                              alt="abu"
+                            />
+                          </Image>
+                        </Link>
                       )}
                     </>
                   ))}

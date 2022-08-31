@@ -163,8 +163,6 @@ const PostDetails = () => {
     });
   }, [comments]);
 
-  console.log(author);
-
   return (
     <Modal>
       <Wrapper>
@@ -214,6 +212,14 @@ const PostDetails = () => {
               </UserProfile>
 
               {post && post.postType === "profile" && (
+                <ImageWrapper>
+                  <Images
+                    src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
+                  />
+                </ImageWrapper>
+              )}
+
+              {post && post.image !== "" && (
                 <ImageWrapper>
                   <Images
                     src={`${process.env.REACT_APP_SERVER_URL}/${post.image}`}
