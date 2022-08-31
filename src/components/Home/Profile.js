@@ -37,13 +37,14 @@ const Profile = () => {
     variables: { userId: user.id },
   });
 
+  console.log(userInfo);
   return (
     <Wrapper>
       <Cover>
-        {/* <CoverImage
+        <CoverImage
           src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
           alt="cover"
-        /> */}
+        />
 
         <Avatar>
           <EmptyAvatar>

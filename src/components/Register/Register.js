@@ -44,6 +44,7 @@ const Register = () => {
           token: data.register.token,
         })
         .then((res) => {
+          console.log(res);
           setLoading(false);
           navigate(`/verify`);
         })

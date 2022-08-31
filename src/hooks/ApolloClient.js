@@ -4,7 +4,7 @@ import { setContext } from "@apollo/client/link/context";
 import { createUploadLink } from "apollo-upload-client";
 
 const uploadLink = createUploadLink({
-  uri: " https://socialserverr.herokuapp.com",
+  uri: `${process.env.REACT_APP_SERVER_URL}`,
   "Apollo-Require-Preflight": "true",
 });
 const authLink = setContext((_, { headers }) => {
