@@ -174,7 +174,7 @@ const PostDetails = () => {
                 <Left>
                   <UserImage>
                     <Link to={`/profile/${post?.userId}`}>
-                      {author && author.avatars !== 0 ? (
+                      {author && author.avatars.length !== 0 ? (
                         <PostAvatar
                           src={`${process.env.REACT_APP_SERVER_URL}/${author.avatars[0].avatar}`}
                           alt="post"

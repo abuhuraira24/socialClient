@@ -37,7 +37,6 @@ const Profile = () => {
     variables: { userId: user.id },
   });
 
-  console.log(userInfo);
   return (
     <Wrapper>
       <Cover>
