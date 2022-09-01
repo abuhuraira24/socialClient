@@ -130,7 +130,6 @@ const Popup = ({ children }) => {
         .then((res) => {
           setLoading(false);
           setIsOpen(false);
-          navigate("/");
         })
         .catch((error) => {
           setLoading(false);

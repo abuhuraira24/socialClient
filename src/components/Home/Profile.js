@@ -25,7 +25,7 @@ const Profile = () => {
 
   useQuery(GET_AVATAE_BY_ID, {
     onCompleted: (data) => {
-      setUserInfo(data.getUserById.avatars);
+      setUserInfo(data.getUserById);
     },
     variables: { userId: user.id },
     onError(error) {
@@ -41,22 +41,21 @@ const Profile = () => {
   return (
     <Wrapper>
       <Cover>
-        <CoverImage
-          src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
-          alt="cover"
-        />
+        {userInfo && userInfo.cover.length !== 0 && (
+          <CoverImage src={`${userInfo.cover[0].url}`} alt="cover" />
+        )}
 
         <Avatar>
           <EmptyAvatar>
-            {userInfo && userInfo.length === 0 && (
+            {userInfo && userInfo.avatars.length === 0 && (
               <Image
                 src="https://res.cloudinary.com/dza2t1htw/image/upload/v1661353556/user_mi2nyr.png"
                 alt=""
               />
             )}
-            {userInfo && userInfo.length !== 0 && (
+            {userInfo && userInfo.avatars.length !== 0 && (
               <Image
-                src={`${process.env.REACT_APP_SERVER_URL}/${userInfo[0].avatar}`}
+                src={`${process.env.REACT_APP_SERVER_URL}/${userInfo.avatars[0].avatar}`}
                 alt=""
               />
             )}
@@ -83,6 +82,9 @@ const GET_AVATAE_BY_ID = gql`
     getUserById(userId: $userId) {
       avatars {
         avatar
+      }
+      cover {
+        url
       }
     }
   }
